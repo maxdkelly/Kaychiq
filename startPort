@@ -1,0 +1,11 @@
+#!/bin/bash
+cd ./backend 
+echo "Started python virtual environment."
+python3 -m venv venv
+. venv/bin/activate
+echo "Downloading backend requirements please wait..."
+touch ./log.txt
+pip install -r requirements.txt > ./log.txt 2>&1
+if [[ $1 == "--new" ]]; then
+    rm -f ./server/app.db
+fi

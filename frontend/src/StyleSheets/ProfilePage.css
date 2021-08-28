@@ -1,0 +1,223 @@
+.homeContainer{
+    flex-direction: column;
+    justify-content: center;
+    background-color: #f8f9fa;
+    margin-left: 12rem;
+    margin-right: 12rem;
+    padding-left: 5rem;
+    padding-right: 2rem;
+}
+
+.edit-icon{
+    margin-left: auto;
+    margin-right:0rem;
+    margin-bottom: 0;
+    
+}
+
+.mainContainer{
+    display:flex;
+    flex-direction: row;
+
+}
+
+.yourProfile{
+    margin-top:0rem;
+    font-size:3rem;
+    text-align: center;
+}
+
+.button{
+    background-color:  #f4eddb;
+    border:none;
+    color:black;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    width: 70%;
+    margin: .5rem;
+    border-radius: 2px;
+    align-self: center;
+    margin-top:1rem;
+}
+
+.button:hover{
+    color:  #f4eddb;
+    border: none;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    width:70%;
+    margin: .5rem;
+    background-color: #19253f;
+    align-self: center;
+    border-radius: 2px;
+    margin-top:1rem;
+}
+
+.img{
+    width: 10rem;;
+    flex-grow: 3;
+}
+
+.infoContainer{
+    margin-left:3rem;
+    margin-top: 2rem;
+
+    width: 100%;
+    font-size: large;
+    display: flex;
+    flex-direction: column;
+}
+
+.maintext{
+    margin:.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sbutton{
+    widows: 4rem;
+    margin-right:2rem;
+    background-color:  #f4eddb;
+    border:none;
+    color:black;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+
+}
+
+.dis{
+    visibility: hidden;
+}
+
+.show{
+    margin:1rem;
+    visibility:visible;
+}
+
+.showInput{
+    margin:.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.buttonC{
+    background-color:  #f4eddb;
+    border:none;
+    color:black;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    width: 42%;
+    margin: .5rem;
+    border-radius: 2px;
+    align-self: center;
+    margin-top:1rem;
+    text-align: center;
+    
+}
+
+.connectButton{
+    background-color:  #f4eddb;
+    border:none;
+    color:black;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    width: 10rem;
+    margin: .5rem;
+    border-radius: 2px;
+    align-self: center;
+    margin-top:1rem;
+    text-align: center;
+    
+}
+
+.linkButton{
+    background-color:   #f4eddb;
+    border:none;
+    color:black;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    width: 42%;
+    margin: .5rem;
+    border-radius: 2px;
+    align-self: center;
+    margin-top:1rem;
+    text-align: center;
+    padding-top:.5rem;
+    padding-bottom: .5rem;
+    padding-left: 1rem;
+    padding-right:1rem;
+    
+}
+
+.linkButton:hover{
+    background-color:   #f4eddb;
+    border:none;
+    color:#293242;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    width: 42%;
+    margin: .5rem;
+    border-radius: 2px;
+    align-self: center;
+    margin-top:1rem;
+    text-align: center;
+    padding-top:.5rem;
+    padding-bottom: .5rem;
+    padding-left: 1rem;
+    padding-right:1rem;
+    
+}
+
+.buttonC:hover{
+    color:  #f4eddb;
+    border: none;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    width:42%;
+    margin: .5rem;
+    background-color: #19253f;
+    align-self: center;
+    border-radius: 2px;
+    margin-top:1rem;
+}
+
+
+
+.errorMsg{
+    color:red;
+    align-self: center;
+    text-align: center;
+}
+
+.errorInput{
+    
+    border: 2px solid red;
+    border-radius: 4px;
+}
+.successMsg{
+    margin-top: 2rem;
+    margin-bottom:2rem;
+}
+
+.connections{
+    margin-top: 2rem;
+}
+
+.connectionButton{
+    background-color:  #f4eddb;
+    border:none;
+    color:black;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    width: 23%;
+    margin: .5rem;
+    border-radius: 2px;
+    align-self: center;
+    margin-top:1rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    font-size: large;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: baseline;
+}

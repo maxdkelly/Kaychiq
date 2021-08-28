@@ -1,0 +1,55 @@
+create task test ( enter correct token )
+curl -d '{ 
+    "token": "8a1816cb-05a3-4c94-b306-f8705cae9c66",
+    "task" : {
+                "taskName": "s",  
+                "taskDescription": "difghs ",  
+                "taskTags": [], 
+                "priority": "high",  
+                "startDate": "15/06/1111", 
+                "endDate": "16/06/1111",  
+                "hours": {
+                            "15/06/1111": [2,2,2,2,2], 
+                            "16/06/1111": [2,2,2,2,2]},
+                "contributors":[0,2,3]
+            }
+    
+}
+' -H "Content-Type: application/json" -X POST http://localhost:5000/api/addTask
+
+delete task test ( enter valid task id )
+curl -d '{ "token": "82835a55-0682-49cc-badf-e271d6e0638a", "task_id" : 2}' -H "Content-Type: application/json" -X POST http://localhost:5000/api/deleteTask
+
+get task test ( enter valid task id )
+curl -d '{ "token": "8a1816cb-05a3-4c94-b306-f8705cae9c66", "task_id" : 12}' -H "Content-Type: application/json" -X POST http://localhost:5000/api/getTask
+
+upload photo
+curl -F file=@/import/reed/4/z5207136/Pictures/gretsch-logo-flask.jpg -F data="" -F token=e6985113-8cae-434d-92c5-40fd53f0d6bd -X POST http://localhost:5000/api/uploadProfileImage
+
+updateTask
+curl -d '{ "token": "8a1816cb-05a3-4c94-b306-f8705cae9c66", "task_id" : 12, 
+            "changes" : {
+                "taskName": "difference",  
+                "description": "difgh ",  
+                "taskTags": ["yeah"], 
+                "priority": "high",  
+                "startDate": "15/06/2000", 
+                "endDate": "16/06/2000",  
+                "contributors":[0,2, 5],
+                "completionDate": "17/7/2021",                
+                "hours": {
+                            "1/06/11": [8,2,3], 
+                            "1/1/1":[8,1,3]},
+                "taskTags":["gay","nuk"]
+            }
+}' -H "Content-Type: application/json" -X POST http://localhost:5000/api/updateTask
+
+
+
+get profile image
+curl -d '{ "token": "82835a55-0682-49cc-badf-e271d6e0638a", "user_id" : 0}' -H "Content-Type: application/json" -X POST http://localhost:5000/api/getProfileImage
+
+get connections
+curl -d  '{ "user_id": 0, "token": "e6985113-8cae-434d-92c5-40fd53f0d6bd"}'-H "Content-Type: application/json" -X POST http://localhost:5000/api/getConnections 
+
+curl -d '{ "token": "e6985113-8cae-434d-92c5-40fd53f0d6bd"}' -H "Content-Type: application/json" -X POST http://localhost:5000/api/getConnectionRequests

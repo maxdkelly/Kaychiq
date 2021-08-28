@@ -1,0 +1,13 @@
+.dateContainer{
+    margin:1rem;
+    border: 1rem;
+    background-color:  #f4eddb;
+    border-radius: 3px;
+    display:flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-evenly;
+}
+.dateText{
+    margin:1rem;
+}

@@ -1,0 +1,119 @@
+.searchUser{
+   display:flex;
+   flex-direction: column;
+   justify-content: space-evenly;
+   align-items: center;
+   margin-top:0rem;
+   
+}
+
+.inputSearch{
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    text-align: center;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    width: 40%;
+ 
+
+
+}
+
+.form-control{
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    outline: none;
+    border: none;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+    border-radius: 8px;
+    width: 30rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+    
+}
+
+.usersBox{
+    padding:4rem;
+}
+
+.noResults{
+    /* background-color: #f4eddb;
+    
+    margin:1rem;
+    border-radius: 5px;
+    padding-top:.2rem;
+    padding-bottom:.2rem;
+    padding-left:2rem;
+    padding-right: 2rem;
+    display: inline-block; */
+    text-align: center;
+}
+
+
+.noResults1{
+    margin-top: 4rem;
+    margin-bottom:2rem;
+    text-align: center;
+    text-emphasis: bold;
+}
+.connected{
+    margin-top: 2rem;
+}
+.but{
+    align-self: center;
+}
+
+.uContainer{
+   
+    
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    
+   
+    margin-left:3rem;
+}
+
+.userPreview{
+    background-color:  #f4eddb;
+    border-radius: 3px;
+    display: inline-block;
+    padding-top:.2rem;
+    padding-bottom:.2rem;
+    padding-left:6rem;
+    padding-right: 6rem;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    margin-top:1rem;
+    
+}
+
+.otherUser{
+    box-sizing: border-box;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+    margin: auto;
+    background-color: #f2f2f3ea;
+    color: rgb(46, 45, 45);
+    border-radius: .5rem;
+    border-bottom: 2rem;
+    margin-top: 4rem;
+    padding-bottom:4rem;
+  }

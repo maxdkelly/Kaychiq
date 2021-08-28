@@ -1,0 +1,84 @@
+.tasksBox{
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    margin-right: 15rem;
+    margin-left: 15rem;
+    background-color: #f8f9fa;
+    opacity: 1;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    color: #19253f;
+    padding-bottom: 4rem;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+
+
+}
+
+.titleCal{
+    color: #19253f;
+    margin-top: 0rem;
+    margin-bottom:0;
+    font-size: 3rem;
+    text-align: center;
+    flex-grow:3;
+}
+
+.cont{
+    border:0;
+    color: #19253f;
+
+}
+.addIcon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   margin-right:2rem;
+   margin-left: auto;
+    
+}
+
+.taskHeader{
+    display:flex;
+    flex-direction: row;
+    align-items: baseline
+}
+.circle{
+    margin-bottom: .25rem;
+    margin-top: 1rem;
+}
+
+.passwordContainer{
+    align-self: center;
+}
+
+.headerContainer{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-left: 5rem;
+    padding-right:5rem;
+}
+.subHeaderContainer{
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: baseline;
+    padding-left: 5rem;
+    padding-right:5rem;
+
+    
+}
+
+.searchContainer{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: baseline;
+    
+}
+
+.msg{
+    margin-top: 1rem;
+}

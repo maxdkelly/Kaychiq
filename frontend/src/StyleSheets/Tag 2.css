@@ -1,0 +1,14 @@
+.tag-box{
+    background-color:  #19253f;
+    color:#f4eddb;
+    padding: .3rem;
+    border-radius: 5px;
+    display:inline-block;
+    margin-left: .5rem;
+    margin-right: .5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;;
+}
+.closeIcon{
+    margin-left: .5rem;
+}
