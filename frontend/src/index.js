@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import './index.css';
 import { HomePage } from "./pages/HomePage";
-import  LobbyPage  from "./pages/LobbyPage";
+import  {LobbyPage}  from "./pages/LobbyPage";
 import  {GuessNumberGame}  from "./pages/GuessNumberGame";
 
 
