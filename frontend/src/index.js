@@ -3,12 +3,19 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import './index.css';
 import { HomePage } from "./pages/HomePage";
+import  {LobbyPage}  from "./pages/LobbyPage";
+import  {GuessNumberGame}  from "./pages/GuessNumberGame";
+
+
 
 function App() {
   return (
     <div className="App">
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route exact path="/lobby" component={LobbyPage} />
+        <Route exact path="/guessNumberGame" component={GuessNumberGame} />
+
         <Route path="*" component={() => "404 NOT FOUND"} />
       </Switch>
     </div>
