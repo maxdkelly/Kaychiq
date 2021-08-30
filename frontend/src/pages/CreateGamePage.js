@@ -1,30 +1,29 @@
-import React, { useState }  from "react";
+import React, { useState } from "react";
 import { Redirect } from "react-router";
 
 import Header from "../components/Header"
-import JoinGameForm from "../components/JoinGameForm";
+import CreateGameForm from "../components/CreateGameForm";
 import LobbyView from "../components/LobbyView";
 
-export const LobbyPage = props =>{
-
+export const CreateGamePage = props =>{
+  
     const [token, setToken] = useState("");
 
     const handleToken = token => {
         console.log(token);
         setToken(token);
     }
-  
+
     return(
         <body>
-            <Header> </Header>
+            <Header/> 
             < div className="homeContainer" > 
-                <JoinGameForm passToken={handleToken}/>
+                <CreateGameForm passToken={handleToken}/>
             </div>
 
-            <div className="homeContainer" > 
+            < div className="homeContainer" > 
                 <LobbyView token={token}/>
             </div>
-
         </body>
     )
           
