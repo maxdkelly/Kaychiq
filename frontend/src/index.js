@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import './index.css';
 import { HomePage } from "./pages/HomePage";
 import  {LobbyPage}  from "./pages/LobbyPage";
+import  {CreateGamePage}  from "./pages/CreateGamePage";
+
 import  {GuessNumberGame}  from "./pages/GuessNumberGame";
 
 
@@ -14,6 +16,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/lobby" component={LobbyPage} />
+        <Route exact path="/createGame" component={CreateGamePage} />
+
         <Route exact path="/guessNumberGame" component={GuessNumberGame} />
 
         <Route path="*" component={() => "404 NOT FOUND"} />
