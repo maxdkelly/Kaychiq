@@ -16,10 +16,10 @@ db = SQLAlchemy(app)
 if not path.exists('./app.db'):
     print('Creating app.db...')
     from api.model import *
-	try:
-    	db.create_all()
-	except:
-		pass
+    try:
+        db.create_all()
+    except:
+        pass
 
 from api.general.routes import general
 app.register_blueprint(general)
