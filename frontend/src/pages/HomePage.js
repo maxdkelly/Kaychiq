@@ -17,9 +17,9 @@ export const HomePage = props => {
                         <div className="text">Do you want to get fucked</div>
                         <div className="textLARG"> Kaychiq is the solution for you!  </div>
 
-                        <button  className="userContainer">
-                        <div className="textLARG">Create Game </div>                                                         
-                        </button>
+                        <Link to="/createGame" className="userContainer">
+                            <div className="textLARG">Create Game </div>                                                         
+                        </Link>
                         <Link to="/lobby" className="userContainer">
                             <div className="textLARG">Join Lobby </div>       
                         </Link>

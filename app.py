@@ -1,8 +1,22 @@
 from flask import Flask, send_from_directory
 from flask_cors import CORS, cross_origin
+from flask_sqlalchemy import SQLAlchemy
+
+from os import path
+from api.config import Config
 
 app = Flask(__name__,static_folder='frontend/build',static_url_path='')
+
+app.config.from_object(Config)
+
 cors = CORS(app)
+
+db = SQLAlchemy(app)
+
+if not path.exists('./app.db'):
+    print('Creating app.db...')
+    from api.model import *
+    db.create_all()
 
 from api.general.routes import general
 app.register_blueprint(general)

@@ -44,6 +44,7 @@ body {
     text-align:center;
     margin: 2rem;
     color: #293242;
+    
 }
 
 .userContainer{
@@ -57,5 +58,7 @@ body {
     justify-content: center;
     /* justify-content: space-evenly; */
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    text-decoration: none;
+    color: black
 
 }
