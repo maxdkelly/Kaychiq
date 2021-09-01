@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
       height: 100,
-      width: 140,
+      width: 100,
     },
     control: {
       padding: theme.spacing(2),
@@ -123,48 +123,44 @@ export const LobbyView = props => {
       }
 
     return (
-        <div>
-            <div className="textLARG"> Lobby:
-            {/* 
-
-            
-            {
-                players.map((player) => {       
-                    return <div className="textSMOL"> {player} </div>
-                })
-            } */}
-            </div>
-
-            <Grid item>
-                <Grid 
-                    container 
-                    justifyContent="center" 
-                    justify = "center" 
-                    alignItems="center"
-                    spacing={spacing}
-                >
-                {players.map((player) => (
-                    
-                        <Card className="cardContainer"  alignItems="center">
-                            <CardContent className = "cardContentContainer"  alignItems="center">
-                                <img src={sojuToObj[sojuMap[player]]} width="80" height="120"/>         
-
-                                <Typography component="div"  justify = "center"  alignItems="center">
-                                    <Box fontWeight="fontWeightBold" m={1} justify = "center"alignItems="center" >
-                                        {player}
-                                    </Box>
-                                </Typography>
-                               
-                            </CardContent>
-                        </Card>
-                    
-                ))}
-                </Grid>
-            </Grid>
        
-
             
-        </div>
+            <React.Fragment  >
+                <Grid container spacing={3}>
+
+                  <Grid item xs={12}>
+                  <div className="titleText">Lobby </div> 
+
+                  </Grid>
+                  <Grid item>
+                    <Grid 
+                        container 
+                        justifyContent="center" 
+                        justify = "center" 
+                        alignItems="center"
+                        spacing={spacing}
+                    >
+                        {players.map((player) => (
+                            
+                                <Card className="cardContainer"  alignItems="center">
+                                    <CardContent className = "cardContentContainer"  alignItems="center">
+                                        <img src={sojuToObj[sojuMap[player]]} width="80" height="120"/>         
+
+                                        <Typography component="div"  justify = "center"  alignItems="center">
+                                            <Box fontWeight="fontWeightBold" m={1} style ={{"text-align": "center"}} >
+                                                {player}
+                                            </Box>
+                                        </Typography>
+                                    
+                                    </CardContent>
+                                </Card>
+                            
+                        ))}
+                    </Grid>
+                    </Grid>
+                </Grid>
+            </React.Fragment>
+      
         
     );
 

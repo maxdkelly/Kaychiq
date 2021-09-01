@@ -1,5 +1,5 @@
 body {
-    background-image: url("./pexels-pixabay-266451.jpg");
+    background-image: url("./bground.jpeg");
 
 }
 
@@ -37,6 +37,70 @@ body {
     color: #626f87;
 }
 
+.buttonText{
+    font-size: x-large;
+    font-weight: bold;
+    text-decoration: none;
+    text-align:center;
+    margin: 1rem;
+    color: #ffffff;
+}
+
+.smallButtonText{
+    font-size: medium;
+    font-weight: bold;
+    text-decoration: none;
+    text-align:center;
+    margin: 0.25rem;
+    color: #ffffff;
+}
+
+.medButtonText{
+    font-size: large;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 0.25rem;
+    color: #ffffff;
+}
+
+.titleText{
+    font-size: xx-large;
+    font-weight: bold;
+    text-decoration: none;
+    text-align:center;
+    margin: 1rem;
+    color: #141313;
+}
+
+.dialogText{
+    font-size: medium;
+    font-weight: bold;
+    text-decoration: none;
+    text-align:center;
+    margin: 0.2rem;
+    color: #293242;
+    
+}
+
+.paperTitleText{
+    font-size: x-large;
+    font-weight: bold;
+    text-decoration: none;
+    text-align:center;
+
+    margin: 0.2rem;
+    color: #293242;
+}
+
+.mutedText{
+    color: rgb(116, 115, 115);
+    font-weight: 450;
+    font-size: medium;
+    text-decoration: none;
+    margin-bottom: 1rem;
+}
+
+
 .textSMOL{
     font-size: large;
     font-weight: bold;
@@ -61,6 +125,10 @@ body {
     text-decoration: none;
     color: black
 
+}
+
+.link{
+    text-decoration: none;
 }
 
 .cardContentContainer{
@@ -93,3 +161,11 @@ body {
 
     padding: 10px;
 }
+
+.centered {
+    text-decoration: none;
+    height: 100vh; /* Magic here */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

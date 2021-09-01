@@ -9,15 +9,18 @@ import Header from "../components/Header"
 import guess from '../utils/guess';
 import general from '../utils/general';
 
-import Modal from 'react-bootstrap/Modal'
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
 import GuessGameView from '../components/GuessGameView';
+import GuessDialog from '../components/GuessDialog';
+import GuessFinishedDialog from '../components/GuessFinishedDialog';
 
-import gif from '../gifs/gif1.gif'
-
-  
 
 export const GuessNumberGame = props => {
 
@@ -32,24 +35,18 @@ export const GuessNumberGame = props => {
 
     const [name, setName] = useState("");
 
-
     const [highest, setHighest] = useState(100);
     const [lowest, setLowest] = useState(0);
-    const [numGuess, setNumGuess] = useState(0);
+  
     const [currGuess, setCurrGuess] = useState([0, ""]);
-    const [guessError, setGuessError] = useState(false);
 
     const [players, setPlayers] = useState([]);
     const [sojuMap, setSojuMap] = useState({});
     const [currPlayer, setCurrPlayer] = useState("");
 
-    
-   
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const closeGif = () => setLoserShow(false);
 
     useEffect(() => {
 
@@ -73,7 +70,7 @@ export const GuessNumberGame = props => {
 
     useInterval(() => {
         checkGame()
-    }, 2000);   
+    }, 1000);   
   
     const checkGame = () => {
        
@@ -98,6 +95,7 @@ export const GuessNumberGame = props => {
 
                     setSojuMap(data.sojuMap);
                     if(data.yourTurn && !data.gameOver) {
+                        console.log("hey");
                         handleShow();
                     }
 
@@ -141,104 +139,19 @@ export const GuessNumberGame = props => {
         }, [delay]);
     }
 
-    function handleGuess(e) {
-        e.preventDefault();
-        
-        console.log(numGuess);
-
-        if(numGuess >= highest || numGuess <= lowest) {
-            setGuessError(true);
-        } else {
-            handleClose();
-            guess.guess(token, numGuess)
-            .then(data => {
-            })
-            
-        }
-    }
-
-    function handleBackToLobby(e) {
-
-        guess.guessToLobby(token);
-        
-    }
+ 
 
     
     return(
         <body>
-            <Header> </Header>
-            <div className="textLARG"> Guess Number Game </div>
+            <Header/> 
+            
 
-            <div className="textLARG"> Hello {name} </div>
+            <GuessGameView players = {players} sojuMap = {sojuMap} currPlayer = {currPlayer} highest = {highest} lowest = {lowest} currGuess = {currGuess} over = {loserShow}/>
+            <GuessDialog show = {show} token = {token} highest = {highest} lowest = {lowest} setClosed = {handleClose}/>
+            <GuessFinishedDialog show = {loserShow} loser = {loser} num = {currGuess[0]} host = {host} token = {token} />
 
-            <GuessGameView players = {players} sojuMap = {sojuMap} currPlayer = {currPlayer} highest = {highest} lowest = {lowest} currGuess = {currGuess}/>
-
-
-            <Modal
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-            >
-                <Modal.Header>
-                    <Modal.Title>Enter Guess</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    
-
-                    <Form>
-                        <Form.Group className="mb-3" controlId="formBasicEmail" hasValidation>
-                            <Form.Label>Enter your number guess</Form.Label>
-                            <Form.Control type="number" placeholder="Enter number" value ={numGuess} onChange={e => setNumGuess(e.target.value)} />
-                            <div className = { guessError ? "errorInput" : "hidden"} >
-                                Please choose a number in between the lowest and highest guesses<br/>
-                            </div>
-                            <Form.Text className="text-muted">
-                               Lowest Guess: {lowest}<br/> Highest Guess: {highest}
-                            </Form.Text>
-                        </Form.Group>
-                        <Button variant="primary" type="submit" onClick={(e) => handleGuess(e)}>
-                            Submit
-                        </Button>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-               
-                </Modal.Footer>
-            </Modal>
-
-
-            <Modal
-                show={loserShow}
-                backdrop="static"    
-            >
-                <Modal.Header>
-                    <Modal.Title>DRINKING TIME</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-
-                    <div className = "center">
-                        <div className = "textSMOL" >
-                            {loser} guessed {currGuess[0]} <br/>
-                            {loser} drinks!
-                        </div> 
-
-                        <img src={gif}/>         
-                    </div>          
-                   
-                    <div className = {host ? "center" : "hidden"}>
-                        <Link to={{pathname: "/createGame", token: token}} className="userContainer" onClick={(e) => handleBackToLobby(e)}>
-                            <div className="textLARG">Back to Lobby </div>       
-                        </Link>
-
-                    </div>
-                            
-                    
-                    
-                </Modal.Body>
-                <Modal.Footer>
-                </Modal.Footer>
-            </Modal>
+           
         </body>
     )
         

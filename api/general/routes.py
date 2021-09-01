@@ -1,9 +1,10 @@
 from flask import jsonify, Blueprint, request
-from api.model import Game, User
+from api.model import Game, User, GuessGame
 from app import db
 import random
 import string
 import glob
+from datetime import timedelta, datetime
 
 general = Blueprint('general', __name__)
 
@@ -25,6 +26,21 @@ def create_game():
     content = request.json 
     print(content)
 
+    one_day = timedelta(hours=24)
+    one_day_ago = datetime.now() - one_day
+
+    old_codes = []
+    for game in Game.query.filter(Game.timeCreated < one_day_ago).all():
+        old_codes.append(game.code)
+
+    Game.query.filter(Game.code.in_(old_codes)).delete()
+    User.query.filter(User.code.in_(old_codes)).delete()
+    GuessGame.query.filter(GuessGame.code.in_(old_codes)).delete()
+
+    db.session.commit()
+
+    print("grabbed",old_codes)
+
     print(get_soju())
     if "username" not in content:
         return jsonify({
@@ -36,6 +52,14 @@ def create_game():
 
     soju = random.choice(get_soju())
     username = content["username"]
+
+    if not username:
+        return jsonify({
+            "isValid": False,
+            "validMsg":"Enter Non Empty Username",
+            "gameToken": None,
+            "individualToken": None
+        })
     tokenUnique = False
     gameToken = ""
 
@@ -44,7 +68,7 @@ def create_game():
         print(gameToken)
         tokenUnique = not bool(Game.query.filter_by(code = gameToken).first())
     print(gameToken)
-    game = Game(code = gameToken)
+    game = Game(code = gameToken, timeCreated = datetime.now())
     user = User(token = gameToken + "_" + username, code = gameToken, name = username, host = True, soju = soju)
 
     db.session.add(game)
@@ -74,6 +98,14 @@ def join_game():
 
     code = content["code"]
     name = content["username"]
+
+    if not name:
+        return jsonify({
+            "isValid": False,
+            "validMsg":"Enter Non Empty Username",
+            "gameToken": None,
+            "individualToken": None
+        })
 
     if not bool(Game.query.filter_by(code = code).first()):
         return jsonify({
@@ -165,7 +197,7 @@ def check_game():
         sojuMap[user.name] = user.soju
 
     game = Game.query.filter_by(code = user.code).first()
-
+    print(game.timeCreated)
     return jsonify({
         "isValid": True,
         "validMsg":"Malformed user information",

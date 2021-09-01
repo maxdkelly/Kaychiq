@@ -3,6 +3,14 @@ import '../StyleSheets/Title.css';
 import general from '../utils/general';
 import { Link } from "react-router-dom";
 
+import TextField from '@material-ui/core/TextField';
+import FormLabel from '@material-ui/core/FormLabel';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
+
 
 class CreateGameForm extends React.Component {
     constructor(props) {
@@ -67,23 +75,61 @@ class CreateGameForm extends React.Component {
 
         if(!this.state.gameCreated) {
             return (
-                <form onSubmit={this.handleSubmit}>
-                  <label>
-                    Enter your Username:
-                    <input type="text" value={this.state.username} onChange={this.handleChange} />
-                  </label>
-                  <input type="submit" value="Submit" />
-                </form>
+
+              <React.Fragment  >
+
+                    <Typography variant="h6" gutterBottom>
+                    Create Game
+                    </Typography>
+                    <Grid container spacing={3}>
+                      <Grid item xs={12}>
+                        <TextField id="standard-basic" value={this.state.username} onChange={this.handleChange} label="Username" />
+
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={this.handleSubmit}   
+                        >
+                          Submit
+                        </Button>
+
+                      </Grid>
+                    </Grid>
+
+                    
+                </React.Fragment>
+
               );
         } else {
             return (
-                <div>
-                    <div className="textLARG"> Your game code is {this.state.gameCode} </div>
-                    <Link to={{pathname: "/guessNumberGame",token:this.state.indToken}} className="userContainer" onClick={(e) => this.handleGuessLink(e)}>
-                        <div className="textLARG">Start Guess Soju Bottle No. Game </div>       
-                    </Link>
+              <React.Fragment  >
+                <Grid container spacing={3}>
 
-                </div>
+                  <Grid item xs={12}>
+                    <div className="titleText">Your game code is {this.state.gameCode} </div> 
+                      
+
+                  </Grid>
+                    <Grid item xs={12}>
+                      <Link 
+                        to={{pathname: "/guessNumberGame",token:this.state.indToken}} 
+                        className="link" 
+                        onClick={(e) => this.handleGuessLink(e)}
+                      >
+                        <Button variant="contained" color="primary" disableElevation>
+                          <Typography variant="button">
+                              Start Guess Bottle No. Game
+                          </Typography>
+                         
+                        </Button>
+                      </Link>
+
+                  </Grid>
+                </Grid>
+              </React.Fragment>
                 
               );
         }
@@ -92,3 +138,13 @@ class CreateGameForm extends React.Component {
   }
 
 export default CreateGameForm
+
+{/* <Typography variant="h6" gutterBottom>
+Create Game
+</Typography>
+<Grid container spacing={3}>
+  <Grid item xs={12}>
+    <TextField id="standard-basic" value={this.state.username} onChange={this.handleChange} label="Username" />
+
+  </Grid>
+</Grid> */}
