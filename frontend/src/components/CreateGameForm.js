@@ -1,16 +1,50 @@
 import React from 'react'
 import '../StyleSheets/Title.css';
 import general from '../utils/general';
+import { Link } from "react-router-dom";
+
 
 class CreateGameForm extends React.Component {
     constructor(props) {
+
+      
       super(props);
-      this.state = {username: '', gameCreated: false, gameCode: "", indToken: ""};
+
+      console.log(props)
+      if(props.token) {
+        this.state = {username: props.token.split('_')[1], gameCreated: true, gameCode: props.token.split('_')[0], indToken:  props.token};
+
+      } else {
+        this.state = {username: '', gameCreated: false, gameCode: "", indToken: ""};
+
+      }
+
+      
   
       this.handleChange = this.handleChange.bind(this);
+      this.handleGuessLink = this.handleGuessLink.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    componentWillReceiveProps(props) {
+      
+      if(props.token) {
+        this.setState({username: props.token.split('_')[1], gameCreated: true, gameCode: props.token.split('_')[0], indToken:  props.token});
+      }
+    }
   
+    handleGuessLink(e) {
+
+        general.startGuessGame(this.state.indToken)
+        .then(data => {
+            if(!data.isValid) {
+                alert(data.validMsg);
+                e.preventDefault();
+
+            }
+        })
+        console.log("hey");
+    }
     handleChange(event) {
       this.setState({username: event.target.value});
     }
@@ -26,6 +60,8 @@ class CreateGameForm extends React.Component {
 
         this.setState({gameCreated: true});    
     }
+
+
   
     render() {
 
@@ -41,7 +77,14 @@ class CreateGameForm extends React.Component {
               );
         } else {
             return (
-                <div className="textLARG"> Your game code is {this.state.gameCode} </div>
+                <div>
+                    <div className="textLARG"> Your game code is {this.state.gameCode} </div>
+                    <Link to={{pathname: "/guessNumberGame",token:this.state.indToken}} className="userContainer" onClick={(e) => this.handleGuessLink(e)}>
+                        <div className="textLARG">Start Guess Soju Bottle No. Game </div>       
+                    </Link>
+
+                </div>
+                
               );
         }
       

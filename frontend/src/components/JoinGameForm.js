@@ -5,7 +5,7 @@ import general from '../utils/general';
 class JoinGameForm extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {username: '', gameCode: "", indToken: ""};
+      this.state = {username: '', gameCode: "", indToken: "", gameCreated: false};
   
       this.handleUsernameChange = this.handleUsernameChange.bind(this);
       this.handleCodeChange = this.handleCodeChange.bind(this);
@@ -20,6 +20,13 @@ class JoinGameForm extends React.Component {
     handleCodeChange(event) {
         this.setState({gameCode: event.target.value});
       }
+
+    componentWillReceiveProps(props) {
+      
+        if(props.token) {
+          this.setState({username: props.token.split('_')[1], gameCreated: true, gameCode: props.token.split('_')[0], indToken:  props.token});
+        }
+    }
   
     handleSubmit(event) {
         event.preventDefault();

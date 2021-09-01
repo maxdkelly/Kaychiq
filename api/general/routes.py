@@ -3,10 +3,13 @@ from api.model import Game, User
 from app import db
 import random
 import string
+import glob
 
-general = Blueprint('gemeral', __name__)
+general = Blueprint('general', __name__)
 
+def get_soju():
 
+    return [x.split("/")[-1].split(".")[0]  for x in glob.glob("./frontend/src/soju/*")]
 
 @general.route("/api/test", methods=['POST','GET'])
 def test():
@@ -22,6 +25,7 @@ def create_game():
     content = request.json 
     print(content)
 
+    print(get_soju())
     if "username" not in content:
         return jsonify({
             "isValid": False,
@@ -30,6 +34,7 @@ def create_game():
             "individualToken": None
         })
 
+    soju = random.choice(get_soju())
     username = content["username"]
     tokenUnique = False
     gameToken = ""
@@ -40,7 +45,7 @@ def create_game():
         tokenUnique = not bool(Game.query.filter_by(code = gameToken).first())
     print(gameToken)
     game = Game(code = gameToken)
-    user = User(token = gameToken + "_" + username, code = gameToken, name = username)
+    user = User(token = gameToken + "_" + username, code = gameToken, name = username, host = True, soju = soju)
 
     db.session.add(game)
     db.session.add(user)
@@ -71,9 +76,17 @@ def join_game():
     name = content["username"]
 
     if not bool(Game.query.filter_by(code = code).first()):
-         return jsonify({
+        return jsonify({
             "isValid": False,
             "validMsg":"Incorrect Game Token",
+            "gameToken": None,
+            "individualToken": None
+        })
+
+    if User.query.filter_by(code = code).count() > 8:
+        return jsonify({
+            "isValid": False,
+            "validMsg":"Too many players in Game (Max 8)",
             "gameToken": None,
             "individualToken": None
         })
@@ -87,7 +100,11 @@ def join_game():
             "individualToken": None
         })
 
-    user = User(token = token, code = code, name = name)
+    sojus = get_soju()
+    for user in User.query.filter_by(code = code):
+        sojus.remove(user.soju)
+
+    user = User(token = token, code = code, name = name, soju = random.choice(sojus))
 
     db.session.add(user)
     db.session.commit()
@@ -113,7 +130,8 @@ def check_game():
             "validMsg":"Malformed user information",
             "gameStarted": False,
             "gameLink": None,
-            "players": []
+            "players": [],
+            "sojuMap": {}
         })
 
     if content['token'] == "":
@@ -122,7 +140,8 @@ def check_game():
             "validMsg":"Malformed user information",
             "gameStarted": False,
             "gameLink": None,
-            "players": []
+            "players": [],
+            "sojuMap": {}
         })
 
     token = content["token"]
@@ -134,20 +153,62 @@ def check_game():
             "validMsg":"Malformed user information",
             "gameStarted": False,
             "gameLink": None,
-            "players": []
+            "players": [],
+            "sojuMap": {}
         })
 
     print(user.code)
     players = []
+    sojuMap = {}
     for user in User.query.filter_by(code = user.code):
         players.append(user.name)
+        sojuMap[user.name] = user.soju
 
+    game = Game.query.filter_by(code = user.code).first()
 
     return jsonify({
         "isValid": True,
         "validMsg":"Malformed user information",
-        "gameStarted": False,
-        "gameLink": None,
-        "players": players
+        "gameStarted": game.started,
+        "gameLink": game.link,
+        "players": players,
+        "sojuMap": sojuMap
     })
 
+
+@general.route("/api/isHost", methods=['POST'])
+def isHost():
+
+    content = request.json 
+    print(content)
+
+    if "token" not in content:
+        return jsonify({
+            "isValid": False,
+            "validMsg":"Malformed user information",
+            "isHost": None
+        })
+
+    if content['token'] == "":
+        return jsonify({
+            "isValid": False,
+            "validMsg":"Malformed user information",
+            "isHost": None
+        })
+
+    token = content["token"]
+    user = User.query.filter_by(token = token).first()   
+
+    if not user:
+        return jsonify({
+            "isValid": False,
+            "validMsg":"Incorrect Token",
+            "isHost": None
+        })
+
+
+    return jsonify({
+        "isValid": False,
+            "validMsg":"Malformed user information",
+            "isHost": user.host
+    })

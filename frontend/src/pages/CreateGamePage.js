@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router";
 
 import Header from "../components/Header"
@@ -9,6 +9,13 @@ export const CreateGamePage = props =>{
   
     const [token, setToken] = useState("");
 
+    useEffect(() => {
+
+        if(props.location.token) {
+            setToken(props.location.token);
+        }
+      }, []);
+
     const handleToken = token => {
         console.log(token);
         setToken(token);
@@ -18,7 +25,7 @@ export const CreateGamePage = props =>{
         <body>
             <Header/> 
             < div className="homeContainer" > 
-                <CreateGameForm passToken={handleToken}/>
+                <CreateGameForm passToken={handleToken} token={token}/>
             </div>
 
             < div className="homeContainer" > 

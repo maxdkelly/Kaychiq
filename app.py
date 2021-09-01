@@ -22,6 +22,8 @@ if not path.exists('./app.db'):
         pass
 
 from api.general.routes import general
+from api.guessGame.routes import guessGame
+app.register_blueprint(guessGame)
 app.register_blueprint(general)
 
 @app.route('/')

@@ -7,6 +7,7 @@ import  {LobbyPage}  from "./pages/LobbyPage";
 import  {CreateGamePage}  from "./pages/CreateGamePage";
 
 import  {GuessNumberGame}  from "./pages/GuessNumberGame";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 

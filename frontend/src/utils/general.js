@@ -42,7 +42,34 @@ class General {
           console.log(err);
         })
 
-  }
+    }
+
+    startGuessGame(token) {
+        return axios.post('/api/startGuessGame', {
+            token: token
+          })
+            .then(res => {
+                  return res.data;
+            })
+            .catch(err => {
+              console.log(err);
+            })
+    
+        }
+
+    isHost(token) {
+      return axios.post('/api/isHost', {
+          token: token
+        })
+          .then(res => {
+                return res.data;
+          })
+          .catch(err => {
+            console.log(err);
+          })
+  
+      }
+  
 
   
 
