@@ -47,7 +47,7 @@ def startGuessGame():
     db.session.commit()
 
     num = random.randint(0, 99)
-    num = 50
+    # num = 50
     guessGame = GuessGame(code = code, number = num, lowestGuess = 0, highestGuess = 99, turnNum = 0, numPlayers = len(players))
     db.session.add(guessGame)
     db.session.commit()
