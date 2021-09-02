@@ -26,22 +26,39 @@ import strawberry from '../soju/strawberry.png'
 import watermelon from '../soju/watermelon.png'
 import lychee from '../soju/lychee.png'
 
+
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height
+  };
+}
+
+function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+}
+
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
     }, 
     layout: {
-      width: 'auto',
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-        width: "auto",
-        maxWidth: "70%",
-        marginLeft: 'auto',
-        marginRight: 'auto',
-      },
-      
-     
+      width: 'fit-content',
+      maxWidth: "90%",
+      marginLeft: 'auto',
+      marginRight: 'auto',       
     },
     paper: {
       marginTop: theme.spacing(3),
@@ -91,6 +108,8 @@ export const GuessGameView = props => {
     const [checked, setChecked] = useState(false);
     const [fadeChecked, setFadeChecked] = useState(false);
 
+    const { height, width } = useWindowDimensions();
+
     const [sojuToObj, setSojuToObj] = useState({
         'apple': apple,
         'grapefruit': grapefruit,
@@ -134,6 +153,29 @@ export const GuessGameView = props => {
       setCurrGuess(props.currGuess);
 
     }, [props.currGuess])
+
+    const getIconSize = relSize => {
+
+      return Math.max(relSize/2.3, relSize * width/1920 )
+
+    }
+
+    const getFontSize = () => {
+
+        if(width > 1400) {
+            return "medium"
+        }
+
+        if(width > 1000) {
+            return "small"
+        }
+
+        if(width > 700) {
+            return "x-small"
+        }
+
+        return "xx-small"
+    }
     
     return (
         <div>
@@ -147,17 +189,32 @@ export const GuessGameView = props => {
                   <div class ="mutedText" >
                       Lowest Guess: {lowest}<br/> Highest Guess: {highest}
                   </div>
-                  <Grid container  spacing={2}>
+                  <Grid container  
+                    spacing={2} 
+                    alignItems="center"
+                    justifyContent="center" 
+                    justify = "center"
+                  >
                     {players.map((player) => (
                               
                       <Card className="cardContainer" style = {currPlayer == player ? {"background-color":"#b1b1af"} :  {"background-color":"#dcdcdc"}} raised = {currPlayer == player ? true : false} >
-                          <CardContent className = "cardContentContainer"  >
-                              <img src={sojuToObj[sojuMap[player]]} width="80" height="120"/>         
-                                  <div style = {currPlayer == player ? {"text-align": "center", "font-weight": "770"} : {"text-align": "center", "font-weight": "bold"}} >
-                                      {player}
-                                  </div>
-                              
-                          
+                          <CardContent className = "cardContentContainer"  alignItems="center">
+                            <img src={sojuToObj[sojuMap[player]]} width={getIconSize(80)} height={getIconSize(120)} />         
+
+                            <div style = {{
+                                "max-width": getIconSize(80),
+                                "font-size": getFontSize(),
+                                "font-weight": "bold",
+                                "text-decoration": "none",
+                                "text-align" : "center", 
+                                "vertical-align": "middle",
+                                "color": "#293242"
+                            }}>
+
+
+                                {player}
+                            </div>  
+                                    
                           </CardContent>
                       </Card>
                           

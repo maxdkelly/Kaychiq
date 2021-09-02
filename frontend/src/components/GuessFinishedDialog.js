@@ -93,34 +93,53 @@ export const GuessFinishedDialog = props => {
         
     }
     return (
-      <Dialog open={show} aria-labelledby="simple-dialog-title" fullWidth maxWidth="xs" style = {{"color": "#626f87"}}>
+      <Dialog open={show} aria-labelledby="simple-dialog-title" fullWidth maxWidth="xs" style = {{"color": "#D2D2CF"}}>
         <DialogTitle id="simple-dialog-title" style = {{"background-color": "#626f87"}}>
         <div className="medButtonText">Drinking Time!</div> 
         </DialogTitle>
 
-        <List>
+        <div style = {{"background-color": "#D2D2CF",  "vertical-align": "middle",
+                                "color": "#293242"}}>
+
+          <List>
       
-            <ListItem>
-                <div className = "dialogText" >
-                    {loser} guessed the correct number ({num}) and must drink!
-                </div> 
+              <ListItem>
+                  <div className = "dialogText" >
+                      {loser} guessed the correct number ({num}) and must drink!
+                  </div> 
+              
+              </ListItem>
             
-            </ListItem>
+
+
           
+          </List>
 
+          <img style = {{
+            "display" : "block",
+            "align-self":"center", 
+            "margin-bottom":"1rem",
+            "margin-left": "auto",
+            "margin-right": "auto",
 
+          }} src={gif}/>  
+          <Button style = {host ? {"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
+            "align-self":"center", 
+            "margin-bottom":"1rem",
+            "margin-left": "auto",
+            "margin-right": "auto"} : 
+              {"display":"none"}}
+                  variant="contained"
+                  color="primary"
+                  onClick={e => handleBackToLobby(e)} 
+                >
+                    <div className="smallButtonText">Back To Lobby</div> 
+          </Button>
+          
+          
+          
+        </div> 
         
-        </List>
-
-        <img style = {{"align-self":"center", "margin-bottom":"1rem"}} src={gif}/>  
-        <Button style = {host ? {"background-color": "#3D3D90","align-self":"center", "max-width": "90%", "margin-bottom":"0.4rem"} : 
-            {"display":"none"}}
-                variant="contained"
-                color="primary"
-                onClick={e => handleBackToLobby(e)} 
-              >
-                  <div className="smallButtonText">Back To Lobby</div> 
-        </Button>
          
         
        

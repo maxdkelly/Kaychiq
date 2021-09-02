@@ -22,6 +22,28 @@ import lychee from '../soju/lychee.png'
 
 
 
+function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height
+    };
+  }
+  
+  function useWindowDimensions() {
+    const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  
+    useEffect(() => {
+      function handleResize() {
+        setWindowDimensions(getWindowDimensions());
+      }
+  
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+  
+    return windowDimensions;
+  }
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,6 +56,23 @@ const useStyles = makeStyles((theme) => ({
     control: {
       padding: theme.spacing(2),
     },
+    image: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'contain'
+    },
+    cardText: {
+        "max-width": "80",
+        "font-size": "medium",
+        "font-weight": "bold",
+        "text-decoration": "none",
+        "text-align" : "center",
+        "word-wrap": "break-word",
+    
+        "margin": "0.1rem",
+        "color": "#293242"
+    }
   }));
 
 export const LobbyView = props => {
@@ -44,6 +83,8 @@ export const LobbyView = props => {
 
     const [spacing, setSpacing] = React.useState(2);
     const classes = useStyles();
+    
+    const { height, width } = useWindowDimensions();
 
     const [sojuMap, setSojuMap] = useState({});
     const [sojuToObj, setSojuToObj] = useState({
@@ -84,6 +125,8 @@ export const LobbyView = props => {
         return apple;
     }
     const checkGame = () => {
+
+        console.log(width)
        
         general.checkGameStarted(token)
             .then(data => {
@@ -101,6 +144,29 @@ export const LobbyView = props => {
                 
             })
     };
+
+    const getIconSize = relSize => {
+
+        return Math.max(relSize/2.3, relSize * width/1920 )
+
+    }
+
+    const getFontSize = () => {
+
+        if(width > 1400) {
+            return "medium"
+        }
+
+        if(width > 1000) {
+            return "small"
+        }
+
+        if(width > 700) {
+            return "x-small"
+        }
+
+        return "xx-small"
+    }
 
     function useInterval(callback, delay) {
         const savedCallback = useRef();
@@ -138,19 +204,27 @@ export const LobbyView = props => {
                         justifyContent="center" 
                         justify = "center" 
                         alignItems="center"
-                        spacing={spacing}
+                        spacing={5}
                     >
                         {players.map((player) => (
                             
-                                <Card className="cardContainer"  alignItems="center">
+                                <Card className = "cardContainer">
                                     <CardContent className = "cardContentContainer"  alignItems="center">
-                                        <img src={sojuToObj[sojuMap[player]]} width="80" height="120"/>         
+                                        <img src={sojuToObj[sojuMap[player]]} width={getIconSize(80)} height={getIconSize(120)} />         
 
-                                        <Typography component="div"  justify = "center"  alignItems="center">
-                                            <Box fontWeight="fontWeightBold" m={1} style ={{"text-align": "center"}} >
-                                                {player}
-                                            </Box>
-                                        </Typography>
+                                        <div style = {{
+                                            "max-width": getIconSize(80),
+                                            "font-size": getFontSize(),
+                                            "font-weight": "bold",
+                                            "text-decoration": "none",
+                                            "text-align" : "center", 
+                                            "vertical-align": "middle",
+                                            "color": "#293242"
+                                        }}>
+
+
+                                            {player}
+                                        </div>  
                                     
                                     </CardContent>
                                 </Card>
