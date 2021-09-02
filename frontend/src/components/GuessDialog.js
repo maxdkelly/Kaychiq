@@ -34,6 +34,8 @@ import Dialog from '@material-ui/core/Dialog';
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
+import GuessGameRules from './GuessGameRules';
+
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -53,6 +55,12 @@ export const GuessDialog = props => {
 
     const [token, setToken] = useState(props.token);
     const [show, setShow] = useState(props.show);
+    const [rulesShow, setRulesShow] = useState(false);
+
+
+    
+    const handleRulesClose = () => setRulesShow(false);
+    
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -95,7 +103,32 @@ export const GuessDialog = props => {
     return (
       <Dialog open={show} aria-labelledby="simple-dialog-title" fullWidth maxWidth="xs" style = {{"color": "#626f87"}}>
         <DialogTitle id="simple-dialog-title" style = {{"background-color": "#626f87"}}>
-        <div className="medButtonText">Enter your Guess</div> 
+          
+        <Grid style={{"max-height":"10%"}} container spacing={3} justifyContent = "flex-end">
+                  <Grid item xs style = {{"max-width" : "80%"}}>
+                   <div className="medButtonText">Enter your Guess</div>
+                  </Grid>
+
+                  <Grid item xs style = {{"max-width" : "20%"}}>
+                    <Button variant="contained" color="primary" style = 
+                          {{"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
+                          "align-self":"center", 
+                          "margin-bottom":"1rem",
+                          "margin-left": "auto",
+                          "margin-right": "auto"}} 
+                          onClick = {() => setRulesShow(true)}
+                         
+                        >
+                              <div className = "smallText">
+                               Rules
+
+                              </div>
+                          
+                         
+                        </Button>
+                    </Grid>
+                  </Grid>
+        
         </DialogTitle>
 
         <List>
@@ -128,7 +161,7 @@ export const GuessDialog = props => {
                   <div className="smallButtonText">Submit</div> 
         </Button>
         
-
+        <GuessGameRules show = {rulesShow} handleClose = {handleRulesClose}/>
     </Dialog>
         
     );

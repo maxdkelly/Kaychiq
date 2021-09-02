@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import {HashRouter , Route, Switch, Redirect } from "react-router-dom";
+// import {  browserHistory, Router, Route, IndexRoute } from 'react-router'
+// import { browserHistory } from 'history'
 import './index.css';
 import { HomePage } from "./pages/HomePage";
 import  {LobbyPage}  from "./pages/LobbyPage";
@@ -14,7 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   return (
     <div className="App">
-      <Switch>
+        <Switch >
         <Route exact path="/" component={HomePage} />
         <Route exact path="/lobby" component={LobbyPage} />
         <Route exact path="/createGame" component={CreateGamePage} />
@@ -29,8 +31,8 @@ function App() {
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
-  <BrowserRouter>
+  <HashRouter>
     <App />
-  </BrowserRouter>,
+  </HashRouter>,
   rootElement
 );

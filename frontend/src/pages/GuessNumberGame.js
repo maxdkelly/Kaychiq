@@ -44,9 +44,18 @@ export const GuessNumberGame = props => {
     const [sojuMap, setSojuMap] = useState({});
     const [currPlayer, setCurrPlayer] = useState("");
 
-    const handleClose = () => setShow(false);
+    const [recentlyClosed, setRecClosed] = useState(false);
+   
     const handleShow = () => setShow(true);
 
+    const handleClose = () => {
+
+
+        setShow(false);
+        setRecClosed(true);
+        setTimeout(() => { setRecClosed(false);}, 4000);
+        
+    }
 
     useEffect(() => {
 
@@ -98,7 +107,7 @@ export const GuessNumberGame = props => {
                     setCurrPlayer(data.currPlayer);
 
                     setSojuMap(data.sojuMap);
-                    if(data.yourTurn && !data.gameOver) {
+                    if(data.yourTurn && !data.gameOver && !recentlyClosed) {
                         console.log("hey");
                         handleShow();
                     }
@@ -151,7 +160,7 @@ export const GuessNumberGame = props => {
             <Header/> 
             
 
-            <GuessGameView players = {players} sojuMap = {sojuMap} currPlayer = {currPlayer} highest = {highest} lowest = {lowest} currGuess = {currGuess} over = {loserShow}/>
+            <GuessGameView players = {players} sojuMap = {sojuMap} currPlayer = {currPlayer} highest = {highest} lowest = {lowest} currGuess = {currGuess} over = {loserShow} show={show}/>
             <GuessDialog show = {show} token = {token} highest = {highest} lowest = {lowest} setClosed = {handleClose}/>
             <GuessFinishedDialog show = {loserShow} loser = {loser} num = {currGuess[0]} host = {host} token = {token} />
 

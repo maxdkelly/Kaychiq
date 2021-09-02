@@ -13,7 +13,7 @@ class JoinGameForm extends React.Component {
     constructor(props) {
       super(props);
       
-      this.state = {username: '', gameCode: "", indToken: "", gameCreated: false};
+      this.state = {username: '', gameCode: "", indToken: "", gameCreated: false, errorMsg : ""};
   
       this.handleUsernameChange = this.handleUsernameChange.bind(this);
       this.handleCodeChange = this.handleCodeChange.bind(this);
@@ -32,7 +32,7 @@ class JoinGameForm extends React.Component {
     componentWillReceiveProps(props) {
       
         if(props.token) {
-          this.setState({username: props.token.split('_')[1], gameCreated: true, gameCode: props.token.split('_')[0], indToken:  props.token});
+          this.setState({username: props.token.split('_')[1], gameCreated: true, gameCode: props.token.split('_')[0], indToken:  props.token, errorMsg : ""});
         }
     }
   
@@ -48,7 +48,7 @@ class JoinGameForm extends React.Component {
                 this.setState({gameCreated: true});    
 
             } else {
-                alert(data.validMsg)
+              this.setState({errorMsg: data.validMsg});
             }
             
         })
@@ -70,7 +70,14 @@ class JoinGameForm extends React.Component {
                 </Typography>
                 <Grid container spacing={3}>
                   <Grid item xs={12}>
-                    <TextField id="standard-basic" value={this.state.username} onChange={this.handleUsernameChange} label="Username" />
+                  <TextField 
+                        id={this.state.errorMsg == "" ? "standard-basic" : "standard-error-helper-text"}
+                        value={this.state.username} 
+                        onChange={this.handleUsernameChange} 
+                        helperText={this.state.errorMsg}
+                        label="Username" 
+                        />
+                    {/* <TextField id="standard-basic" value={this.state.username} onChange={this.handleUsernameChange} label="Username" /> */}
 
                   </Grid>
 

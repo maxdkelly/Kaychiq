@@ -65,7 +65,15 @@ def create_game():
     if not username:
         return jsonify({
             "isValid": False,
-            "validMsg":"Enter Non Empty Username",
+            "validMsg":"Please Enter a Non Empty Username",
+            "gameToken": None,
+            "individualToken": None
+        })
+
+    if len(username) > 10:
+        return jsonify({
+            "isValid": False,
+            "validMsg":"Please Enter a Username of 10 or less characters",
             "gameToken": None,
             "individualToken": None
         })
@@ -112,6 +120,14 @@ def join_game():
         return jsonify({
             "isValid": False,
             "validMsg":"Enter Non Empty Username",
+            "gameToken": None,
+            "individualToken": None
+        })
+
+    if len(name) > 10:
+        return jsonify({
+            "isValid": False,
+            "validMsg":"Please Enter a Username of 10 or less characters",
             "gameToken": None,
             "individualToken": None
         })

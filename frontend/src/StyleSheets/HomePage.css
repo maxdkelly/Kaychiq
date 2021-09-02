@@ -100,6 +100,13 @@ body {
     margin-bottom: 1rem;
 }
 
+.smallText{
+    color: #ced0d4;;
+    font-weight: 750;
+    font-size: xx-small;
+    text-decoration: none;
+}
+
 
 .textSMOL{
     font-size: large;

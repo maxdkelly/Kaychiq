@@ -9,12 +9,15 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
 import Slide from '@material-ui/core/Slide';
 import Fade from '@material-ui/core/Fade';
 
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+
+import GuessGameRules from './GuessGameRules';
 
 
 import apple from '../soju/apple.png'
@@ -96,6 +99,9 @@ export const GuessGameView = props => {
   
     const [players, setPlayers] = useState(props.players);
     const classes = useStyles();
+    const [rulesShow, setRulesShow] = useState(false);
+    const handleRulesClose = () => setRulesShow(false);
+
 
     const [currPlayer, setCurrPlayer] = useState(props.currPlayer);
     const [highest, setHighest] = useState(props.highest);
@@ -104,6 +110,7 @@ export const GuessGameView = props => {
     const [sojuMap, setSojuMap] = useState({});
 
     const [over, setOver] = useState(props.over);
+    const [show, setShow] = useState(props.show)
 
     const [checked, setChecked] = useState(false);
     const [fadeChecked, setFadeChecked] = useState(false);
@@ -132,11 +139,12 @@ export const GuessGameView = props => {
         setCurrGuess(props.currGuess);
 
         setOver(props.over)
+        setShow(props.show);
         
 
         console.log(players)
 
-      }, [props.players, props.sojuMap, props.currPlayer, props.highest, props.lowest, props.over]);
+      }, [props.players, props.sojuMap, props.currPlayer, props.highest, props.lowest, props.over, props.show]);
 
     useEffect(() => {
 
@@ -177,11 +185,49 @@ export const GuessGameView = props => {
         return "xx-small"
     }
     
+    const getCurrFontSize = () => {
+
+      if(width > 1600) {
+          return "medium"
+      }
+
+      if(width > 1400) {
+          return "small"
+      }
+
+      if(width > 900) {
+          return "x-small"
+      }
+
+      return "xx-small"
+  }
     return (
         <div>
 
             <main className={players.length == 0 ? "hidden" : classes.layout}>
                 <Paper className={players.length == 0 ? "hidden" : classes.paper}> 
+
+                <Grid container spacing={3} justifyContent = "flex-end">
+                  <Grid item xs style = {{"max-width" : "25%"}}>
+                    <Button variant="contained" color="primary" style = 
+                          {{"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
+                          "align-self":"center", 
+                          "margin-bottom":"1rem",
+                          "margin-left": "auto",
+                          "margin-right": "auto"}} 
+                          onClick = {() => setRulesShow(true)}
+                         
+                        >
+                              <div className = "smallText">
+                               Rules
+
+                              </div>
+                          
+                         
+                        </Button>
+                    </Grid>
+                  </Grid>
+
                   <div class ="paperTitleText" >
                       Guess The Soju Bottle No.
                   </div>
@@ -196,27 +242,64 @@ export const GuessGameView = props => {
                     justify = "center"
                   >
                     {players.map((player) => (
-                              
-                      <Card className="cardContainer" style = {currPlayer == player ? {"background-color":"#b1b1af"} :  {"background-color":"#dcdcdc"}} raised = {currPlayer == player ? true : false} >
-                          <CardContent className = "cardContentContainer"  alignItems="center">
-                            <img src={sojuToObj[sojuMap[player]]} width={getIconSize(80)} height={getIconSize(120)} />         
+                        
+                      <div>
+                          <Card className="cardContainer" style = {currPlayer == player ? {"background-color":"#b1b1af"} :  {"background-color":"#dcdcdc"}} raised = {currPlayer == player ? true : false} >
+                            <CardContent className = "cardContentContainer"  alignItems="center">
+                              <img src={sojuToObj[sojuMap[player]]} width={getIconSize(80)} height={getIconSize(120)} />         
 
-                            <div style = {{
-                                "max-width": getIconSize(80),
-                                "font-size": getFontSize(),
-                                "font-weight": "bold",
-                                "text-decoration": "none",
-                                "text-align" : "center", 
-                                "vertical-align": "middle",
-                                "color": "#293242"
-                            }}>
+                              <div style = {{
+                                  "max-width": getIconSize(80),
+                                  "font-size": getFontSize(),
+                                  "font-weight": "bold",
+                                  "text-decoration": "none",
+                                  "text-align" : "center", 
+                                  "vertical-align": "middle",
+                                  "color": "#293242",
+                                  "word-wrap": "break-word",
+                                  "line-height": "110%"
+                              }}>
 
 
-                                {player}
-                            </div>  
-                                    
-                          </CardContent>
-                      </Card>
+                                  {player}
+                              </div>  
+                                      
+                            </CardContent>
+                        </Card>
+
+                        <Grid container direction="column" alignItems="center" spacing={0.1}  style = {player == currPlayer ? {
+                                 
+                                 "grid-gap": "0px 1px" } : {"display":"none"}}>
+                          <Grid item>
+                            <ArrowDropUpIcon/>
+                          </Grid>
+                          <Grid item>
+
+                          <div style = {player == currPlayer ? {
+                                  "max-width": getIconSize(80),
+                                  "font-size": getCurrFontSize(),
+                                  "font-weight": "bold",
+                                  "text-decoration": "none",
+                                  "text-align" : "center", 
+                                  "vertical-align": "middle",
+                                  "color": "#293242",
+                                  "word-wrap": "break-word",
+                                  "line-height": "110%"
+                              } : {"display":"none"}}>
+
+
+                                Current player
+                              </div>  
+                           
+                          </Grid>
+                        </Grid>
+
+                      
+
+                        
+
+                      </div>
+                      
                           
                       ))}
                     
@@ -242,6 +325,7 @@ export const GuessGameView = props => {
            
                 
             
+            <GuessGameRules show = {rulesShow} handleClose = {handleRulesClose}/>
 
             
         </div>

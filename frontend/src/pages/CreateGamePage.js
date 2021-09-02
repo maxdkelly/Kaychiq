@@ -70,7 +70,7 @@ export const CreateGamePage = props =>{
                     <Grid container spacing={3}   paddingBottom = '5rem'>
 
                         <Grid item xs={12}>
-                            {/* <div className="titleText">Your game code is {this.state.gameCode} </div>  */}
+                          
                             <div className="titleText">Lobby </div>  
 
                         </Grid>

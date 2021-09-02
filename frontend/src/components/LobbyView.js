@@ -103,7 +103,13 @@ export const LobbyView = props => {
         if (props.token !== token) {
             setToken(props.token);        
         }
+       
     });
+
+    useEffect(() => {
+        checkGame();
+    }
+    ,[])
 
     
     const startGame = link => {
@@ -212,7 +218,8 @@ export const LobbyView = props => {
                                 "text-decoration": "none",
                                 "text-align" : "center", 
                                 "vertical-align": "middle",
-                                "color": "#293242"
+                                "color": "#293242",
+                                "word-wrap": "break-word"
                             }}>
 
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import '../StyleSheets/Title.css';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 import AppBar from '@material-ui/core/AppBar';
