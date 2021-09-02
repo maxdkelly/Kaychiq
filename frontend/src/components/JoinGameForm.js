@@ -2,10 +2,18 @@ import React from 'react'
 import '../StyleSheets/Title.css';
 import general from '../utils/general';
 
+import TextField from '@material-ui/core/TextField';
+import FormLabel from '@material-ui/core/FormLabel';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
 class JoinGameForm extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {username: '', gameCode: "", indToken: ""};
+      
+      this.state = {username: '', gameCode: "", indToken: "", gameCreated: false, errorMsg : ""};
   
       this.handleUsernameChange = this.handleUsernameChange.bind(this);
       this.handleCodeChange = this.handleCodeChange.bind(this);
@@ -20,6 +28,13 @@ class JoinGameForm extends React.Component {
     handleCodeChange(event) {
         this.setState({gameCode: event.target.value});
       }
+
+    componentWillReceiveProps(props) {
+      
+        if(props.token) {
+          this.setState({username: props.token.split('_')[1], gameCreated: true, gameCode: props.token.split('_')[0], indToken:  props.token, errorMsg : ""});
+        }
+    }
   
     handleSubmit(event) {
         event.preventDefault();
@@ -33,7 +48,7 @@ class JoinGameForm extends React.Component {
                 this.setState({gameCreated: true});    
 
             } else {
-                alert(data.validMsg)
+              this.setState({errorMsg: data.validMsg});
             }
             
         })
@@ -44,22 +59,57 @@ class JoinGameForm extends React.Component {
     render() {
 
         if(!this.state.gameCreated) {
+
+          
             return (
-                <form onSubmit={this.handleSubmit}>
-                  <label>
-                    Enter your Username:
-                    <input type="text" value={this.state.username} onChange={this.handleUsernameChange} />
-                  </label>
-                  <label>
-                    Enter your Game Code:
-                    <input type="text" value={this.state.gameCode} onChange={this.handleCodeChange} />
-                  </label>
-                  <input type="submit" value="Submit" />
-                </form>
+
+              <React.Fragment  >
+
+                <Typography variant="h6" gutterBottom>
+                Join Game
+                </Typography>
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                  <TextField 
+                        id={this.state.errorMsg == "" ? "standard-basic" : "standard-error-helper-text"}
+                        value={this.state.username} 
+                        onChange={this.handleUsernameChange} 
+                        helperText={this.state.errorMsg}
+                        label="Username" 
+                        />
+                    {/* <TextField id="standard-basic" value={this.state.username} onChange={this.handleUsernameChange} label="Username" /> */}
+
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField id="standard-basic" value={this.state.gameCode} onChange={this.handleCodeChange} label="Game Code" />
+
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.handleSubmit}   
+                    >
+                      Submit
+                    </Button>
+
+                  </Grid>
+                </Grid>
+
+              
+              </React.Fragment>      
               );
         } else {
             return (
-                <div className="textLARG"> You have joined game {this.state.gameCode} </div>
+
+              <React.Fragment  >
+
+                <div className="titleText"> You have joined game {this.state.gameCode}</div> 
+               
+              </React.Fragment> 
+                
               );
         }
       
