@@ -7,7 +7,9 @@ import LobbyView from "../components/LobbyView";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import purple from '@material-ui/core/colors/purple';
+import Grid from '@material-ui/core/Grid';
+import general from "../utils/general";
+
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -55,6 +57,10 @@ export const LobbyPage = props => {
         if(props.location.token) {
             setToken(props.location.token);
         }
+
+        else if(general.hasToken()) {
+            setToken(general.getToken());
+        }
       }, []);
 
     const handleToken = token => {
@@ -74,6 +80,15 @@ export const LobbyPage = props => {
             
             <main className={token ? classes.layout : "hidden"}>
                 <Paper className={classes.paper}> 
+                    <Grid container spacing={3}   paddingBottom = '5rem'>
+
+                        <Grid item xs={12}>
+                          
+                            <div className="titleText">Lobby </div>  
+
+                        </Grid>
+  
+                    </Grid>
                     <LobbyView token={token}/>
                 </Paper>
             </main>

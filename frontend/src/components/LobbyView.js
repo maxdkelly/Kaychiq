@@ -188,52 +188,43 @@ export const LobbyView = props => {
         }, [delay]);
       }
 
-    return (
-       
-            
-            <React.Fragment  >
-                <Grid container spacing={3}>
+    return (          
+        <Grid 
+            container 
+            justifyContent="center" 
+            justify = "center" 
+            alignItems="center"
+            spacing={5}
+            marginTop={50}
+            marginBottom={50}
+            paddingTop = '1.5rem'
+        >
+            {players.map((player) => (
+                
+                    <Card className = "cardContainer">
+                        <CardContent className = "cardContentContainer"  alignItems="center">
+                            <img src={sojuToObj[sojuMap[player]]} width={getIconSize(80)} height={getIconSize(120)} />         
 
-                  <Grid item xs={12}>
-                  <div className="titleText">Lobby </div> 
-
-                  </Grid>
-                  <Grid item>
-                    <Grid 
-                        container 
-                        justifyContent="center" 
-                        justify = "center" 
-                        alignItems="center"
-                        spacing={5}
-                    >
-                        {players.map((player) => (
-                            
-                                <Card className = "cardContainer">
-                                    <CardContent className = "cardContentContainer"  alignItems="center">
-                                        <img src={sojuToObj[sojuMap[player]]} width={getIconSize(80)} height={getIconSize(120)} />         
-
-                                        <div style = {{
-                                            "max-width": getIconSize(80),
-                                            "font-size": getFontSize(),
-                                            "font-weight": "bold",
-                                            "text-decoration": "none",
-                                            "text-align" : "center", 
-                                            "vertical-align": "middle",
-                                            "color": "#293242"
-                                        }}>
+                            <div style = {{
+                                "max-width": getIconSize(80),
+                                "font-size": getFontSize(),
+                                "font-weight": "bold",
+                                "text-decoration": "none",
+                                "text-align" : "center", 
+                                "vertical-align": "middle",
+                                "color": "#293242"
+                            }}>
 
 
-                                            {player}
-                                        </div>  
-                                    
-                                    </CardContent>
-                                </Card>
-                            
-                        ))}
-                    </Grid>
-                    </Grid>
-                </Grid>
-            </React.Fragment>
+                                {player}
+                            </div>  
+                        
+                        </CardContent>
+                    </Card>
+                
+            ))}
+        </Grid>
+         
       
         
     );

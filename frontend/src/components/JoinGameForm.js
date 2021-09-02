@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 class JoinGameForm extends React.Component {
     constructor(props) {
       super(props);
+      
       this.state = {username: '', gameCode: "", indToken: "", gameCreated: false};
   
       this.handleUsernameChange = this.handleUsernameChange.bind(this);

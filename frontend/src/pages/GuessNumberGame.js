@@ -52,6 +52,10 @@ export const GuessNumberGame = props => {
 
         if(token) {
             setName(token.split("_")[1])
+        } else if(general.hasToken()) {
+            setToken(general.getToken());
+        } else {
+            history.push("/");
         }
 
         general.isHost(token) 

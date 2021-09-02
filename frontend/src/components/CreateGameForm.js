@@ -19,8 +19,13 @@ class CreateGameForm extends React.Component {
       super(props);
 
       console.log(props)
+      
+      const cookies_token = general.getToken();
       if(props.token) {
         this.state = {username: props.token.split('_')[1], gameCreated: true, gameCode: props.token.split('_')[0], indToken:  props.token};
+
+      } else if(general.hasToken()) {
+        this.state = {username: cookies_token.split('_')[1], gameCreated: true, gameCode: cookies_token.split('_')[0], indToken:  cookies_token};
 
       } else {
         this.state = {username: '', gameCreated: false, gameCode: "", indToken: ""};
@@ -119,7 +124,13 @@ class CreateGameForm extends React.Component {
                         className="link" 
                         onClick={(e) => this.handleGuessLink(e)}
                       >
-                        <Button variant="contained" color="primary" disableElevation>
+                        <Button variant="contained" color="primary" style = 
+                          {{"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
+                          "align-self":"center", 
+                          "margin-bottom":"1rem",
+                          "margin-left": "auto",
+                          "margin-right": "auto"}} 
+                        >
                           <Typography variant="button">
                               Start Guess Bottle No. Game
                           </Typography>

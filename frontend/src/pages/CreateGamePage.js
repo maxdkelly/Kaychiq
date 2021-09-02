@@ -6,6 +6,8 @@ import CreateGameForm from "../components/CreateGameForm";
 import LobbyView from "../components/LobbyView";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
 import purple from '@material-ui/core/colors/purple';
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -20,12 +22,8 @@ const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(3),
       marginBottom: theme.spacing(3),
-      padding: theme.spacing(2),
-      [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-        marginTop: theme.spacing(6),
-        marginBottom: theme.spacing(6),
-        padding: theme.spacing(3),
-      },
+      padding: '1.5rem',
+      width: 'fit-content',
       backgroundColor: '#C4C3D0',
       borderRadius: 10
     },
@@ -68,7 +66,17 @@ export const CreateGamePage = props =>{
             </main>
 
             <main className={token ? classes.layout : "hidden"}>
-                <Paper className={classes.paper}> 
+                <Paper className={classes.paper}>
+                    <Grid container spacing={3}   paddingBottom = '5rem'>
+
+                        <Grid item xs={12}>
+                            {/* <div className="titleText">Your game code is {this.state.gameCode} </div>  */}
+                            <div className="titleText">Lobby </div>  
+
+                        </Grid>
+  
+                    </Grid>
+                    
                     <LobbyView token={token}/>
                 </Paper>
             </main>

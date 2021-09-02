@@ -6,6 +6,10 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
+import general from '../utils/general';
+
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -21,11 +25,20 @@ const useStyles = makeStyles((theme) =>
   }),
 );
 
+
+
 export const Header = props =>  {
 
   const history = useHistory();
 
   const classes = useStyles();
+
+  const handleClick = () => {
+    general.removeToken();
+    window.location.reload();
+  }
+
+
   return (
     // <div className="Title">
     //   <h1>Kaychiq</h1>
@@ -35,6 +48,10 @@ export const Header = props =>  {
         <Typography variant="h5" className={classes.title} onClick = {() => history.push("/")}>
           Kaychiq
         </Typography>
+        <div className = {general.hasToken() ? "" : "hidden"}>
+          <Button  color="inherit" onClick = {() => handleClick()}>Leave Game</Button>
+
+        </div>
       </Toolbar>
     </AppBar>
   )

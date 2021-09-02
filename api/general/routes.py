@@ -20,6 +20,15 @@ def test():
         "validMsg":"Test route works"
     })
 
+
+# @general.route("/api/deleteUser", methods=['POST'])
+# def test():
+
+#     return jsonify({
+#         "isValid":True,
+#         "validMsg":"Test route works"
+#     })
+
 @general.route("/api/createGame", methods=['POST'])
 def create_game():
 
