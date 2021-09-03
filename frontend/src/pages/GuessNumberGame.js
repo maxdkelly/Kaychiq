@@ -110,6 +110,8 @@ export const GuessNumberGame = props => {
                     if(data.yourTurn && !data.gameOver && !recentlyClosed) {
                         console.log("hey");
                         handleShow();
+                    } else {
+                        setShow(false);
                     }
 
                     if(data.gameOver) {

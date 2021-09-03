@@ -164,7 +164,7 @@ export const GuessGameView = props => {
 
     const getIconSize = relSize => {
 
-      return Math.max(relSize/2.3, relSize * width/1920 )
+      return Math.max(relSize/2.1, relSize * width/1920 )
 
     }
 
@@ -208,7 +208,7 @@ export const GuessGameView = props => {
                 <Paper className={players.length == 0 ? "hidden" : classes.paper}> 
 
                 <Grid container spacing={3} justifyContent = "flex-end">
-                  <Grid item xs style = {{"max-width" : "25%"}}>
+                  <Grid item xs style = {{"max-width" : "32%"}}>
                     <Button variant="contained" color="primary" style = 
                           {{"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
                           "align-self":"center", 
@@ -284,7 +284,8 @@ export const GuessGameView = props => {
                                   "vertical-align": "middle",
                                   "color": "#293242",
                                   "word-wrap": "break-word",
-                                  "line-height": "110%"
+                                  "line-height": "110%",
+                                  "padding-bottom" : "1rem"
                               } : {"display":"none"}}>
 
 
