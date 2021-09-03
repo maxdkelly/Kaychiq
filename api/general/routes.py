@@ -178,10 +178,10 @@ def join_game():
             "individualToken": None
         })
 
-    if User.query.filter_by(code = code).count() > 8:
+    if User.query.filter_by(code = code).count() > 10:
         return jsonify({
             "isValid": False,
-            "validMsg":"Too many players in Game (Max 8)",
+            "validMsg":"Too many players in Game (Max 10)",
             "gameToken": None,
             "individualToken": None
         })
@@ -198,6 +198,9 @@ def join_game():
     sojus = get_soju()
     for user in User.query.filter_by(code = code):
         sojus.remove(user.soju)
+
+    if not sojus:
+        sojus = get_soju()
 
     user = User(token = token, code = code, name = name, soju = random.choice(sojus))
 
