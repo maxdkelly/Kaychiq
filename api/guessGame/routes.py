@@ -6,6 +6,31 @@ import string
 
 guessGame = Blueprint('guessGame', __name__)
 
+def removeUser(code, turn):
+
+    game = GuessGame.query.filter_by(code = code).first()
+    
+    if not game:
+        return
+        
+    game.numPlayers -= 1
+
+    #makes sure turn order is maintained
+    if turn == game.turnNum:
+        if game.turnNum + 1 == game.numPlayers:
+            game.turnNum = 0
+    elif turn < game.turnNum:
+        game.turnNum -= 1
+
+
+    db.session.commit()
+
+    for user in User.query.filter_by(code = code):
+        if user.turn > turn:
+            user.turn -= 1
+            db.session.commit()
+
+
 
 
 @guessGame.route("/api/startGuessGame", methods=['POST'])
@@ -27,6 +52,7 @@ def startGuessGame():
 
 
     game = Game.query.filter_by(code = code).first()
+    
     game.started = True
     game.link = "guessNumberGame"
 

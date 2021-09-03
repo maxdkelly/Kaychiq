@@ -92,6 +92,19 @@ class General {
           })
   
       }
+
+     leaveGame(token) {
+      return axios.post('/api/leaveGame', {
+          token: token
+        })
+          .then(res => {
+                return res.data;
+          })
+          .catch(err => {
+            console.log(err);
+          })
+  
+      }
   
 
   

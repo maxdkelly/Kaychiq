@@ -77,7 +77,7 @@ export const GuessDialog = props => {
         setShow(props.show);
         setHighest(props.highest);
         setLowest(props.lowest);
-        
+
       
       }, [props.token, props.highest, props.lowest, props.show]);
 

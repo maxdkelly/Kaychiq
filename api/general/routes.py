@@ -1,5 +1,6 @@
 from flask import jsonify, Blueprint, request
 from api.model import Game, User, GuessGame
+from api.guessGame.routes import removeUser
 from app import db
 import random
 import string
@@ -7,6 +8,8 @@ import glob
 from datetime import timedelta, datetime
 
 general = Blueprint('general', __name__)
+
+removeUserFuncs = [removeUser]
 
 def get_soju():
 
@@ -24,17 +27,44 @@ def test():
 @general.route("/api/leaveGame", methods=['POST'])
 def leave_game():
 
-    if "username" not in content:
+    content = request.json 
+
+    if "token" not in content:
         return jsonify({
             "isValid": False,
             "validMsg":"Malformed user information",
-            "gameToken": None,
-            "individualToken": None
         })
+
+    token = content['token']
+
+    user = User.query.filter_by(token = token).first()
+
+    if not user:
+        return jsonify({
+            "isValid": False,
+            "validMsg":"Incorrect token",
+        })
+
+    for removeUserFunc in removeUserFuncs:
+        removeUserFunc(user.code, user.turn)
+
+    User.query.filter_by(token = token).delete()
+    print("deleted the user")
+
+    db.session.commit()
+
+
+    #get game code 
+
+    #if code is within guessGame
+    #run guessGame remove user function
+        #shift players index
+        #decreases numPlayers
+        #if its players turn , move next turn
 
     return jsonify({
         "isValid":True,
-        "validMsg":"Test route works"
+        "validMsg":"Deleted user"
     })
 
 @general.route("/api/createGame", methods=['POST'])

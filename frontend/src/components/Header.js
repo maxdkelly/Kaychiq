@@ -34,6 +34,11 @@ export const Header = props =>  {
   const classes = useStyles();
 
   const handleClick = () => {
+
+    
+    general.leaveGame(general.getToken());
+    console.log('hey')
+   
     general.removeToken();
     window.location.reload();
   }
