@@ -82,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
       paddingRight: '1rem'
     },
     logContainer: {
+      maxWidth: "90%",
       marginLeft: 'auto',
       marginRight: 'auto',
       width: 'fit-content',

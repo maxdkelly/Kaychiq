@@ -21,13 +21,21 @@ def test():
     })
 
 
-# @general.route("/api/deleteUser", methods=['POST'])
-# def test():
+@general.route("/api/leaveGame", methods=['POST'])
+def leave_game():
 
-#     return jsonify({
-#         "isValid":True,
-#         "validMsg":"Test route works"
-#     })
+    if "username" not in content:
+        return jsonify({
+            "isValid": False,
+            "validMsg":"Malformed user information",
+            "gameToken": None,
+            "individualToken": None
+        })
+
+    return jsonify({
+        "isValid":True,
+        "validMsg":"Test route works"
+    })
 
 @general.route("/api/createGame", methods=['POST'])
 def create_game():
