@@ -28,6 +28,7 @@ import plum from '../soju/plum.png'
 import strawberry from '../soju/strawberry.png'
 import watermelon from '../soju/watermelon.png'
 import lychee from '../soju/lychee.png'
+import chicken from '../soju/chicken.png'
 
 
 function getWindowDimensions() {
@@ -126,7 +127,8 @@ export const GuessGameView = props => {
         'plum': plum,
         'strawberry': strawberry,
         'watermelon': watermelon,
-        'lychee': lychee
+        'lychee': lychee,
+        'chicken': chicken
     })
 
     useEffect(() => {
