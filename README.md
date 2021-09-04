@@ -2,7 +2,7 @@
 
 ## Latest deployment
 
-Play the latest version of [Kaychiq] (https://kaychiq.herokuapp.com/)
+Play the latest version of [Kaychiq](https://kaychiq.herokuapp.com/)
 
 ## Setting up dev environment
 
