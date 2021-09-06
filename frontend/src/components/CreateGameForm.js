@@ -25,6 +25,7 @@ class CreateGameForm extends React.Component {
         this.state = {username: props.token.split('_')[1], gameCreated: true, gameCode: props.token.split('_')[0], indToken:  props.token, errorMsg : ""};
 
       } else if(general.hasToken()) {
+        
         this.state = {username: cookies_token.split('_')[1], gameCreated: true, gameCode: cookies_token.split('_')[0], indToken:  cookies_token, errorMsg : ""};
 
       } else {
@@ -58,6 +59,36 @@ class CreateGameForm extends React.Component {
         })
         console.log("hey");
     }
+
+    handleFlickLink(e) {
+
+      general.startFlickGame(this.state.indToken)
+      .then(data => {
+          if(!data.isValid) {
+              alert(data.validMsg);
+              e.preventDefault();
+
+          }
+      })
+      console.log("hey");
+
+
+    }
+
+
+    handleBlackoutLink(e) {
+
+      general.startBlackout(this.state.indToken)
+      .then(data => {
+          if(!data.isValid) {
+              alert(data.validMsg);
+              e.preventDefault();
+
+          }
+      })
+      console.log("hey");
+    }
+
     handleChange(event) {
       this.setState({username: event.target.value});
     }
@@ -174,6 +205,45 @@ class CreateGameForm extends React.Component {
                         </Button>
                       </Link>
 
+
+                      <Link 
+                        to={{pathname: "/flickGame",token:this.state.indToken}} 
+                        className="link" 
+                        onClick={(e) => this.handleFlickLink(e)}
+                      >
+                        <Button variant="contained" color="primary" style = 
+                          {{"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
+                          "align-self":"center", 
+                          "margin-bottom":"1rem",
+                          "margin-left": "auto",
+                          "margin-right": "auto"}} 
+                        >
+                          <Typography variant="button">
+                              Start Flick the Soju Bottle Cap Game
+                          </Typography>
+                         
+                        </Button>
+                      </Link>
+
+                      <Link 
+                        to={{pathname: "/blackout",token:this.state.indToken}} 
+                        className="link" 
+                        onClick={(e) => this.handleBlackoutLink(e)}
+                      >
+                        <Button variant="contained" color="primary" style = 
+                          {{"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
+                          "align-self":"center", 
+                          "margin-bottom":"1rem",
+                          "margin-left": "auto",
+                          "margin-right": "auto"}} 
+                        >
+                          <Typography variant="button">
+                              Start Blackout
+                          </Typography>
+                         
+                        </Button>
+                      </Link>
+
                   </Grid>
                 </Grid>
               </React.Fragment>
@@ -186,12 +256,3 @@ class CreateGameForm extends React.Component {
 
 export default CreateGameForm
 
-{/* <Typography variant="h6" gutterBottom>
-Create Game
-</Typography>
-<Grid container spacing={3}>
-  <Grid item xs={12}>
-    <TextField id="standard-basic" value={this.state.username} onChange={this.handleChange} label="Username" />
-
-  </Grid>
-</Grid> */}

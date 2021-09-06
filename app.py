@@ -23,8 +23,13 @@ if not path.exists('./app.db'):
 
 from api.general.routes import general
 from api.guessGame.routes import guessGame
+from api.flickGame.routes import flickGame
+from api.blackout.routes import blackout
+
 app.register_blueprint(guessGame)
+app.register_blueprint(flickGame)
 app.register_blueprint(general)
+app.register_blueprint(blackout)
 
 @app.route('/')
 def serve():

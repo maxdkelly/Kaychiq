@@ -9,6 +9,8 @@ import  {LobbyPage}  from "./pages/LobbyPage";
 import  {CreateGamePage}  from "./pages/CreateGamePage";
 
 import  {GuessNumberGame}  from "./pages/GuessNumberGame";
+import { FlickGame } from './pages/FlickGame';
+import { Blackout } from './pages/Blackout';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -22,6 +24,9 @@ function App() {
         <Route exact path="/createGame" component={CreateGamePage} />
 
         <Route exact path="/guessNumberGame" component={GuessNumberGame} />
+        <Route exact path="/flickGame" component={FlickGame} />
+        <Route exact path="/blackout" component={Blackout} />
+
 
         <Route path="*" component={() => "404 NOT FOUND"} />
       </Switch>

@@ -36,3 +36,32 @@ class GuessGame(db.Model):
     over = db.Column(db.Boolean, nullable = False, default=False)
     retLink = db.Column(db.String(20),  nullable=True)
 
+
+class FlickGame(db.Model):
+    __tablename__ = 'FlickGame'
+    code = db.Column(db.String(4), primary_key=True, nullable=False)
+    timeCreated = db.Column(db.DateTime, unique=False, nullable=False, default=datetime.utcnow)
+    hitPoints = db.Column(db.Integer, nullable = False)
+    currHitPos = db.Column(db.Integer)
+    hitRange = db.Column(db.Integer, nullable = False)
+    maxHitPos = db.Column(db.Integer, nullable = False)
+    turnNum = db.Column(db.Integer, nullable = False)
+    numPlayers = db.Column(db.Integer, nullable = False)
+    over = db.Column(db.Boolean, nullable = False, default=False)
+    tick = db.Column(db.Boolean, nullable = False, default=False)
+    retLink = db.Column(db.String(20),  nullable=True)
+
+class Blackout(db.Model):
+    __tablename__ = 'Blackout'
+    code = db.Column(db.String(4), primary_key=True, nullable=False)
+    timeCreated = db.Column(db.DateTime, unique=False, nullable=False, default=datetime.utcnow)
+    hitPoints = db.Column(db.Integer, nullable = False)
+    currHitPos = db.Column(db.Integer)
+    hitRange = db.Column(db.Integer, nullable = False)
+    maxHitPos = db.Column(db.Integer, nullable = False)
+    turnNum = db.Column(db.Integer, nullable = False)
+    numPlayers = db.Column(db.Integer, nullable = False)
+    over = db.Column(db.Boolean, nullable = False, default=False)
+    tick = db.Column(db.Boolean, nullable = False, default=False)
+    retLink = db.Column(db.String(20),  nullable=True)
+

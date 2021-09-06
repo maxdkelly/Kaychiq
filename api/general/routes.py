@@ -1,5 +1,6 @@
 from flask import jsonify, Blueprint, request
 from api.model import Game, User, GuessGame
+from api.guessGame.routes import removeUser
 from app import db
 import random
 import string
@@ -7,6 +8,8 @@ import glob
 from datetime import timedelta, datetime
 
 general = Blueprint('general', __name__)
+
+removeUserFuncs = [removeUser]
 
 def get_soju():
 
@@ -21,13 +24,48 @@ def test():
     })
 
 
-# @general.route("/api/deleteUser", methods=['POST'])
-# def test():
+@general.route("/api/leaveGame", methods=['POST'])
+def leave_game():
 
-#     return jsonify({
-#         "isValid":True,
-#         "validMsg":"Test route works"
-#     })
+    content = request.json 
+
+    if "token" not in content:
+        return jsonify({
+            "isValid": False,
+            "validMsg":"Malformed user information",
+        })
+
+    token = content['token']
+
+    user = User.query.filter_by(token = token).first()
+
+    if not user:
+        return jsonify({
+            "isValid": False,
+            "validMsg":"Incorrect token",
+        })
+
+    for removeUserFunc in removeUserFuncs:
+        removeUserFunc(user.code, user.turn)
+
+    User.query.filter_by(token = token).delete()
+    print("deleted the user")
+
+    db.session.commit()
+
+
+    #get game code 
+
+    #if code is within guessGame
+    #run guessGame remove user function
+        #shift players index
+        #decreases numPlayers
+        #if its players turn , move next turn
+
+    return jsonify({
+        "isValid":True,
+        "validMsg":"Deleted user"
+    })
 
 @general.route("/api/createGame", methods=['POST'])
 def create_game():
@@ -140,10 +178,10 @@ def join_game():
             "individualToken": None
         })
 
-    if User.query.filter_by(code = code).count() > 8:
+    if User.query.filter_by(code = code).count() > 10:
         return jsonify({
             "isValid": False,
-            "validMsg":"Too many players in Game (Max 8)",
+            "validMsg":"Too many players in Game (Max 10)",
             "gameToken": None,
             "individualToken": None
         })
@@ -160,6 +198,9 @@ def join_game():
     sojus = get_soju()
     for user in User.query.filter_by(code = code):
         sojus.remove(user.soju)
+
+    if not sojus:
+        sojus = get_soju()
 
     user = User(token = token, code = code, name = name, soju = random.choice(sojus))
 

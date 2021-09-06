@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export const GuessGameView = props => {
+export const FlickGameView = props => {
   
     const [players, setPlayers] = useState(props.players);
     const classes = useStyles();
@@ -232,12 +232,9 @@ export const GuessGameView = props => {
                   </Grid>
 
                   <div class ="paperTitleText" >
-                      Guess The Soju Bottle No.
+                      Flick The Soju Bottle Cap
                   </div>
 
-                  <div class ="mutedText" >
-                      Lowest Guess: {lowest}<br/> Highest Guess: {highest}
-                  </div>
                   <Grid container  
                     spacing={2} 
                     alignItems="center"
@@ -311,9 +308,25 @@ export const GuessGameView = props => {
                     </Grid>
                 </Paper>
             </main>
+
+
+            <main className={players.length == 0 ? "hidden" : classes.layout}>
+                <Paper className={players.length == 0 ? "hidden" : classes.paper}> 
+
+              
+
+                  <div class ="paperTitleText" >
+                      Flick The Soju Bottle Cap
+                  </div>
+                  
+                 
+                    
+                
+                </Paper>
+            </main>
             
    
-            <Fade in={fadeChecked}  timeout = {1000}>
+            {/* <Fade in={fadeChecked}  timeout = {1000}>
             <Slide direction="up" in={checked} timeout = {1000}>
 
                 <Paper className={(currGuess[0] && !over)? classes.logContainer: "hidden"} elevation={6}>                  
@@ -324,7 +337,7 @@ export const GuessGameView = props => {
 
                 </Slide>
               
-            </Fade>
+            </Fade> */}
             
            
                 
@@ -339,4 +352,4 @@ export const GuessGameView = props => {
 }
   
 
-export default GuessGameView
+export default FlickGameView

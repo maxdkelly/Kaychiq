@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 
 import Header from "../components/Header"
-import guess from '../utils/guess';
+import flick from '../utils/flick';
 import general from '../utils/general';
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
@@ -17,32 +17,36 @@ import Fade from '@material-ui/core/Fade';
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
-import GuessGameView from '../components/GuessGameView';
+import FlickGameView from '../components/FlickGameView';
 import GuessDialog from '../components/GuessDialog';
 import GuessFinishedDialog from '../components/GuessFinishedDialog';
 
 
-export const GuessNumberGame = props => {
+export const FlickGame = props => {
 
     const history = useHistory();
 
     const [token, setToken] = useState(props.location.token);
+
+    const [currHit, setCurrHit] = useState([-1, -1, -1, ""]);
+    const [currPlayer, setCurrPlayer] = useState("");
+
+    const [hitRange, setHitRange] = useState(100);
+    const [maxHitPos, setMaxHitPos] = useState(0);
+
+    const [tick, setTick] = useState(false);
+    const [players, setPlayers] = useState([]);
+
+
     const [show, setShow] = useState(false);
     const [loserShow, setLoserShow] = useState(false);
     const [loser, setLoser] = useState("");
 
     const [host, setHost] = useState(false);
 
-    const [name, setName] = useState("");
-
-    const [highest, setHighest] = useState(100);
-    const [lowest, setLowest] = useState(0);
-  
-    const [currGuess, setCurrGuess] = useState([0, ""]);
-
-    const [players, setPlayers] = useState([]);
+    const [name, setName] = useState(""); 
     const [sojuMap, setSojuMap] = useState({});
-    const [currPlayer, setCurrPlayer] = useState("");
+
 
     const [recentlyClosed, setRecClosed] = useState(false);
    
@@ -87,19 +91,22 @@ export const GuessNumberGame = props => {
   
     const checkGame = () => {
        
-        guess.getGuessState(token)
+        flick.getFlickState(token)
             .then(data => {
                 console.log(data)
 
                 if(data) {
 
-                    if(data.currGuess != currGuess[0]) {
-                        setCurrGuess([data.currGuess, currPlayer]);
+                    if(data.tick != tick) {
+                        setCurrHit([data.currHitPos, maxHitPos, hitRange, currPlayer]);
+                        setTick(data.tick);
                     }
 
-                    console.log(currGuess);
-                    setHighest(data.highestGuess);
-                    setLowest(data.lowestGuess);
+                    setMaxHitPos(data.maxHitPos);
+                    setHitRange(data.hitRange);
+                    // console.log(currGuess);
+                    // setHighest(data.highestGuess);
+                    // setLowest(data.lowestGuess);
 
                     setPlayers(data.players);
                    
@@ -107,12 +114,12 @@ export const GuessNumberGame = props => {
                     setCurrPlayer(data.currPlayer);
 
                     setSojuMap(data.sojuMap);
-                    if(data.yourTurn && !data.gameOver && !recentlyClosed) {
-                        console.log("hey");
-                        handleShow();
-                    } else {
-                        setShow(false);
-                    }
+                    // if(data.yourTurn && !data.gameOver && !recentlyClosed) {
+                    //     console.log("hey");
+                    //     handleShow();
+                    // } else {
+                    //     setShow(false);
+                    // }
 
                     if(data.gameOver) {
                         setLoser(data.currPlayer);
@@ -162,9 +169,9 @@ export const GuessNumberGame = props => {
             <Header/> 
             
 
-            <GuessGameView players = {players} sojuMap = {sojuMap} currPlayer = {currPlayer} highest = {highest} lowest = {lowest} currGuess = {currGuess} over = {loserShow} show={show}/>
-            <GuessDialog show = {show} token = {token} highest = {highest} lowest = {lowest} setClosed = {handleClose}/>
-            <GuessFinishedDialog show = {loserShow} loser = {loser} num = {currGuess[0]} host = {host} token = {token} />
+            <FlickGameView players = {players} sojuMap = {sojuMap} currPlayer = {currPlayer} currHit = {currHit} over = {loserShow} show={show}/>
+            {/* <GuessDialog show = {show} token = {token} highest = {highest} lowest = {lowest} setClosed = {handleClose}/>
+            <GuessFinishedDialog show = {loserShow} loser = {loser} num = {currGuess[0]} host = {host} token = {token} /> */}
 
            
         </body>

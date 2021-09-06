@@ -77,7 +77,7 @@ export const GuessDialog = props => {
         setShow(props.show);
         setHighest(props.highest);
         setLowest(props.lowest);
-        
+
       
       }, [props.token, props.highest, props.lowest, props.show]);
 
@@ -109,7 +109,7 @@ export const GuessDialog = props => {
                    <div className="medButtonText">Enter your Guess</div>
                   </Grid>
 
-                  <Grid item xs style = {{"max-width" : "20%"}}>
+                  <Grid item xs style = {{"max-width" : "28%"}}>
                     <Button variant="contained" color="primary" style = 
                           {{"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
                           "align-self":"center", 

@@ -8,7 +8,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
+import { useHistory } from "react-router-dom";
+
+
 import purple from '@material-ui/core/colors/purple';
+import general from "../utils/general";
 const useStyles = makeStyles((theme) => ({
     appBar: {
       position: 'relative',
@@ -43,11 +47,27 @@ const useStyles = makeStyles((theme) => ({
 export const CreateGamePage = props =>{
     const classes = useStyles();
     const [token, setToken] = useState("");
+    const history = useHistory();
+
 
     useEffect(() => {
 
         if(props.location.token) {
             setToken(props.location.token);
+        }
+
+        
+
+        if(general.hasToken()) {
+          general.isHost(general.getToken())
+          .then(data => {
+            if(!data.isHost) {
+              history.push("/lobby");
+            }
+          })
+
+
+        
         }
       }, []);
 
