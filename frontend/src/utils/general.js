@@ -78,6 +78,32 @@ class General {
               console.log(err);
             })
     
+      }
+
+    startFlickGame(token) {
+      return axios.post('/api/startFlickGame', {
+          token: token
+        })
+          .then(res => {
+                return res.data;
+          })
+          .catch(err => {
+            console.log(err);
+          })
+  
+      }
+
+      startBlackout(token) {
+        return axios.post('/api/startBlackout', {
+            token: token
+          })
+            .then(res => {
+                  return res.data;
+            })
+            .catch(err => {
+              console.log(err);
+            })
+    
         }
 
     isHost(token) {
