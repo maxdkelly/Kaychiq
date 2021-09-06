@@ -17,7 +17,7 @@ Install node modules.
 `cd frontend && npm install`
 
 start local server.
-`cd npm start`
+`npm start`
 
 ### Setup backend
 
