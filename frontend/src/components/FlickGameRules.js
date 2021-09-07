@@ -96,11 +96,11 @@ export const FlickGameRules = props => {
           </ListItem>
           <ListItem>
           <Typography variant = "body2">
-             In 'Flick the Soju Bottle Cap Game' you take turns tring to flick the XXXXXX off the virtual soju bottle cap, by pressing the hit button.
+             In 'Flick the Soju Bottle Cap Game' you take turns tring to flick the tail off the virtual soju bottle cap, by pressing the hit button.
              <br/> <br/>
              The closer the slider is to the red area, the harder your flick is.
              <br/> <br/>
-             If you flick the XXXX off the virtual soju bottle cap, the people before and after you drink!
+             If you flick the tail off the virtual soju bottle cap, the people before and after you drink!
             </Typography>
           </ListItem>
 
