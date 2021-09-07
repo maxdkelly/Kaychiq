@@ -17,7 +17,7 @@ import Fade from '@material-ui/core/Fade';
 
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 
-import GuessGameRules from './GuessGameRules';
+import FlickGameRules from './FlickGameRules';
 
 
 import apple from '../soju/apple.png'
@@ -29,6 +29,9 @@ import strawberry from '../soju/strawberry.png'
 import watermelon from '../soju/watermelon.png'
 import lychee from '../soju/lychee.png'
 import chicken from '../soju/chicken.png'
+
+
+
 
 
 function getWindowDimensions() {
@@ -104,7 +107,7 @@ export const FlickGameView = props => {
     const [rulesShow, setRulesShow] = useState(false);
     const handleRulesClose = () => setRulesShow(false);
 
-
+  
     const [currPlayer, setCurrPlayer] = useState(props.currPlayer);
     const [highest, setHighest] = useState(props.highest);
     const [lowest, setLowest] = useState(props.lowest);
@@ -132,10 +135,18 @@ export const FlickGameView = props => {
     })
 
     useEffect(() => {
+        setCurrPlayer(props.currPlayer);
+    },[]);
+
+    useEffect(() => {
 
         setPlayers(props.players);
         setSojuMap(props.sojuMap);
-        setCurrPlayer(props.currPlayer);
+
+        setTimeout(() => {
+            setCurrPlayer(props.currPlayer);
+
+        }, 3000);
 
         setHighest(props.highest);
         setLowest(props.lowest);
@@ -145,7 +156,7 @@ export const FlickGameView = props => {
         setShow(props.show);
         
 
-        console.log(players)
+        // console.log(players)
 
       }, [props.players, props.sojuMap, props.currPlayer, props.highest, props.lowest, props.over, props.show]);
 
@@ -170,6 +181,12 @@ export const FlickGameView = props => {
       return Math.max(relSize/2.1, relSize * width/1920 )
 
     }
+
+    const getVidSize = relSize => {
+
+        return Math.max(relSize/2.1, relSize * width/1920 )
+  
+      }
 
     const getFontSize = () => {
 
@@ -204,6 +221,9 @@ export const FlickGameView = props => {
 
       return "xx-small"
   }
+
+  
+
     return (
         <div>
 
@@ -218,7 +238,7 @@ export const FlickGameView = props => {
                           "margin-bottom":"1rem",
                           "margin-left": "auto",
                           "margin-right": "auto"}} 
-                          onClick = {() => setRulesShow(true)}
+                          onClick = {() =>   setRulesShow(true)}
                          
                         >
                               <div className = "smallText">
@@ -231,7 +251,7 @@ export const FlickGameView = props => {
                     </Grid>
                   </Grid>
 
-                  <div class ="paperTitleText" >
+                  <div class ="paperTitleText" style = {{"padding-bottom" : "10px"}}>
                       Flick The Soju Bottle Cap
                   </div>
 
@@ -309,40 +329,9 @@ export const FlickGameView = props => {
                 </Paper>
             </main>
 
-
-            <main className={players.length == 0 ? "hidden" : classes.layout}>
-                <Paper className={players.length == 0 ? "hidden" : classes.paper}> 
-
-              
-
-                  <div class ="paperTitleText" >
-                      Flick The Soju Bottle Cap
-                  </div>
-                  
-                 
-                    
-                
-                </Paper>
-            </main>
             
-   
-            {/* <Fade in={fadeChecked}  timeout = {1000}>
-            <Slide direction="up" in={checked} timeout = {1000}>
-
-                <Paper className={(currGuess[0] && !over)? classes.logContainer: "hidden"} elevation={6}>                  
-                  <Box fontWeight="fontWeightBold" m={1} justify = "center"alignItems="center" className = {classes.log} >
-                      {currGuess[1]} guessed {currGuess[0]}, {currGuess[0] == highest ? " the number is lower": "the number is higher"}
-                  </Box>
-                </Paper>
-
-                </Slide>
-              
-            </Fade> */}
             
-           
-                
-            
-            <GuessGameRules show = {rulesShow} handleClose = {handleRulesClose}/>
+            <FlickGameRules show = {rulesShow} handleClose = {handleRulesClose}/>
 
             
         </div>

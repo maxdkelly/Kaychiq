@@ -42,6 +42,7 @@ class FlickGame(db.Model):
     code = db.Column(db.String(4), primary_key=True, nullable=False)
     timeCreated = db.Column(db.DateTime, unique=False, nullable=False, default=datetime.utcnow)
     hitPoints = db.Column(db.Integer, nullable = False)
+    currHitPoints = db.Column(db.Integer, nullable = False)
     currHitPos = db.Column(db.Integer)
     hitRange = db.Column(db.Integer, nullable = False)
     maxHitPos = db.Column(db.Integer, nullable = False)
