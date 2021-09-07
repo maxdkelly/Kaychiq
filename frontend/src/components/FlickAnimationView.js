@@ -442,19 +442,19 @@ export const FlickAnimationView = props => {
                     {/* <Grid container spacing={3}> */}
                       <Grid item>
 
-                        <video  ref={vidRef1} width={getIconSize(444)} height={getIconSize(294)} className= {show1 ? "" : "hidden"}>
+                        <video playsinline ref={vidRef1} width={getIconSize(444)} height={getIconSize(294)} className= {show1 ? "" : "hidden"}>
                             <source src ={vid1} type="video/mp4" /> 
                         </video>
 
-                        <video  ref={vidRef2} width={getIconSize(444)} height={getIconSize(294)} className= {show2 ? "" : "hidden"}>
+                        <video playsinline  ref={vidRef2} width={getIconSize(444)} height={getIconSize(294)} className= {show2 ? "" : "hidden"}>
                             <source src ={vid2} type="video/mp4" /> 
                         </video>
 
-                        <video  ref={vidRef3} width={getIconSize(444)} height={getIconSize(294)} className= {show3 ? "" : "hidden"}>
+                        <video playsinline  ref={vidRef3} width={getIconSize(444)} height={getIconSize(294)} className= {show3 ? "" : "hidden"}>
                             <source src ={vid3} type="video/mp4" /> 
                         </video>
 
-                        <video  ref={vidRef4} width={getIconSize(444)} height={getIconSize(294)} className= {show4 ? "" : "hidden"} >
+                        <video playsinline  ref={vidRef4} width={getIconSize(444)} height={getIconSize(294)} className= {show4 ? "" : "hidden"} >
                             <source src ={vid4} type="video/mp4" /> 
                         </video>
 
