@@ -227,7 +227,7 @@ class CreateGameForm extends React.Component {
 
                       <Link 
                         to={{pathname: "/blackout",token:this.state.indToken}} 
-                        className="link" 
+                        className="hidden" 
                         onClick={(e) => this.handleBlackoutLink(e)}
                       >
                         <Button variant="contained" color="primary" style = 

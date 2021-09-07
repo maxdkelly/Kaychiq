@@ -12,15 +12,14 @@ import general from '../utils/general';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
+import Grid from '@material-ui/core/Grid';
 
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
 import FlickGameView from '../components/FlickGameView';
-import GuessDialog from '../components/GuessDialog';
-import GuessFinishedDialog from '../components/GuessFinishedDialog';
-
+import FlickAnimationView from '../components/FlickAnimationView';
+import FlickFinishedDialog from '../components/FlickFinishedDialog';
 
 export const FlickGame = props => {
 
@@ -28,7 +27,7 @@ export const FlickGame = props => {
 
     const [token, setToken] = useState(props.location.token);
 
-    const [currHit, setCurrHit] = useState([-1, -1, -1, ""]);
+    const [currHit, setCurrHit] = useState([-1,  ""]);
     const [currPlayer, setCurrPlayer] = useState("");
 
     const [hitRange, setHitRange] = useState(100);
@@ -36,12 +35,14 @@ export const FlickGame = props => {
 
     const [tick, setTick] = useState(false);
     const [players, setPlayers] = useState([]);
+    const [start, setStart] = useState(true);
 
 
     const [show, setShow] = useState(false);
     const [loserShow, setLoserShow] = useState(false);
-    const [loser, setLoser] = useState("");
+    const [losers, setLosers] = useState(["",""]);
 
+    const [stage, setStage] = useState(0);
     const [host, setHost] = useState(false);
 
     const [name, setName] = useState(""); 
@@ -98,32 +99,37 @@ export const FlickGame = props => {
                 if(data) {
 
                     if(data.tick != tick) {
-                        setCurrHit([data.currHitPos, maxHitPos, hitRange, currPlayer]);
+                        console.log([data.currHitPos, hitRange, currPlayer])
+                        setStart(false);
+                        setCurrHit([data.currHitPos, currPlayer]);
                         setTick(data.tick);
                     }
 
+                    setStage(data.stage);
+
                     setMaxHitPos(data.maxHitPos);
                     setHitRange(data.hitRange);
-                    // console.log(currGuess);
-                    // setHighest(data.highestGuess);
-                    // setLowest(data.lowestGuess);
-
+         
                     setPlayers(data.players);
                    
                     
                     setCurrPlayer(data.currPlayer);
 
                     setSojuMap(data.sojuMap);
-                    // if(data.yourTurn && !data.gameOver && !recentlyClosed) {
-                    //     console.log("hey");
-                    //     handleShow();
-                    // } else {
-                    //     setShow(false);
-                    // }
+                    if(data.yourTurn && !data.gameOver) {
+                        setShow(true);
+                    } else {
+                        setShow(false);
+                    }
 
                     if(data.gameOver) {
-                        setLoser(data.currPlayer);
-                        setLoserShow(true);
+
+                        setTimeout(() => {
+                            setLosers(data.drinkingPlayers);
+                            setLoserShow(true);
+
+                        }, 4000);
+                        
                     }
 
                     if(data.link) {
@@ -161,19 +167,29 @@ export const FlickGame = props => {
         }, [delay]);
     }
 
- 
+
 
     
     return(
         <body>
             <Header/> 
             
+            <Grid container spacing={3}  alignItems="center"
+                    justifyContent="center" 
+                    justify = "center">
 
-            <FlickGameView players = {players} sojuMap = {sojuMap} currPlayer = {currPlayer} currHit = {currHit} over = {loserShow} show={show}/>
-            {/* <GuessDialog show = {show} token = {token} highest = {highest} lowest = {lowest} setClosed = {handleClose}/>
-            <GuessFinishedDialog show = {loserShow} loser = {loser} num = {currGuess[0]} host = {host} token = {token} /> */}
+                <Grid item >
+                    <FlickGameView players = {players} sojuMap = {sojuMap} currPlayer = {currPlayer} currHit = {currHit} over = {loserShow} show={show}/>
 
+                </Grid>
+
+                <Grid item>
+                     <FlickAnimationView tick = {tick} stage = {stage} start = {start} token = {token} show = {show} currHit = {currHit} newMaxHit = {maxHitPos}/>
+
+                </Grid>
+            </Grid>
            
+            <FlickFinishedDialog show = {loserShow} losers = {losers} token = {token} host = {host}/>
         </body>
     )
         

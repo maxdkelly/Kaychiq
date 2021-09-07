@@ -1,6 +1,7 @@
 from flask import jsonify, Blueprint, request
 from api.model import Game, User, GuessGame
 from api.guessGame.routes import removeUser
+from api.flickGame.routes import removeFlickUser
 from app import db
 import random
 import string
@@ -9,7 +10,7 @@ from datetime import timedelta, datetime
 
 general = Blueprint('general', __name__)
 
-removeUserFuncs = [removeUser]
+removeUserFuncs = [removeUser, removeFlickUser]
 
 def get_soju():
 

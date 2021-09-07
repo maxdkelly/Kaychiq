@@ -12,7 +12,7 @@ class General {
 
   hasToken() {
 
-    console.log(Cookies.get('token'));
+   
     return Cookies.get('token') != undefined;
   }
 
