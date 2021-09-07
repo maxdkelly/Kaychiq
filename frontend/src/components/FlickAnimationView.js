@@ -31,10 +31,15 @@ import watermelon from '../soju/watermelon.png'
 import lychee from '../soju/lychee.png'
 import chicken from '../soju/chicken.png'
 
-import vid1 from '../flicks/vid1.webm'
-import vid2 from '../flicks/vid2.webm'
-import vid3 from '../flicks/vid3.webm'
-import vid4 from '../flicks/vid4.webm'
+import vid1w from '../flicks/vid1.webm'
+import vid2w from '../flicks/vid2.webm'
+import vid3w from '../flicks/vid3.webm'
+import vid4w from '../flicks/vid4.webm'
+
+import vid1 from '../flicks/vid1.mp4'
+import vid2 from '../flicks/vid2.mp4'
+import vid3 from '../flicks/vid3.mp4'
+import vid4 from '../flicks/vid4.mp4'
 
 
 
@@ -443,19 +448,24 @@ export const FlickAnimationView = props => {
                       <Grid item>
 
                         <video playsinline ref={vidRef1} width={getIconSize(444)} height={getIconSize(294)} className= {show1 ? "" : "hidden"}>
-                            <source src ={vid1} type="video/webm" /> 
+                            <source src ={vid1w} type="video/webm" /> 
+                            <source src ={vid1} type="video/mp4" /> 
+
                         </video>
 
                         <video playsinline  ref={vidRef2} width={getIconSize(444)} height={getIconSize(294)} className= {show2 ? "" : "hidden"}>
-                            <source src ={vid2} type="video/webm" /> 
+                          <source src ={vid2w} type="video/webm" /> 
+                          <source src ={vid2} type="video/mp4" /> 
                         </video>
 
                         <video playsinline  ref={vidRef3} width={getIconSize(444)} height={getIconSize(294)} className= {show3 ? "" : "hidden"}>
-                            <source src ={vid3} type="video/webm" /> 
+                          <source src ={vid3w} type="video/webm" /> 
+                          <source src ={vid3} type="video/mp4" />  
                         </video>
 
                         <video playsinline  ref={vidRef4} width={getIconSize(444)} height={getIconSize(294)} className= {show4 ? "" : "hidden"} >
-                            <source src ={vid4} type="video/webm" /> 
+                          <source src ={vid4w} type="video/webm" /> 
+                          <source src ={vid4} type="video/mp4" /> 
                         </video>
 
 
