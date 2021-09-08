@@ -36,6 +36,11 @@ import vid2w from '../flicks/vid2.webm'
 import vid3w from '../flicks/vid3.webm'
 import vid4w from '../flicks/vid4.webm'
 
+import vid1o from '../flicks/vid1.ogv'
+import vid2o from '../flicks/vid2.ogv'
+import vid3o from '../flicks/vid3.ogv'
+import vid4o from '../flicks/vid4.ogv'
+
 import vid1 from '../flicks/vid1.mp4'
 import vid2 from '../flicks/vid2.mp4'
 import vid3 from '../flicks/vid3.mp4'
@@ -447,25 +452,33 @@ export const FlickAnimationView = props => {
                     {/* <Grid container spacing={3}> */}
                       <Grid item>
 
-                        <video playsinline ref={vidRef1} width={getIconSize(444)} height={getIconSize(294)} className= {show1 ? "" : "hidden"}>
+                        <video playsinline muted ref={vidRef1} width={getIconSize(444)} height={getIconSize(294)} className= {show1 ? "" : "hidden"}>
                             <source src ={vid1w} type="video/webm" /> 
                             <source src ={vid1} type="video/mp4" /> 
+                            <source src ={vid1o} type="video/ogg" /> 
+
 
                         </video>
 
-                        <video playsinline  ref={vidRef2} width={getIconSize(444)} height={getIconSize(294)} className= {show2 ? "" : "hidden"}>
+                        <video playsinline muted ref={vidRef2} width={getIconSize(444)} height={getIconSize(294)} className= {show2 ? "" : "hidden"}>
                           <source src ={vid2w} type="video/webm" /> 
-                          <source src ={vid2} type="video/mp4" /> 
+                          <source src ={vid2} type="video/mp4" />
+                          <source src ={vid2o} type="video/ogg" /> 
+
                         </video>
 
-                        <video playsinline  ref={vidRef3} width={getIconSize(444)} height={getIconSize(294)} className= {show3 ? "" : "hidden"}>
+                        <video playsinline muted ref={vidRef3} width={getIconSize(444)} height={getIconSize(294)} className= {show3 ? "" : "hidden"}>
                           <source src ={vid3w} type="video/webm" /> 
-                          <source src ={vid3} type="video/mp4" />  
+                          <source src ={vid3} type="video/mp4" /> 
+                          <source src ={vid3o} type="video/ogg" /> 
+
                         </video>
 
-                        <video playsinline  ref={vidRef4} width={getIconSize(444)} height={getIconSize(294)} className= {show4 ? "" : "hidden"} >
+                        <video playsinline muted ref={vidRef4} width={getIconSize(444)} height={getIconSize(294)} className= {show4 ? "" : "hidden"} >
                           <source src ={vid4w} type="video/webm" /> 
                           <source src ={vid4} type="video/mp4" /> 
+                          <source src ={vid4o} type="video/ogg" /> 
+
                         </video>
 
 
