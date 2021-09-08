@@ -452,7 +452,7 @@ export const FlickAnimationView = props => {
                     {/* <Grid container spacing={3}> */}
                       <Grid item>
 
-                        <video playsinline muted ref={vidRef1} width={getIconSize(444)} height={getIconSize(294)} className= {show1 ? "" : "hidden"}>
+                        <video preload="auto"  playsinline muted ref={vidRef1} width={getIconSize(444)} height={getIconSize(294)} className= {show1 ? "" : "hidden"}>
                             <source src ={vid1w} type="video/webm" /> 
                             <source src ={vid1} type="video/mp4" /> 
                             <source src ={vid1o} type="video/ogg" /> 
@@ -460,21 +460,21 @@ export const FlickAnimationView = props => {
 
                         </video>
 
-                        <video playsinline muted ref={vidRef2} width={getIconSize(444)} height={getIconSize(294)} className= {show2 ? "" : "hidden"}>
+                        <video preload="auto" playsinline muted ref={vidRef2} width={getIconSize(444)} height={getIconSize(294)} className= {show2 ? "" : "hidden"}>
                           <source src ={vid2w} type="video/webm" /> 
                           <source src ={vid2} type="video/mp4" />
                           <source src ={vid2o} type="video/ogg" /> 
 
                         </video>
 
-                        <video playsinline muted ref={vidRef3} width={getIconSize(444)} height={getIconSize(294)} className= {show3 ? "" : "hidden"}>
+                        <video preload="auto" playsinline muted ref={vidRef3} width={getIconSize(444)} height={getIconSize(294)} className= {show3 ? "" : "hidden"}>
                           <source src ={vid3w} type="video/webm" /> 
                           <source src ={vid3} type="video/mp4" /> 
                           <source src ={vid3o} type="video/ogg" /> 
 
                         </video>
 
-                        <video playsinline muted ref={vidRef4} width={getIconSize(444)} height={getIconSize(294)} className= {show4 ? "" : "hidden"} >
+                        <video preload="auto" playsinline muted ref={vidRef4} width={getIconSize(444)} height={getIconSize(294)} className= {show4 ? "" : "hidden"} >
                           <source src ={vid4w} type="video/webm" /> 
                           <source src ={vid4} type="video/mp4" /> 
                           <source src ={vid4o} type="video/ogg" /> 
