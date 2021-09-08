@@ -114,6 +114,8 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
+
+
 export const FlickAnimationView = props => {
 
 
@@ -125,6 +127,7 @@ export const FlickAnimationView = props => {
 
   const stages = [stage1, stage2, stage3]
   const vids = [vid1, vid2, vid3, vid4]
+  const [gifs, setGifs] = useState([]);
   const [vidIndex, setIndex] = useState(0);
   const [stageIndex, setStageIndex] = useState(0);
 
@@ -152,7 +155,17 @@ export const FlickAnimationView = props => {
   const [changed, setChanged] = useState(false);
   const classes = useStyles();
   const [hitDisabled, setDisabled] = useState(false);
-    
+
+  useEffect(() => {
+
+    let imgList = vids
+    imgList.forEach((image) => {
+      new Image().src = image
+    });
+
+    setGifs(imgList);
+
+  },[])
   useEffect(() => {
 
     console.log(props.currHit)
@@ -178,11 +191,13 @@ export const FlickAnimationView = props => {
 
   setStarted(props.gameStarted)
  }, [props.gameStarted])
+
+
+
   
   useEffect(() => {
     console.log("something happened")
 
-  
     if(! props.start) {
 
       handleSliderStop(props.currHit[0]);
@@ -193,30 +208,14 @@ export const FlickAnimationView = props => {
       if( props.stage != stage) {
         setChanged(true);
       }
-  
-      
-
-      
-      
-
     }
 
     setStage(props.stage);
     setTick(props.tick);
 
-
-    
-
   }, [props.tick, props.stage]);
 
-  useEffect(() => {
-
-   
-
-  },[]);
-
-   
-
+  
     const getIconSize = relSize => {
 
       return Math.max(relSize/1.7, relSize * 1.3 * width/1920 )
@@ -298,7 +297,7 @@ export const FlickAnimationView = props => {
 
     const repeat = () => {
       console.log("heree")
-      setVid(vids[vidIndex]);
+      setVid(gifs[vidIndex]);
 
       setTimeout(function() { //Start the timer
 
@@ -312,7 +311,7 @@ export const FlickAnimationView = props => {
 
       if(vidIndex < vids.length - 1) {
 
-        setVid(vids[vidIndex + 1]);
+        setVid(gifs[vidIndex + 1]);
 
        
         setTimeout(function() { //Start the timer
