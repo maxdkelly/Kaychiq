@@ -119,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
 export const FlickAnimationView = props => {
 
 
-  const [vid, setVid] = useState(stage1)
+  const vid = useRef(stage1)
   const paperRef = useRef(null);
 
   const [sliderValue, setSlider] = useState(1);
@@ -197,6 +197,7 @@ export const FlickAnimationView = props => {
   
   useEffect(() => {
     console.log("something happened")
+    console.log(props.stage)
 
     if(! props.start) {
 
@@ -297,13 +298,13 @@ export const FlickAnimationView = props => {
 
     const repeat = () => {
       console.log("heree")
-      setVid(gifs[vidIndex]);
+      vid.current = gifs[vidIndex];
 
       setTimeout(function() { //Start the timer
 
-        setVid(stages[stageIndex])
+        vid.current = stages[stageIndex]
         setMax(newMax); 
-        }, 3500)
+        }, 4500)
 
     }
 
@@ -311,14 +312,14 @@ export const FlickAnimationView = props => {
 
       if(vidIndex < vids.length - 1) {
 
-        setVid(gifs[vidIndex + 1]);
+        vid.current = gifs[vidIndex + 1];
 
        
         setTimeout(function() { //Start the timer
 
           setMax(newMax);
 
-          setVid(stages[stageIndex + 1]);
+          vid.current = stages[stageIndex + 1];
           setStageIndex(stageIndex + 1);
 
 
@@ -330,7 +331,7 @@ export const FlickAnimationView = props => {
           } 
           
            
-          }, 3500)
+          }, 4500)
       }
 
     }
@@ -342,7 +343,7 @@ export const FlickAnimationView = props => {
       setTimeout(function() { //Start the timer
         setStopNum(-10);
         
-      }, 4000)
+      }, 4500)
 
       
     }
@@ -453,7 +454,7 @@ export const FlickAnimationView = props => {
 
                       <Grid item>
 
-                        <img src = {vid} width={getIconSize(444)} height={getIconSize(294)}/>
+                        <img src = {vid.current} width={getIconSize(444)} height={getIconSize(294)}/>
                         {/* 
                         <video autoplay playsinline muted ref={vidRef1} width={getIconSize(444)} height={getIconSize(294)} className= {show1 ? "" : "hidden"}>
                             <source src ={vid1w} type="video/webm" /> 
