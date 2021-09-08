@@ -37,7 +37,7 @@ export const FlickGame = props => {
     const [players, setPlayers] = useState([]);
     const [start, setStart] = useState(true);
 
-
+    const [gameStarted, setStarted] = useState(false);
     const [show, setShow] = useState(false);
     const [loserShow, setLoserShow] = useState(false);
     const [losers, setLosers] = useState(["",""]);
@@ -94,8 +94,7 @@ export const FlickGame = props => {
        
         flick.getFlickState(token)
             .then(data => {
-                console.log(data)
-
+               
                 if(data) {
 
                     if(data.tick != tick) {
@@ -117,6 +116,7 @@ export const FlickGame = props => {
 
                     setSojuMap(data.sojuMap);
                     if(data.yourTurn && !data.gameOver) {
+                        console.log("your turn")
                         setShow(true);
                     } else {
                         setShow(false);
@@ -139,6 +139,8 @@ export const FlickGame = props => {
                         });
 
                     }
+
+                    setStarted(true);
                 } else {
                     console.log("error pinging api")
                 }
@@ -184,7 +186,7 @@ export const FlickGame = props => {
                 </Grid>
 
                 <Grid item>
-                     <FlickAnimationView tick = {tick} stage = {stage} start = {start} token = {token} show = {show} currHit = {currHit} newMaxHit = {maxHitPos}/>
+                     <FlickAnimationView tick = {tick} stage = {stage} start = {start} token = {token} show = {show} currHit = {currHit} newMaxHit = {maxHitPos} gameStarted = {gameStarted}/>
 
                 </Grid>
             </Grid>

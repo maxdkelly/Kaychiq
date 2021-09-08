@@ -19,6 +19,7 @@ import Fade from '@material-ui/core/Fade';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 
 import GuessGameRules from './GuessGameRules';
+import GifPlayer from 'react-gif-player'
 
 
 import apple from '../soju/apple.png'
@@ -31,20 +32,17 @@ import watermelon from '../soju/watermelon.png'
 import lychee from '../soju/lychee.png'
 import chicken from '../soju/chicken.png'
 
-import vid1w from '../flicks/vid1.webm'
-import vid2w from '../flicks/vid2.webm'
-import vid3w from '../flicks/vid3.webm'
-import vid4w from '../flicks/vid4.webm'
+import stage1 from '../flicks/stage1.gif'
+import stage2 from '../flicks/stage2.jpg'
+import stage3 from '../flicks/stage3.jpg'
 
-import vid1o from '../flicks/vid1.ogv'
-import vid2o from '../flicks/vid2.ogv'
-import vid3o from '../flicks/vid3.ogv'
-import vid4o from '../flicks/vid4.ogv'
+import vid1 from '../flicks/vid1.gif'
+import vid2 from '../flicks/vid2.gif'
+import vid3 from '../flicks/vid3.gif'
+import vid4 from '../flicks/vid4.gif'
 
-import vid1 from '../flicks/vid1.mp4'
-import vid2 from '../flicks/vid2.mp4'
-import vid3 from '../flicks/vid3.mp4'
-import vid4 from '../flicks/vid4.mp4'
+
+
 
 
 
@@ -118,25 +116,17 @@ const useStyles = makeStyles((theme) => ({
 
 export const FlickAnimationView = props => {
 
-  const vidRef1 = useRef(null);
-  const vidRef2 = useRef(null);
-  const vidRef3 = useRef(null);
-  const vidRef4 = useRef(null);
 
-  
+  const [vid, setVid] = useState(stage1)
   const paperRef = useRef(null);
 
   const [sliderValue, setSlider] = useState(1);
   const [slideDir, setDir] = useState(true);
 
-  const [show1, set1] = useState(true);
-  const [show2, set2] = useState(false);
-  const [show3, set3] = useState(false);
-  const [show4, set4] = useState(false);
-
-  const vidShows = [set1, set2, set3, set4]
-  const vidRefs = [vidRef1, vidRef2, vidRef3, vidRef4]
+  const stages = [stage1, stage2, stage3]
+  const vids = [vid1, vid2, vid3, vid4]
   const [vidIndex, setIndex] = useState(0);
+  const [stageIndex, setStageIndex] = useState(0);
 
   const [stage, setStage] = useState(0);
   const [tick, setTick] = useState(props.tick);
@@ -153,12 +143,15 @@ export const FlickAnimationView = props => {
   
   const [maxHit, setMax] = useState(70);
   const [newMax, setNewMax] = useState(70);
+  const [gameStarted, setStarted] = useState(false);
+
 
 
   const { height, width } = useWindowDimensions();
   
   const [changed, setChanged] = useState(false);
   const classes = useStyles();
+  const [hitDisabled, setDisabled] = useState(false);
     
   useEffect(() => {
 
@@ -180,9 +173,14 @@ export const FlickAnimationView = props => {
 
   setNewMax(props.newMaxHit)
  }, [props.newMaxHit])
+
+ useEffect(() => {
+
+  setStarted(props.gameStarted)
+ }, [props.gameStarted])
   
   useEffect(() => {
-    console.log(props)
+    console.log("something happened")
 
   
     if(! props.start) {
@@ -225,33 +223,7 @@ export const FlickAnimationView = props => {
 
     }
 
-    const progress = () => {
-
-      if(vidIndex < vidShows.length - 1) {
-
-        vidShows[vidIndex](false);
-        vidShows[vidIndex + 1](true);
-        vidRefs[vidIndex + 1].current.play()
-
-       
-        setTimeout(function() { //Start the timer
-
-          setMax(newMax);
-          if(vidIndex < vidShows.length - 2) {
-            vidShows[vidIndex + 1](false);
-            vidShows[vidIndex + 2](true);
-            setIndex(vidIndex + 2);
-            console.log("set")
-
-          } else {
-            // alert("game over")
-          }
-          
-           
-          }, 4000)
-      }
-
-    }
+    
 
     useInterval(() => {
       changeSlider()
@@ -325,17 +297,87 @@ export const FlickAnimationView = props => {
   }
 
     const repeat = () => {
-      console.log(vidIndex)
-      vidRefs[vidIndex].current.play()
+      console.log("heree")
+      setVid(vids[vidIndex]);
 
       setTimeout(function() { //Start the timer
 
-        console.log(newMax);
+        setVid(stages[stageIndex])
         setMax(newMax); 
-        }, 4000)
-     
-     
+        }, 3500)
 
+    }
+
+    const progress = () => {
+
+      if(vidIndex < vids.length - 1) {
+
+        setVid(vids[vidIndex + 1]);
+
+       
+        setTimeout(function() { //Start the timer
+
+          setMax(newMax);
+
+          setVid(stages[stageIndex + 1]);
+          setStageIndex(stageIndex + 1);
+
+
+          if(vidIndex < vids.length - 2) {
+
+            setIndex(vidIndex + 2);
+            console.log("set")
+
+          } 
+          
+           
+          }, 3500)
+      }
+
+    }
+
+    const handleSliderStop = num => {
+
+      console.log(num);
+      setStopNum(num);
+      setTimeout(function() { //Start the timer
+        setStopNum(-10);
+        
+      }, 4000)
+
+      
+    }
+
+    
+
+    const handleSubmit = (e) => {
+
+      e.preventDefault();
+      if(!stop) {
+
+        setStop(true);
+        setDisabled(true);
+        setTimeout(function() { //Start the timer
+          setStop(false);
+          setDisabled(false);
+          
+        }, 5500)
+      
+        console.log(token[0])
+        flick.flick(token[0], sliderValue)
+        .then(data => {
+
+          
+            // if(data.stage != stage) {
+            //   setChanged(true);
+            // }
+            // setStage(data.stage);
+
+            // handleSliderStop(sliderValue);
+        })
+
+      }
+      
     }
 
     const getGradient = () => {
@@ -359,48 +401,6 @@ export const FlickAnimationView = props => {
 
     }
 
-    const handleSliderStop = num => {
-
-      if(!stop) {
-        // console.log("sssssssssssssssssssssssssddddddd")
-        console.log(num);
-        setStopNum(num);
-        setTimeout(function() { //Start the timer
-          setStopNum(-10);
-          
-        }, 4000)
-
-      }
-    }
-
-    
-
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      if(!stop) {
-
-        setStop(true);
-        setTimeout(function() { //Start the timer
-          setStop(false);
-          
-        }, 5000)
-      
-        console.log(token[0])
-        flick.flick(token[0], sliderValue)
-        .then(data => {
-
-          
-            if(data.stage != stage) {
-              setChanged(true);
-            }
-            setStage(data.stage);
-
-            handleSliderStop(sliderValue);
-        })
-
-      }
-      
-    }
     const PrettoSlider = withStyles({
     
       root: {
@@ -442,7 +442,7 @@ export const FlickAnimationView = props => {
 
             
 
-            <main className={classes.layout}>
+            <main className={gameStarted ? classes.layout: "hidden"}>
                 <Paper ref = {paperRef} className={classes.paper}> 
 
                   <div class ="paperTitleText" style = {{"padding-bottom" : "10px"}}>
@@ -450,41 +450,41 @@ export const FlickAnimationView = props => {
                   </div>
 
                     {/* <Grid container spacing={3}> */}
+
+
                       <Grid item>
 
-                        <video autoplay playsinline muted ref={vidRef1} width={getIconSize(444)} height={getIconSize(294)} className= {show1 ? "" : "hidden"}
-                        poster = '../flicks/vid1.jpg' >z
+                        <img src = {vid} width={getIconSize(444)} height={getIconSize(294)}/>
+                        {/* 
+                        <video autoplay playsinline muted ref={vidRef1} width={getIconSize(444)} height={getIconSize(294)} className= {show1 ? "" : "hidden"}>
                             <source src ={vid1w} type="video/webm" /> 
                             <source src ={vid1} type="video/mp4" /> 
                             <source src ={vid1o} type="video/ogg" /> 
 
 
-                        </video>
+                        </video> */}
 
-                        <video autoplay playsinline muted ref={vidRef2} width={getIconSize(444)} height={getIconSize(294)} className= {show2 ? "" : "hidden"}
-                        poster = '../flicks/vid2.jpg' >
+                        {/* <video autoplay playsinline muted ref={vidRef2} width={getIconSize(444)} height={getIconSize(294)} className= {show2 ? "" : "hidden"}>
                           <source src ={vid2w} type="video/webm" /> 
                           <source src ={vid2} type="video/mp4" />
                           <source src ={vid2o} type="video/ogg" /> 
 
                         </video>
 
-                        <video autoplay playsinline muted ref={vidRef3} width={getIconSize(444)} height={getIconSize(294)} className= {show3 ? "" : "hidden"}
-                        poster = '../flicks/vid3.jpg' >
+                        <video autoplay  playsinline muted ref={vidRef3} width={getIconSize(444)} height={getIconSize(294)} className= {show3 ? "" : "hidden"}>
                           <source src ={vid3w} type="video/webm" /> 
                           <source src ={vid3} type="video/mp4" /> 
                           <source src ={vid3o} type="video/ogg" /> 
 
                         </video>
 
-                        <video autoplay playsinline muted ref={vidRef4} width={getIconSize(444)} height={getIconSize(294)} className= {show4 ? "" : "hidden"} 
-                        poster = '../flicks/vid4.jpg' >
+                        <video autoplay  playsinline muted ref={vidRef4} width={getIconSize(444)} height={getIconSize(294)} className= {show4 ? "" : "hidden"} >
                           <source src ={vid4w} type="video/webm" /> 
                           <source src ={vid4} type="video/mp4" /> 
                           <source src ={vid4o} type="video/ogg" /> 
 
                         </video>
-
+ */}
 
                       </Grid>
                       {/* </Grid> */}
@@ -501,6 +501,7 @@ export const FlickAnimationView = props => {
                                 <Button
                                   variant="contained"
                                   color="primary"
+                                  disabled = {hitDisabled}
                                   onClick={(e) => handleSubmit(e)}   
                                   >
                                   Hit
