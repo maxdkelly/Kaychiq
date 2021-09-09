@@ -507,7 +507,7 @@ export const FlickAnimationView = props => {
                   horizontal: 'center',
                 }}
                 open={open}
-                autoHideDuration={4000}
+                autoHideDuration={2000}
                 onClose={handleClose}
                 message= {msg}
                 action={
