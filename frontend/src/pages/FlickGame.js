@@ -17,6 +17,10 @@ import Grid from '@material-ui/core/Grid';
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
 import FlickGameView from '../components/FlickGameView';
 import FlickAnimationView from '../components/FlickAnimationView';
 import FlickFinishedDialog from '../components/FlickFinishedDialog';
@@ -33,6 +37,10 @@ export const FlickGame = props => {
     const [hitRange, setHitRange] = useState(100);
     const [maxHitPos, setMaxHitPos] = useState(0);
 
+    const [open, setOpen] = useState(false);
+
+    const handleClose = () => setOpen(false);
+
     const [tick, setTick] = useState(false);
     const [players, setPlayers] = useState([]);
     const [start, setStart] = useState(true);
@@ -47,6 +55,10 @@ export const FlickGame = props => {
 
     const [name, setName] = useState(""); 
     const [sojuMap, setSojuMap] = useState({});
+
+    const [msg, setMsg] = useState("");
+
+    const [health, setHealth] = useState("100");
 
     useEffect(() => {
 
@@ -84,14 +96,34 @@ export const FlickGame = props => {
                 if(data) {
                     setStage(data.stage);
                     if(data.tick != tick) {
-                        console.log([data.currHitPos, hitRange, currPlayer])
+                        console.log(currPlayer, " hit ", data.currHitPos, maxHitPos)
+
+                        let hitDiff = Math.abs(data.currHitPos - maxHitPos)
+
+                        if (hitDiff <= 10) {
+                            setMsg(currPlayer + " powerfully flicked the tail")
+                        } else if (hitDiff <= 30) {
+                            setMsg(currPlayer + " made a solid attempt at flicking the tail")
+                        } else {
+                            setMsg(currPlayer + " made a shite attempt at flicking the tail")
+                        }
+                        
                         setStart(false);
                         setCurrHit([data.currHitPos, currPlayer]);
                         setTick(data.tick);
+
+                        if(data.health != health && !data.gameOver) {
+                            setHealth(data.health)
+                            handleClose();
+                            setTimeout(() => {
+                                setOpen(true);
+    
+                            }, 5000);
+    
+                        }
                     }
 
                     
-
                     setMaxHitPos(data.maxHitPos);
                     setHitRange(data.hitRange);
          
@@ -103,7 +135,7 @@ export const FlickGame = props => {
                     setSojuMap(data.sojuMap);
 
                     if(data.yourTurn && !data.gameOver) {
-                        console.log("your turn")
+                        // console.log("your turn")
                         setShow(true);
                     } else {
                         setShow(false);
@@ -173,12 +205,44 @@ export const FlickGame = props => {
                 </Grid>
 
                 <Grid item>
-                     <FlickAnimationView tick = {tick} stage = {stage} start = {start} token = {token} show = {show} currHit = {currHit} newMaxHit = {maxHitPos} gameStarted = {gameStarted}/>
+                     <FlickAnimationView 
+                        tick = {tick} 
+                        stage = {stage} 
+                        start = {start} 
+                        token = {token} 
+                        show = {show} 
+                        currHit = {currHit} 
+                        newMaxHit = {maxHitPos} 
+                        gameStarted = {gameStarted}
+                        msg = {msg}
+                        over = {loserShow}
+                    />
 
                 </Grid>
             </Grid>
            
             <FlickFinishedDialog show = {loserShow} losers = {losers} token = {token} host = {host}/>
+
+            
+            <div className = {msg != "" ? "" : "hidden"}>
+
+            <Snackbar
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                autoHideDuration={4000}
+                onClose={handleClose}
+                message= {"Soju bottle tail at " + health + "% health"}
+                action={
+                  <React.Fragment>
+                    
+                  </React.Fragment>
+                }
+              />
+
+            </div>
         </body>
     )
         

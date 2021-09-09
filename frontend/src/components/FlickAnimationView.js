@@ -16,6 +16,10 @@ import Box from '@material-ui/core/Box';
 import Slider from '@material-ui/core/Slider';
 import Fade from '@material-ui/core/Fade';
 
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 
 import GuessGameRules from './GuessGameRules';
@@ -126,7 +130,7 @@ export const FlickAnimationView = props => {
   const vid = useRef(stage1)
   const paperRef = useRef(null);
 
-  const [sliderValue, setSlider] = useState(4);
+  const [sliderValue, setSlider] = useState(5);
   const [slideDir, setDir] = useState(true);
 
   const stages = [stage1, stage2, stage3]
@@ -137,6 +141,10 @@ export const FlickAnimationView = props => {
 
   const [stage, setStage] = useState(0);
   const [tick, setTick] = useState(props.tick);
+
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => setOpen(false);
 
   const [stop, setStop] = useState(false);
 
@@ -151,9 +159,9 @@ export const FlickAnimationView = props => {
   const [maxHit, setMax] = useState(70);
   const [newMax, setNewMax] = useState(70);
   const [gameStarted, setStarted] = useState(false);
+  const [msg, setMsg] = useState(props.msg);
 
-
-
+  const [over, setOver] = useState(false);
   const { height, width } = useWindowDimensions();
   
   const [changed, setChanged] = useState(false);
@@ -181,9 +189,11 @@ export const FlickAnimationView = props => {
     }, 3900);
   },[props.show])
 
-     
-  // useEffect(() => {
 
+    useEffect(() => {
+
+      setMsg(props.msg)
+     }, [props.msg])
    
 
  useEffect(() => {
@@ -196,6 +206,9 @@ export const FlickAnimationView = props => {
   setStarted(props.gameStarted)
  }, [props.gameStarted])
 
+ useEffect(() => {
+   setOver(props.over)
+ }, [props.over])
 
 
   
@@ -256,19 +269,19 @@ export const FlickAnimationView = props => {
 
       if(sliderValue == 100) {
         setDir(!slideDir)
-        setSlider(sliderValue - 4); 
+        setSlider(sliderValue - 5); 
   
       }
   
        else if( sliderValue == 0) {
         setDir(!slideDir)
-        setSlider(sliderValue + 4); 
+        setSlider(sliderValue + 5); 
   
       } else {
         if(slideDir) {
-          setSlider(sliderValue + 4); 
+          setSlider(sliderValue + 5); 
         } else {
-          setSlider(sliderValue - 4); 
+          setSlider(sliderValue - 5); 
     
         }
   
@@ -303,9 +316,12 @@ export const FlickAnimationView = props => {
     const repeat = () => {
 
       setHit(-10);
+      handleClose();
+
       vid.current = gifs[vidIndex];
 
       setTimeout(function() { //Start the timer
+        setOpen(true);
 
         vid.current = stages[stageIndex]
         setMax(newMax); 
@@ -321,12 +337,15 @@ export const FlickAnimationView = props => {
     const progress = () => {
 
       setHit(-10);
+      handleClose();
+
       if(vidIndex < vids.length - 1) {
 
         vid.current = gifs[vidIndex + 1];
 
        
         setTimeout(function() { //Start the timer
+          setOpen(true);
 
           setMax(newMax);
           setStopNum(-10);
@@ -381,11 +400,11 @@ export const FlickAnimationView = props => {
         let width = paperRef.current.clientWidth;
         // console.log("heysssssssss")
         let str =  "linear-gradient(to right, green 0px,  green " +
-          (Math.round(width * ((maxHit - 10) / 100 ))).toString() + 
+          (Math.round(width * ((maxHit - 15) / 100 ))).toString() + 
           "px, red " + 
-          (Math.round(width * ((maxHit) / 100 ))).toString() + 
+          (Math.round(width * ((maxHit - 5) / 100 ))).toString() + 
           "px, green " + 
-          (Math.round(width *((maxHit + 10) / 100 ))).toString() + 
+          (Math.round(width *((maxHit + 5) / 100 ))).toString() + 
            "px)";
 
         // console.log(str);
@@ -435,16 +454,12 @@ export const FlickAnimationView = props => {
     return (
         <div>
 
-            
-
             <main className={gameStarted ? classes.layout: "hidden"}>
                 <Paper ref = {paperRef} className={classes.paper}> 
 
                   <div class ="paperTitleText" style = {{"padding-bottom" : "10px"}}>
                       Game View
                   </div>
-
-                    {/* <Grid container spacing={3}> */}
 
 
                       <Grid item>
@@ -457,42 +472,8 @@ export const FlickAnimationView = props => {
                         <img src = {vid3} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
                         <img src = {vid4} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
 
-                        {/* 
-                        <video autoplay playsinline muted ref={vidRef1} width={getIconSize(444)} height={getIconSize(294)} className= {show1 ? "" : "hidden"}>
-                            <source src ={vid1w} type="video/webm" /> 
-                            <source src ={vid1} type="video/mp4" /> 
-                            <source src ={vid1o} type="video/ogg" /> 
-
-
-                        </video> */}
-
-                        {/* <video autoplay playsinline muted ref={vidRef2} width={getIconSize(444)} height={getIconSize(294)} className= {show2 ? "" : "hidden"}>
-                          <source src ={vid2w} type="video/webm" /> 
-                          <source src ={vid2} type="video/mp4" />
-                          <source src ={vid2o} type="video/ogg" /> 
-
-                        </video>
-
-                        <video autoplay  playsinline muted ref={vidRef3} width={getIconSize(444)} height={getIconSize(294)} className= {show3 ? "" : "hidden"}>
-                          <source src ={vid3w} type="video/webm" /> 
-                          <source src ={vid3} type="video/mp4" /> 
-                          <source src ={vid3o} type="video/ogg" /> 
-
-                        </video>
-
-                        <video autoplay  playsinline muted ref={vidRef4} width={getIconSize(444)} height={getIconSize(294)} className= {show4 ? "" : "hidden"} >
-                          <source src ={vid4w} type="video/webm" /> 
-                          <source src ={vid4} type="video/mp4" /> 
-                          <source src ={vid4o} type="video/ogg" /> 
-
-                        </video>
- */}
-
                       </Grid>
-                      {/* </Grid> */}
-
-
-                    
+          
                       <PrettoSlider  value={sliderValue} aria-label="pretto slider" defaultValue={20} />
 
                       <div className={ show ? classes.layout : "hidden"}> 
@@ -513,41 +494,30 @@ export const FlickAnimationView = props => {
                         </Grid>
 
                       </div>
-                      
-               
-                  
 
-                  
-                 
-                    
-                  {/* <Button variant="contained" color="primary" style = 
-                    {{"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
-                    "align-self":"center", 
-                    "margin-bottom":"1rem",
-                    "margin-left": "auto",
-                    "margin-right": "auto"}} 
-                    onClick = {() =>  progress()}
-                  >
-                    <div className = "smallText">
-                      Progress
-                    </div>
- 
-                  </Button>
-                  <Button variant="contained" color="primary" style = 
-                    {{"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
-                    "align-self":"center", 
-                    "margin-bottom":"1rem",
-                    "margin-left": "auto",
-                    "margin-right": "auto"}} 
-                    onClick = {() =>  repeat()}
-                  >
-                    <div className = "smallText">
-                      Repeat
-                    </div>
- 
-                  </Button> */}
+             
                 </Paper>
             </main>
+
+            <div className = {msg != "" ? "" : "hidden"}>
+
+            <Snackbar
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                open={open}
+                autoHideDuration={4000}
+                onClose={handleClose}
+                message= {msg}
+                action={
+                  <React.Fragment>
+                    
+                  </React.Fragment>
+                }
+              />
+
+            </div>
             
    
       

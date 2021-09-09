@@ -82,7 +82,7 @@ def startFlickGame():
         
     FlickGame.query.filter_by(code = code).delete()
     db.session.commit()
-    num = random.randint(240, 499)
+    num = random.randint(210, 700)
     flipGame = FlickGame(code = code, hitPoints = num, currHitPoints = num, hitRange = 100, maxHitPos = 70, turnNum = 0, numPlayers = len(players), tick = False)
     db.session.add(flipGame)
     db.session.commit()
@@ -162,6 +162,18 @@ def getFlickState():
     if game.currHitPoints <= 0:
         stage = 2
 
+    health = 100
+
+    if game.currHitPoints < (3 * game.hitPoints / 4):
+        health = 75
+
+    if game.currHitPoints < game.hitPoints / 2:
+        health = 50
+
+    if game.currHitPoints < game.hitPoints / 4:
+        health = 25
+
+
     player = User.query.filter_by(turn = game.turnNum, code = code).first()   
 
     yourTurn = False
@@ -216,7 +228,8 @@ def getFlickState():
             "stage": stage,
             "sojuMap": sojuMap,
             "tick": game.tick,
-            "drinkingPlayers": drinkingPlayers
+            "drinkingPlayers": drinkingPlayers,
+            "health": health
         })
 
 @flickGame.route("/api/flick", methods=['POST'])
@@ -261,7 +274,12 @@ def flick():
             "currHitPos": None
         })
 
-    game.currHitPoints -= (100 - abs(flick - game.maxHitPos))
+    if abs(flick - game.maxHitPos) <= 10:
+
+        game.currHitPoints -= 100
+    elif abs(flick - game.maxHitPos) <= 30:
+        game.currHitPoints -= int((100 - abs(flick - game.maxHitPos)) / 5)
+        
     game.currHitPos = flick
 
     game.maxHitPos = random.randint(20, 80)
@@ -269,7 +287,6 @@ def flick():
     game.tick = not game.tick
     stage = 0
     if game.currHitPoints < game.hitPoints / 2:
-        print("why",game.currHitPoints , game.hitPoints)
         stage = 1
     if game.currHitPoints <= 0:
         stage = 2
