@@ -88,7 +88,7 @@ export const FlickGame = props => {
 
     useInterval(() => {
         checkGame()
-    }, 1000);   
+    }, 500);   
   
     const checkGame = () => {
        
@@ -128,7 +128,7 @@ export const FlickGame = props => {
                             setLosers(data.drinkingPlayers);
                             setLoserShow(true);
 
-                        }, 4000);
+                        }, 4700);
                         
                     }
 

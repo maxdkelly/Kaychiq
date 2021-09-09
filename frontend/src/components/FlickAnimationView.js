@@ -304,6 +304,8 @@ export const FlickAnimationView = props => {
         vid.current = stages[stageIndex]
         setMax(newMax); 
         setStopNum(-10);
+        setStop(false);
+        setDisabled(false);
 
         }, 4800)
 
@@ -321,6 +323,8 @@ export const FlickAnimationView = props => {
 
           setMax(newMax);
           setStopNum(-10);
+          setStop(false);
+          setDisabled(false);
 
           vid.current = stages[stageIndex + 1];
           setStageIndex(stageIndex + 1);
@@ -354,11 +358,6 @@ export const FlickAnimationView = props => {
 
         setStop(true);
         setDisabled(true);
-        setTimeout(function() { //Start the timer
-          setStop(false);
-          setDisabled(false);
-          
-        }, 5500)
       
         console.log(token[0])
         flick.flick(token[0], sliderValue)
