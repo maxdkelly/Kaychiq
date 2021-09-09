@@ -297,15 +297,17 @@ export const FlickAnimationView = props => {
   }
 
     const repeat = () => {
-      console.log("heree")
       vid.current = gifs[vidIndex];
 
       setTimeout(function() { //Start the timer
 
         vid.current = stages[stageIndex]
         setMax(newMax); 
-        }, 4500)
+        setStopNum(-10);
 
+        }, 4800)
+
+       
     }
 
     const progress = () => {
@@ -318,6 +320,7 @@ export const FlickAnimationView = props => {
         setTimeout(function() { //Start the timer
 
           setMax(newMax);
+          setStopNum(-10);
 
           vid.current = stages[stageIndex + 1];
           setStageIndex(stageIndex + 1);
@@ -331,7 +334,7 @@ export const FlickAnimationView = props => {
           } 
           
            
-          }, 4500)
+          }, 4800)
       }
 
     }
@@ -339,13 +342,7 @@ export const FlickAnimationView = props => {
     const handleSliderStop = num => {
 
       console.log(num);
-      setStopNum(num);
-      setTimeout(function() { //Start the timer
-        setStopNum(-10);
-        
-      }, 4500)
-
-      
+      setStopNum(num); 
     }
 
     
@@ -455,6 +452,13 @@ export const FlickAnimationView = props => {
                       <Grid item>
 
                         <img src = {vid.current} width={getIconSize(444)} height={getIconSize(294)}/>
+
+
+                        <img src = {vid1} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
+                        <img src = {vid2} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
+                        <img src = {vid3} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
+                        <img src = {vid4} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
+
                         {/* 
                         <video autoplay playsinline muted ref={vidRef1} width={getIconSize(444)} height={getIconSize(294)} className= {show1 ? "" : "hidden"}>
                             <source src ={vid1w} type="video/webm" /> 
