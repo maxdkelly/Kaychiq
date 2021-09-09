@@ -84,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
       height: 'fit-content',
       width: 'fit-content',
       paddingTop: "7px",
+      paddingBottom: "7px",
       paddingLeft: "20px",
       paddingRight: "20px",
 
