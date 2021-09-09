@@ -126,7 +126,7 @@ export const FlickAnimationView = props => {
   const vid = useRef(stage1)
   const paperRef = useRef(null);
 
-  const [sliderValue, setSlider] = useState(2);
+  const [sliderValue, setSlider] = useState(4);
   const [slideDir, setDir] = useState(true);
 
   const stages = [stage1, stage2, stage3]
@@ -231,7 +231,7 @@ export const FlickAnimationView = props => {
 
     useInterval(() => {
       changeSlider()
-    }, 10);   
+    }, 20);   
 
   function changeSlider() {
 
@@ -256,19 +256,19 @@ export const FlickAnimationView = props => {
 
       if(sliderValue == 100) {
         setDir(!slideDir)
-        setSlider(sliderValue - 2); 
+        setSlider(sliderValue - 4); 
   
       }
   
        else if( sliderValue == 0) {
         setDir(!slideDir)
-        setSlider(sliderValue + 2); 
+        setSlider(sliderValue + 4); 
   
       } else {
         if(slideDir) {
-          setSlider(sliderValue + 2); 
+          setSlider(sliderValue + 4); 
         } else {
-          setSlider(sliderValue - 2); 
+          setSlider(sliderValue - 4); 
     
         }
   
