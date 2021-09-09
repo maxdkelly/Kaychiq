@@ -83,6 +83,9 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(3),
       height: 'fit-content',
       width: 'fit-content',
+      paddingTop: "7px",
+      paddingLeft: "20px",
+      paddingRight: "20px",
 
       marginBottom: theme.spacing(3),
       [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
@@ -122,7 +125,7 @@ export const FlickAnimationView = props => {
   const vid = useRef(stage1)
   const paperRef = useRef(null);
 
-  const [sliderValue, setSlider] = useState(1);
+  const [sliderValue, setSlider] = useState(2);
   const [slideDir, setDir] = useState(true);
 
   const stages = [stage1, stage2, stage3]
@@ -136,7 +139,7 @@ export const FlickAnimationView = props => {
 
   const [stop, setStop] = useState(false);
 
-  const [hit, setHit] = useState(0);
+  const [hit, setHit] = useState(-10);
   const token = useState(props.token);
   const [show, setShow] = useState(props.show);
   const [currHit, setCurrHit] = useState([-1,  ""]);
@@ -196,25 +199,25 @@ export const FlickAnimationView = props => {
 
   
   useEffect(() => {
-    console.log("something happened")
+    console.log("something happened, stage:",props.stage)
     console.log(props.stage)
 
-    if(! props.start) {
+    
 
-      handleSliderStop(props.currHit[0]);
+    handleSliderStop(props.currHit[0]);
 
-      setCurrHit(props.currHit)
-      setGo(true);
+    setCurrHit(props.currHit)
+    setGo(true);
 
-      if( props.stage != stage) {
-        setChanged(true);
-      }
+    if( props.stage != stage) {
+      setChanged(true);
     }
+    
 
     setStage(props.stage);
     setTick(props.tick);
 
-  }, [props.tick, props.stage]);
+  }, [props.tick]);
 
   
     const getIconSize = relSize => {
@@ -227,11 +230,11 @@ export const FlickAnimationView = props => {
 
     useInterval(() => {
       changeSlider()
-  }, 5);   
+    }, 10);   
 
   function changeSlider() {
 
-    if(sliderValue == stopNum && go) {
+    if((sliderValue == stopNum && go) || (go && hit != -10)) {
 
       setGo(false);
       if(!changed) {
@@ -252,19 +255,19 @@ export const FlickAnimationView = props => {
 
       if(sliderValue == 100) {
         setDir(!slideDir)
-        setSlider(sliderValue - 1); 
+        setSlider(sliderValue - 2); 
   
       }
   
        else if( sliderValue == 0) {
         setDir(!slideDir)
-        setSlider(sliderValue + 1); 
+        setSlider(sliderValue + 2); 
   
       } else {
         if(slideDir) {
-          setSlider(sliderValue + 1); 
+          setSlider(sliderValue + 2); 
         } else {
-          setSlider(sliderValue - 1); 
+          setSlider(sliderValue - 2); 
     
         }
   
@@ -286,17 +289,19 @@ export const FlickAnimationView = props => {
     
       // Set up the interval.
       useEffect(() => {
-        function tick() {
+        function tickFunc() {
           savedCallback.current();
         }
         if (delay !== null) {
-          let id = setInterval(tick, delay);
+          let id = setInterval(tickFunc, delay);
           return () => clearInterval(id);
         }
       }, [delay]);
   }
 
     const repeat = () => {
+
+      setHit(-10);
       vid.current = gifs[vidIndex];
 
       setTimeout(function() { //Start the timer
@@ -314,6 +319,7 @@ export const FlickAnimationView = props => {
 
     const progress = () => {
 
+      setHit(-10);
       if(vidIndex < vids.length - 1) {
 
         vid.current = gifs[vidIndex + 1];
@@ -359,18 +365,10 @@ export const FlickAnimationView = props => {
         setStop(true);
         setDisabled(true);
       
-        console.log(token[0])
-        flick.flick(token[0], sliderValue)
-        .then(data => {
-
-          
-            // if(data.stage != stage) {
-            //   setChanged(true);
-            // }
-            // setStage(data.stage);
-
-            // handleSliderStop(sliderValue);
-        })
+        let hitValue = sliderValue;
+        setHit(hitValue);
+        flick.flick(token[0], hitValue);
+        
 
       }
       

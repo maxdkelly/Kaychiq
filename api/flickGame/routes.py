@@ -83,7 +83,7 @@ def startFlickGame():
     FlickGame.query.filter_by(code = code).delete()
     db.session.commit()
     num = random.randint(240, 499)
-    flipGame = FlickGame(code = code, hitPoints = num, currHitPoints = num, hitRange = 100, maxHitPos = 70, turnNum = 0, numPlayers = len(players))
+    flipGame = FlickGame(code = code, hitPoints = num, currHitPoints = num, hitRange = 100, maxHitPos = 70, turnNum = 0, numPlayers = len(players), tick = False)
     db.session.add(flipGame)
     db.session.commit()
 

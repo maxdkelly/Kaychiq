@@ -48,20 +48,6 @@ export const FlickGame = props => {
     const [name, setName] = useState(""); 
     const [sojuMap, setSojuMap] = useState({});
 
-
-    const [recentlyClosed, setRecClosed] = useState(false);
-   
-    const handleShow = () => setShow(true);
-
-    const handleClose = () => {
-
-
-        setShow(false);
-        setRecClosed(true);
-        setTimeout(() => { setRecClosed(false);}, 4000);
-        
-    }
-
     useEffect(() => {
 
         if(token) {
@@ -96,7 +82,7 @@ export const FlickGame = props => {
             .then(data => {
                
                 if(data) {
-
+                    setStage(data.stage);
                     if(data.tick != tick) {
                         console.log([data.currHitPos, hitRange, currPlayer])
                         setStart(false);
@@ -104,7 +90,7 @@ export const FlickGame = props => {
                         setTick(data.tick);
                     }
 
-                    setStage(data.stage);
+                    
 
                     setMaxHitPos(data.maxHitPos);
                     setHitRange(data.hitRange);
@@ -115,6 +101,7 @@ export const FlickGame = props => {
                     setCurrPlayer(data.currPlayer);
 
                     setSojuMap(data.sojuMap);
+
                     if(data.yourTurn && !data.gameOver) {
                         console.log("your turn")
                         setShow(true);
