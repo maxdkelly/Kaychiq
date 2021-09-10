@@ -125,7 +125,7 @@ export const GuessNumberGame = props => {
 
     useInterval(() => {
         checkGame()
-    }, 1000);   
+    }, 700);   
   
     const checkGame = () => {
        
