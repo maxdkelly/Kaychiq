@@ -28,6 +28,9 @@ import FlickFinishedDialog from '../components/FlickFinishedDialog';
 
 import flickGif from '../flicks/flick.gif'
 
+import gif from '../gifs/gif2.gif'
+
+
 function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
     return {
@@ -70,6 +73,7 @@ export const FlickGame = props => {
     const classes = useStyles();
 
     const flickGifLoaded = (new Image().src = flickGif)
+    const finishedGif = (new Image().src = gif)
 
     const [token, setToken] = useState(props.location.token);
 
@@ -297,7 +301,7 @@ export const FlickGame = props => {
                 </Grid>
             </Grid>
            
-            <FlickFinishedDialog show = {loserShow} losers = {losers} token = {token} host = {host}/>
+            <FlickFinishedDialog show = {loserShow} losers = {losers} token = {token} host = {host} gif = {finishedGif}/>
 
             
             <div className = {msg != "" ? "" : "hidden"}>
@@ -308,7 +312,7 @@ export const FlickGame = props => {
                   horizontal: 'right',
                 }}
                 open={open}
-                autoHideDuration={3300}
+                autoHideDuration={3000}
                 onClose={handleClose}
                 message= {"Soju bottle tail at " + health + "% health"}
                 action={

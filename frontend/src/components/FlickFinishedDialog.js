@@ -36,7 +36,6 @@ import Dialog from '@material-ui/core/Dialog';
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
-import gif from '../gifs/gif2.gif'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -62,7 +61,7 @@ export const FlickFinishedDialog = props => {
     const [show, setShow] = useState(props.show);
     const [losers, setLosers] = useState(props.losers);
     const [host, setHost] = useState(props.host)
-
+    const [gif, setGif] = useState(props.gif)
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -78,6 +77,9 @@ export const FlickFinishedDialog = props => {
       
       }, [props.token, props.losers, props.show, props.host]);
 
+    useEffect(() => {
+      setGif(props.gif)
+    }, [props.gif])
     
     function handleBackToLobby(e) {
       general.removeRules();
@@ -122,6 +124,8 @@ export const FlickFinishedDialog = props => {
             "margin-right": "auto",
 
           }} src={gif}/>  
+
+
           <Button style = {host ? {"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
             "align-self":"center", 
             "margin-bottom":"1rem",

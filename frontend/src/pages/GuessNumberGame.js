@@ -15,21 +15,57 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 
 import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
+import Paper from '@material-ui/core/Paper';
+
+import Snackbar from '@material-ui/core/Snackbar';
 
 import GuessGameView from '../components/GuessGameView';
 import GuessDialog from '../components/GuessDialog';
 import GuessFinishedDialog from '../components/GuessFinishedDialog';
+
+import gif from '../gifs/gif1.gif'
+
+import lebron from '../gifs/lebron.gif'
+
+function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height
+    };
+  }
+  
+  function useWindowDimensions() {
+    const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  
+    useEffect(() => {
+      function handleResize() {
+        setWindowDimensions(getWindowDimensions());
+      }
+  
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+  
+    return windowDimensions;
+  }
 
 
 export const GuessNumberGame = props => {
 
     const history = useHistory();
 
+    const { height, width } = useWindowDimensions();
+
+
     const [token, setToken] = useState(props.location.token);
     const [show, setShow] = useState(false);
     const [loserShow, setLoserShow] = useState(false);
     const [loser, setLoser] = useState("");
+
+    const finishedGif = (new Image().src = gif)
+
+    const lebronGif = (new Image().src = lebron)
 
     const [host, setHost] = useState(false);
 
@@ -44,6 +80,12 @@ export const GuessNumberGame = props => {
     const [sojuMap, setSojuMap] = useState({});
     const [currPlayer, setCurrPlayer] = useState("");
 
+    const [popupOpen, setPopup] = useState(false);
+    
+
+    const handlePopupClose = () => setPopup(false);
+
+    const [shown, setShown] = useState(false);
     const [recentlyClosed, setRecClosed] = useState(false);
    
     const handleShow = () => setShow(true);
@@ -106,6 +148,13 @@ export const GuessNumberGame = props => {
                     
                     setCurrPlayer(data.currPlayer);
 
+                   
+
+                    if(data.highestGuess - data.lowestGuess == 2 && !shown) {
+                        setShown(true);
+                        setPopup(true);
+                    }
+
                     setSojuMap(data.sojuMap);
                     if(data.yourTurn && !data.gameOver && !recentlyClosed) {
                         console.log("hey");
@@ -156,6 +205,27 @@ export const GuessNumberGame = props => {
         }, [delay]);
     }
 
+    const getFontSize = () => {
+
+        if(width > 1000) {
+            return "large"
+        }
+
+        if(width > 600) {
+            return "medium"
+        }
+
+       
+        return "small"
+        
+    }
+
+    const getIconSize = relSize => {
+
+        return Math.max(relSize/1.7, relSize * width/1920 )
+  
+    }
+
  
 
     
@@ -166,7 +236,49 @@ export const GuessNumberGame = props => {
 
             <GuessGameView players = {players} sojuMap = {sojuMap} currPlayer = {currPlayer} highest = {highest} lowest = {lowest} currGuess = {currGuess} over = {loserShow} show={show}/>
             <GuessDialog show = {show} token = {token} highest = {highest} lowest = {lowest} setClosed = {handleClose}/>
-            <GuessFinishedDialog show = {loserShow} loser = {loser} num = {currGuess[0]} host = {host} token = {token} />
+            <GuessFinishedDialog show = {loserShow} loser = {loser} num = {currGuess[0]} host = {host} token = {token} gif = {finishedGif} />
+
+            <Snackbar
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={popupOpen}
+                autoHideDuration={3500}
+                onClose={handlePopupClose}
+                message= {"HAHAHAHAHAHA " + currPlayer + " is fucked"}
+                action={
+                  <React.Fragment>
+                    
+                  </React.Fragment>
+                }
+              >
+                <main>
+                    <Paper style = {{
+                         "background-color": '#EEDFDE',
+                         "border-radius": "6"
+                    }}> 
+                    <div style = {{
+                        "padding" : "10px",
+                        
+                        "width": getIconSize(270),
+                        "font-size": getFontSize(),
+                        "font-weight": "bold",
+                        "text-decoration": "none",
+                        "text-align" : "center", 
+                        "vertical-align": "middle",
+                        "color": "#293242",
+                        "line-height": "110%"
+                    }}>
+
+                        {"HAHAHAHAHAHA " + currPlayer + " is fucked"}
+                    </div>  
+                   
+                    <img src = {lebron} width={getIconSize(300)} height={getIconSize(169)} />
+
+                  </Paper>
+                </main>
+            </Snackbar>
 
            
         </body>
