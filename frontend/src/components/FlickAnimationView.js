@@ -484,7 +484,7 @@ export const FlickAnimationView = props => {
                        justify = "center"
                       >
 
-                        <Grid item style = {{"padding" : "15px"}}>
+                        <Grid item style = {{"margin" : "5px"}}>
                           <img src = {vid.current} width={getIconSize(444)} height={getIconSize(294)}/>
 
 
@@ -536,8 +536,11 @@ export const FlickAnimationView = props => {
                 message= {msg}
                 action={
                   <React.Fragment>
-                    
-                  </React.Fragment>
+
+                  <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+                    <CloseIcon fontSize="small" />
+                  </IconButton>
+                </React.Fragment>
                 }
               />
 
