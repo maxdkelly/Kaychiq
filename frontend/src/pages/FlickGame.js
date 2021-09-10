@@ -174,7 +174,7 @@ export const FlickGame = props => {
                             setTimeout(() => {
                                 setWeak(true);
 
-                            }, 5000);
+                            }, 4200);
                             setMsg(currPlayer + " made a shite attempt at flicking the tail")
                         }
                         
@@ -203,13 +203,13 @@ export const FlickGame = props => {
                             setTimeout(() => {
                                 setOpen(true);
     
-                            }, 5000);
+                            }, 4500);
     
                         } else if (hitDiff <= 10  && !data.gameOver) {
                             setTimeout(() => {
                                 setWow(true);
     
-                            }, 5000);
+                            }, 4200);
 
                         }
                     }
