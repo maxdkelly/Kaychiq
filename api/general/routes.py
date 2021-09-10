@@ -12,6 +12,8 @@ general = Blueprint('general', __name__)
 
 removeUserFuncs = [removeUser, removeFlickUser]
 
+code_bank = ["FUCK", "SHIT", "CUNT", "CVNT", "ASSS", "FVCK", "PISS", "BOOB", "ALEX", "BUTT", "CUUM", "JIZZ", "CUMM", "TITS"]
+
 def get_soju():
 
     return [x.split("/")[-1].split(".")[0]  for x in glob.glob("./frontend/src/soju/*")]
@@ -68,13 +70,14 @@ def leave_game():
         "validMsg":"Deleted user"
     })
 
+
 @general.route("/api/createGame", methods=['POST'])
 def create_game():
 
     content = request.json 
     print(content)
 
-    one_day = timedelta(hours=24)
+    one_day = timedelta(hours=2)
     one_day_ago = datetime.now() - one_day
 
     old_codes = []
@@ -119,8 +122,16 @@ def create_game():
     tokenUnique = False
     gameToken = ""
 
+    codes = code_bank.copy()
+    random.shuffle(codes)
+    # print(codes)
     while not tokenUnique:
-        gameToken = ''.join(random.choice(string.ascii_uppercase) for _ in range(4))
+
+        if len(codes) == 0:
+            gameToken = ''.join(random.choice(string.ascii_uppercase) for _ in range(4))
+        else:
+            gameToken = codes.pop()
+
         print(gameToken)
         tokenUnique = not bool(Game.query.filter_by(code = gameToken).first())
     print(gameToken)
@@ -152,7 +163,7 @@ def join_game():
             "individualToken": None
         })
 
-    code = content["code"]
+    code = content["code"].upper()
     name = content["username"]
 
     if not name:

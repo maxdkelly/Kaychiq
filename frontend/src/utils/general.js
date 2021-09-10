@@ -1,9 +1,34 @@
+
+
 import axios from "axios";
 import Cookies from 'js-cookie';
 
 class General {
   constructor() {
-    
+    this.title = "";
+    this.body = [];
+  }
+
+  hasRules() {
+    return this.title != "";
+  }
+
+  setRules(title, body) {
+    this.title = title;
+    this.body = body;
+  }
+
+  removeRules() {
+    this.title = "";
+    this.body = [];
+  }
+
+  getTitle() {
+    return this.title;
+  }
+
+  getBody() {
+    return this.body;
   }
 
   getToken() {
@@ -45,7 +70,9 @@ class General {
       .then(res => {
 
             if(res.data.isValid) {
-              Cookies.set('token', res.data.individualToken, { expires: 1 })
+
+              var twoHours = new Date(new Date().getTime() + 2 * 60 * 60 * 1000);
+              Cookies.set('token', res.data.individualToken, { expires: twoHours })
             }
             return res.data;
       })

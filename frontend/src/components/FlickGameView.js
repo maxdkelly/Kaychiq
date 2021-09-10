@@ -143,10 +143,8 @@ export const FlickGameView = props => {
         setPlayers(props.players);
         setSojuMap(props.sojuMap);
 
-        setTimeout(() => {
-            setCurrPlayer(props.currPlayer);
-
-        }, 3000);
+        
+        setCurrPlayer(props.currPlayer);
 
         setHighest(props.highest);
         setLowest(props.lowest);
@@ -160,21 +158,21 @@ export const FlickGameView = props => {
 
       }, [props.players, props.sojuMap, props.currPlayer, props.highest, props.lowest, props.over, props.show]);
 
-    useEffect(() => {
+    // useEffect(() => {
 
 
-      setFadeChecked(false);
-      setChecked(false);
+    //   setFadeChecked(false);
+    //   setChecked(false);
 
-      setTimeout(function() { //Start the timer
-        setFadeChecked(true);//After 1 second, set render to true
-        setChecked(true);
-      }, 1000)
+    //   setTimeout(function() { //Start the timer
+    //     setFadeChecked(true);//After 1 second, set render to true
+    //     setChecked(true);
+    //   }, 1000)
 
 
-      setCurrGuess(props.currGuess);
+    //   setCurrGuess(props.currGuess);
 
-    }, [props.currGuess])
+    // }, [props.currGuess])
 
     const getIconSize = relSize => {
 
@@ -230,7 +228,7 @@ export const FlickGameView = props => {
             <main className={players.length == 0 ? "hidden" : classes.layout}>
                 <Paper className={players.length == 0 ? "hidden" : classes.paper}> 
 
-                <Grid container spacing={3} justifyContent = "flex-end">
+                {/* <Grid container spacing={3} justifyContent = "flex-end">
                   <Grid item xs style = {{"max-width" : "32%"}}>
                     <Button variant="contained" color="primary" style = 
                           {{"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
@@ -249,7 +247,7 @@ export const FlickGameView = props => {
                          
                         </Button>
                     </Grid>
-                  </Grid>
+                  </Grid> */}
 
                   <div class ="paperTitleText" style = {{"padding-bottom" : "10px"}}>
                       Flick The Soju Bottle Cap

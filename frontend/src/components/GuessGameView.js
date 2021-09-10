@@ -7,7 +7,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
@@ -104,7 +107,10 @@ export const GuessGameView = props => {
     const [rulesShow, setRulesShow] = useState(false);
     const handleRulesClose = () => setRulesShow(false);
 
+    const [open, setOpen] = useState(false);
 
+    const handleClose = () => setOpen(false);
+    const [msg, setMsg] = useState("");
     const [currPlayer, setCurrPlayer] = useState(props.currPlayer);
     const [highest, setHighest] = useState(props.highest);
     const [lowest, setLowest] = useState(props.lowest);
@@ -152,16 +158,18 @@ export const GuessGameView = props => {
     useEffect(() => {
 
 
-      setFadeChecked(false);
-      setChecked(false);
+      handleClose();
 
-      setTimeout(function() { //Start the timer
-        setFadeChecked(true);//After 1 second, set render to true
-        setChecked(true);
-      }, 1000)
+      if(props.currGuess[1]) {
 
+        setTimeout(function() { //Start the timer
+          setOpen(true);
+         }, 1000)
+   
+        setCurrGuess(props.currGuess);
 
-      setCurrGuess(props.currGuess);
+      }
+      
 
     }, [props.currGuess])
 
@@ -210,7 +218,7 @@ export const GuessGameView = props => {
             <main className={players.length == 0 ? "hidden" : classes.layout}>
                 <Paper className={players.length == 0 ? "hidden" : classes.paper}> 
 
-                <Grid container spacing={3} justifyContent = "flex-end">
+                {/* <Grid container spacing={3} justifyContent = "flex-end">
                   <Grid item xs style = {{"max-width" : "32%"}}>
                     <Button variant="contained" color="primary" style = 
                           {{"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
@@ -229,7 +237,7 @@ export const GuessGameView = props => {
                          
                         </Button>
                     </Grid>
-                  </Grid>
+                  </Grid> */}
 
                   <div class ="paperTitleText" >
                       Guess The Soju Bottle No.
@@ -312,8 +320,31 @@ export const GuessGameView = props => {
                 </Paper>
             </main>
             
-   
-            <Fade in={fadeChecked}  timeout = {1000}>
+            <div className = {over ? "hidden" : ""}>
+              <Snackbar
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                open={open}
+                autoHideDuration={9000}
+                onClose={handleClose}
+                message= {
+                  !over ? (currGuess[1] + " guessed " + currGuess[0] + ", " + (currGuess[0] == highest ? " The number is lower": "The number is higher")) : (currGuess[1] + " guessed the correct number")
+                }
+                className = {!over ? "" : "hidden"}
+                action={
+                  <React.Fragment>
+                    
+                  </React.Fragment>
+                }
+              />
+
+
+            </div>
+            
+
+            {/* <Fade in={fadeChecked}  timeout = {1000}>
             <Slide direction="up" in={checked} timeout = {1000}>
 
                 <Paper className={(currGuess[0] && !over)? classes.logContainer: "hidden"} elevation={6}>                  
@@ -325,7 +356,7 @@ export const GuessGameView = props => {
                 </Slide>
               
             </Fade>
-            
+             */}
            
                 
             

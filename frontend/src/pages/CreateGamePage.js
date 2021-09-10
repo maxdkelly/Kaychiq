@@ -85,22 +85,9 @@ export const CreateGamePage = props =>{
                 </Paper>
             </main>
 
-            <main className={token ? classes.layout : "hidden"}>
-                <Paper className={classes.paper}>
-                    <Grid container spacing={3}   paddingBottom = '5rem'>
-
-                        <Grid item xs={12}>
-                          
-                            <div className="titleText">Lobby </div>  
-
-                        </Grid>
-  
-                    </Grid>
                     
-                    <LobbyView token={token}/>
-                </Paper>
-            </main>
-
+            <LobbyView token={token}/>
+               
         
         </body>
     )

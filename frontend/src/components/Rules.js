@@ -37,10 +37,11 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export const GuessGameRules = props => {
+export const Rules = props => {
   
     const classes = useStyles();
-
+    const [body, setBody] = useState([]);
+    const [title, setTitle] = useState(props.title);
    
     const [show, setShow] = useState(props.show);
 
@@ -51,14 +52,14 @@ export const GuessGameRules = props => {
     const handleShow = () => setShow(true);
     const [guessError, setGuessError] = useState(false);
 
-  
+    useEffect(() => {
+        setBody(props.body);
+        setTitle(props.title);
+    }, [props.body, props.title]);
 
     useEffect(() => {
         
-        setShow(props.show);
-       
-        
-      
+        setShow(props.show);   
       }, [props.show]);
 
    
@@ -69,7 +70,7 @@ export const GuessGameRules = props => {
           
         <Grid style={{"max-height":"10%"}} container spacing={3} justifyContent = "flex-end">
                   <Grid item xs style = {{"max-width" : "100%"}}>
-                   <div className="medButtonText">Guess The Soju Bottle No. Rules</div>
+                   <div className="medButtonText">{title}</div>
                   </Grid>
 
         </Grid>
@@ -86,11 +87,16 @@ export const GuessGameRules = props => {
           </ListItem>
           <ListItem>
           <Typography variant = "body2">
-             In 'Guess The Soju Bottle No.' you take turns to guess what the number under the virutal Soju bottle cap is. The number under the virutal Soju bottle cap is between 0 and 100.
-             <br/> <br/>
-             Each guess you make must be within the previous highest and lowest guesses. If you make an incorrect guess the computer will tell you whether the number is higher or lower and update the previous higher or lower guess.
-             <br/> <br/>
-             If you make a correct guess you drink!
+
+            {
+                body
+                .map(item => <div>{item}</div>)
+                .reduce((acc, x) => acc === null ? [x] : [acc, <React.Fragment><br/> <br/> </React.Fragment>, x], null)
+            }
+
+         
+
+          
             </Typography>
           </ListItem>
 
@@ -116,4 +122,4 @@ export const GuessGameRules = props => {
 }
   
 
-export default GuessGameRules
+export default Rules

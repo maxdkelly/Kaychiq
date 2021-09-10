@@ -50,10 +50,39 @@ const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
     },
-    paper: {
-      height: 100,
-      width: 100,
+   
+    appBar: {
+        position: 'relative',
     },
+    layout: {
+        width: 'fit-content',
+        maxWidth: "90%",
+        marginLeft: 'auto',
+        marginRight: 'auto',       
+    },
+    paper: {
+        marginTop: theme.spacing(3),
+        marginBottom: theme.spacing(3),
+        paddingLeft: '30px',
+        paddingRight: '30px',
+        paddingBottom: '30px',
+
+        width: 'fit-content',
+        backgroundColor: '#C4C3D0',
+        borderRadius: 10
+    },
+    stepper: {
+        padding: theme.spacing(3, 0, 5),
+    },
+    buttons: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+    },
+    button: {
+        marginTop: theme.spacing(3),
+        marginLeft: theme.spacing(1),
+    },
+   
     control: {
       padding: theme.spacing(2),
     },
@@ -197,43 +226,56 @@ export const LobbyView = props => {
         }, [delay]);
       }
 
-    return (          
-        <Grid 
-            container 
-            justifyContent="center" 
-            justify = "center" 
-            alignItems="center"
-            spacing={5}
-            marginTop={50}
-            marginBottom={50}
-            paddingTop = '1.5rem'
-        >
-            {players.map((player) => (
+    return (    
+        
+        <main className={players.length != 0 ? classes.layout : "hidden"}>
+            <Paper className={classes.paper}>
                 
-                    <Card className = "cardContainer">
-                        <CardContent className = "cardContentContainer"  alignItems="center">
-                            <img src={sojuToObj[sojuMap[player]]} width={getIconSize(80)} height={getIconSize(120)} />         
+                <div style = {{"padding-bottom" : "15px", "padding-top" : "1px"}}>
+                    <div className="titleText">Lobby </div>  
 
-                            <div style = {{
-                                "max-width": getIconSize(80),
-                                "font-size": getFontSize(),
-                                "font-weight": "bold",
-                                "text-decoration": "none",
-                                "text-align" : "center", 
-                                "vertical-align": "middle",
-                                "color": "#293242",
-                                "word-wrap": "break-word"
-                            }}>
+                </div>    
 
-
-                                {player}
-                            </div>  
+                   
+                <Grid 
+                    container 
+                    justifyContent="center" 
+                    justify = "center" 
+                    alignItems="center"
+                    spacing={5}
+                    marginTop={50}
+                    marginBottom={50}
+                    paddingTop = '1.5rem'
+                >
+                    {players.map((player) => (
                         
-                        </CardContent>
-                    </Card>
-                
-            ))}
-        </Grid>
+                            <Card className = "cardContainer">
+                                <CardContent className = "cardContentContainer"  alignItems="center">
+                                    <img src={sojuToObj[sojuMap[player]]} width={getIconSize(80)} height={getIconSize(120)} />         
+
+                                    <div style = {{
+                                        "max-width": getIconSize(80),
+                                        "font-size": getFontSize(),
+                                        "font-weight": "bold",
+                                        "text-decoration": "none",
+                                        "text-align" : "center", 
+                                        "vertical-align": "middle",
+                                        "color": "#293242",
+                                        "word-wrap": "break-word"
+                                    }}>
+
+
+                                        {player}
+                                    </div>  
+                                
+                                </CardContent>
+                            </Card>
+                        
+                    ))}
+                </Grid>
+            </Paper>
+        </main>
+        
          
       
         

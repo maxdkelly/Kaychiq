@@ -36,7 +36,6 @@ import Dialog from '@material-ui/core/Dialog';
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
-import gif from '../gifs/gif1.gif'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -61,7 +60,9 @@ export const GuessFinishedDialog = props => {
     const [token, setToken] = useState(props.token);
     const [show, setShow] = useState(props.show);
     const [loser, setLoser] = useState(props.loser);
-    const [host, setHost] = useState(props.host)
+    const [host, setHost] = useState(props.host);
+
+    const [gif, setGif] = useState(props.gif)
 
     const [num, setNum] = useState(props.num);
 
@@ -69,7 +70,10 @@ export const GuessFinishedDialog = props => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     
-
+    useEffect(() => {
+      setGif(props.gif)
+    }, [props.gif])
+    
     useEffect(() => {
         setToken(props.token);
         setShow(props.show);
@@ -82,6 +86,7 @@ export const GuessFinishedDialog = props => {
 
     
     function handleBackToLobby(e) {
+        general.removeRules();
 
         guess.guessToLobby(token)
         .then(

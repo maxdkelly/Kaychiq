@@ -16,9 +16,14 @@ import Box from '@material-ui/core/Box';
 import Slider from '@material-ui/core/Slider';
 import Fade from '@material-ui/core/Fade';
 
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 
 import GuessGameRules from './GuessGameRules';
+import GifPlayer from 'react-gif-player'
 
 
 import apple from '../soju/apple.png'
@@ -31,10 +36,17 @@ import watermelon from '../soju/watermelon.png'
 import lychee from '../soju/lychee.png'
 import chicken from '../soju/chicken.png'
 
-import vid1 from '../flicks/vid1.mp4'
-import vid2 from '../flicks/vid2.mp4'
-import vid3 from '../flicks/vid3.mp4'
-import vid4 from '../flicks/vid4.mp4'
+import stage1 from '../flicks/stage1.gif'
+import stage2 from '../flicks/stage2.gif'
+import stage3 from '../flicks/stage3.gif'
+
+import vid1 from '../flicks/vid1.gif'
+import vid2 from '../flicks/vid2.gif'
+import vid3 from '../flicks/vid3.gif'
+import vid4 from '../flicks/vid4.gif'
+
+
+
 
 
 
@@ -66,16 +78,19 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: 1,
     }, 
     layout: {
-      // width: 'fit-content',
-      // maxWidth: "90%",
-      // marginLeft: 'auto',
-      // marginRight: 'auto',       
+      width: 'fit-content',
+      maxWidth: "90%",
+      marginLeft: 'auto',
+      marginRight: 'auto',         
     },
     paper: {
-      marginTop: theme.spacing(3),
-      height: 'fit-content',
-      width: 'fit-content',
-
+      // marginTop: theme.spacing(3),
+      // height: 'fit-content',
+      // width: 'fit-content',
+      paddingTop: "7px",
+      paddingBottom: "7px",
+      paddingLeft: "20px",
+      paddingRight: "20px",
       marginBottom: theme.spacing(3),
       [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
         marginTop: theme.spacing(6),
@@ -106,36 +121,35 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
+
+
 export const FlickAnimationView = props => {
 
-  const vidRef1 = useRef(null);
-  const vidRef2 = useRef(null);
-  const vidRef3 = useRef(null);
-  const vidRef4 = useRef(null);
 
-  
+  const vid = useRef(stage1)
   const paperRef = useRef(null);
 
-  const [sliderValue, setSlider] = useState(1);
+  const [sliderValue, setSlider] = useState(5);
   const [slideDir, setDir] = useState(true);
 
-  const [show1, set1] = useState(true);
-  const [show2, set2] = useState(false);
-  const [show3, set3] = useState(false);
-  const [show4, set4] = useState(false);
-
-  const vidShows = [set1, set2, set3, set4]
-  const vidRefs = [vidRef1, vidRef2, vidRef3, vidRef4]
+  const stages = [stage1, stage2, stage3]
+  const vids = [vid1, vid2, vid3, vid4]
+  const [gifs, setGifs] = useState([]);
   const [vidIndex, setIndex] = useState(0);
+  const [stageIndex, setStageIndex] = useState(0);
 
   const [stage, setStage] = useState(0);
   const [tick, setTick] = useState(props.tick);
 
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => setOpen(false);
+
   const [stop, setStop] = useState(false);
 
-  const [hit, setHit] = useState(0);
+  const [hit, setHit] = useState(-10);
   const token = useState(props.token);
-  const [show, setShow] = useState(props.show);
+  const [show, setShow] = useState(null);
   const [currHit, setCurrHit] = useState([-1,  ""]);
   const [go, setGo] = useState(false);
 
@@ -143,113 +157,120 @@ export const FlickAnimationView = props => {
   
   const [maxHit, setMax] = useState(70);
   const [newMax, setNewMax] = useState(70);
+  const [gameStarted, setStarted] = useState(false);
+  const [msg, setMsg] = useState(props.msg);
 
+  const [tickRate, setTickRate] = useState(20);
 
+  const [over, setOver] = useState(false);
   const { height, width } = useWindowDimensions();
   
   const [changed, setChanged] = useState(false);
   const classes = useStyles();
-    
+  const [hitDisabled, setDisabled] = useState(false);
+
   useEffect(() => {
 
-    console.log(props.currHit)
-   
+    let imgList = vids
+    imgList.forEach((image) => {
+      new Image().src = image
+    });
 
-    setTimeout(() => {
+    setGifs(imgList);
+
+  },[])
+  useEffect(() => {
+
+    console.log(gameStarted)
+
+    if(props.show == false) {
       setShow(props.show)
 
-    }, 3900);
+    } else {
+
+      if(!gameStarted) {
+
+        setTimeout(() => {
+          setShow(props.show)
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          setShow(props.show)
+    
+        }, 6500);
+  
+      }
+
+    }
+   
+    
+    
   },[props.show])
 
-     
-  // useEffect(() => {
 
+    useEffect(() => {
+
+      setMsg(props.msg)
+     }, [props.msg])
    
 
  useEffect(() => {
 
   setNewMax(props.newMaxHit)
  }, [props.newMaxHit])
+
+ useEffect(() => {
+
+  setStarted(props.gameStarted)
+ }, [props.gameStarted])
+
+ useEffect(() => {
+   setOver(props.over)
+ }, [props.over])
+
+
   
   useEffect(() => {
-    console.log(props)
+    console.log("something happened, stage:",props.stage)
+    console.log(props.stage)
 
-  
-    if(! props.start) {
+    
 
-      handleSliderStop(props.currHit[0]);
+    handleSliderStop(props.currHit[0]);
 
-      setCurrHit(props.currHit)
-      setGo(true);
+    setCurrHit(props.currHit)
+    setGo(true);
 
-      if( props.stage != stage) {
-        setChanged(true);
+    if( props.stage != stage) {
+      setChanged(true);
+
+      if(props.stage == 1) {
+        setTickRate(17);
       }
-  
-      
-
-      
-      
-
     }
+    
 
     setStage(props.stage);
     setTick(props.tick);
 
+  }, [props.tick]);
+
+  
+    const getIconSize = relSize => {
+
+      return Math.max(relSize/1.7, relSize * 1.4 * width/1920 )
+
+    }
 
     
 
-  }, [props.tick, props.stage]);
-
-  useEffect(() => {
-
-   
-
-  },[]);
-
-   
-
-    const getIconSize = relSize => {
-
-      return Math.max(relSize/1.7, relSize * 1.3 * width/1920 )
-
-    }
-
-    const progress = () => {
-
-      if(vidIndex < vidShows.length - 1) {
-
-        vidShows[vidIndex](false);
-        vidShows[vidIndex + 1](true);
-        vidRefs[vidIndex + 1].current.play()
-
-       
-        setTimeout(function() { //Start the timer
-
-          setMax(newMax);
-          if(vidIndex < vidShows.length - 2) {
-            vidShows[vidIndex + 1](false);
-            vidShows[vidIndex + 2](true);
-            setIndex(vidIndex + 2);
-            console.log("set")
-
-          } else {
-            // alert("game over")
-          }
-          
-           
-          }, 4000)
-      }
-
-    }
-
     useInterval(() => {
       changeSlider()
-  }, 5);   
+    }, tickRate);   
 
   function changeSlider() {
 
-    if(sliderValue == stopNum && go) {
+    if((sliderValue == stopNum && go) || (go && hit != -10)) {
 
       setGo(false);
       if(!changed) {
@@ -270,19 +291,19 @@ export const FlickAnimationView = props => {
 
       if(sliderValue == 100) {
         setDir(!slideDir)
-        setSlider(sliderValue - 1); 
+        setSlider(sliderValue - 5); 
   
       }
   
        else if( sliderValue == 0) {
         setDir(!slideDir)
-        setSlider(sliderValue + 1); 
+        setSlider(sliderValue + 5); 
   
       } else {
         if(slideDir) {
-          setSlider(sliderValue + 1); 
+          setSlider(sliderValue + 5); 
         } else {
-          setSlider(sliderValue - 1); 
+          setSlider(sliderValue - 5); 
     
         }
   
@@ -304,28 +325,95 @@ export const FlickAnimationView = props => {
     
       // Set up the interval.
       useEffect(() => {
-        function tick() {
+        function tickFunc() {
           savedCallback.current();
         }
         if (delay !== null) {
-          let id = setInterval(tick, delay);
+          let id = setInterval(tickFunc, delay);
           return () => clearInterval(id);
         }
       }, [delay]);
   }
 
     const repeat = () => {
-      console.log(vidIndex)
-      vidRefs[vidIndex].current.play()
+
+      setHit(-10);
+      handleClose();
+
+      vid.current = gifs[vidIndex];
 
       setTimeout(function() { //Start the timer
+        setOpen(true);
 
-        console.log(newMax);
+        vid.current = stages[stageIndex]
         setMax(newMax); 
-        }, 4000)
-     
-     
+        setStopNum(-10);
+        setStop(false);
+        setDisabled(false);
 
+        }, 4800)
+
+       
+    }
+
+    const progress = () => {
+
+      setHit(-10);
+      handleClose();
+
+      if(vidIndex < vids.length - 1) {
+
+        vid.current = gifs[vidIndex + 1];
+
+       
+        setTimeout(function() { //Start the timer
+          setOpen(true);
+
+          setMax(newMax);
+          setStopNum(-10);
+          setStop(false);
+          setDisabled(false);
+
+          vid.current = stages[stageIndex + 1];
+          setStageIndex(stageIndex + 1);
+
+
+          if(vidIndex < vids.length - 2) {
+
+            setIndex(vidIndex + 2);
+            console.log("set")
+
+          } 
+          
+           
+          }, 4800)
+      }
+
+    }
+
+    const handleSliderStop = num => {
+
+      console.log(num);
+      setStopNum(num); 
+    }
+
+    
+
+    const handleSubmit = (e) => {
+
+      e.preventDefault();
+      if(!stop) {
+
+        setStop(true);
+        setDisabled(true);
+      
+        let hitValue = sliderValue;
+        setHit(hitValue);
+        flick.flick(token[0], hitValue);
+        
+
+      }
+      
     }
 
     const getGradient = () => {
@@ -334,11 +422,11 @@ export const FlickAnimationView = props => {
         let width = paperRef.current.clientWidth;
         // console.log("heysssssssss")
         let str =  "linear-gradient(to right, green 0px,  green " +
-          (Math.round(width * ((maxHit - 10) / 100 ))).toString() + 
+          (Math.round(width * ((maxHit - 15) / 100 ))).toString() + 
           "px, red " + 
-          (Math.round(width * ((maxHit) / 100 ))).toString() + 
+          (Math.round(width * ((maxHit - 5) / 100 ))).toString() + 
           "px, green " + 
-          (Math.round(width *((maxHit + 10) / 100 ))).toString() + 
+          (Math.round(width *((maxHit + 5) / 100 ))).toString() + 
            "px)";
 
         // console.log(str);
@@ -349,48 +437,6 @@ export const FlickAnimationView = props => {
 
     }
 
-    const handleSliderStop = num => {
-
-      if(!stop) {
-        // console.log("sssssssssssssssssssssssssddddddd")
-        console.log(num);
-        setStopNum(num);
-        setTimeout(function() { //Start the timer
-          setStopNum(-10);
-          
-        }, 4000)
-
-      }
-    }
-
-    
-
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      if(!stop) {
-
-        setStop(true);
-        setTimeout(function() { //Start the timer
-          setStop(false);
-          
-        }, 5000)
-      
-        console.log(token[0])
-        flick.flick(token[0], sliderValue)
-        .then(data => {
-
-          
-            if(data.stage != stage) {
-              setChanged(true);
-            }
-            setStage(data.stage);
-
-            handleSliderStop(sliderValue);
-        })
-
-      }
-      
-    }
     const PrettoSlider = withStyles({
     
       root: {
@@ -430,40 +476,34 @@ export const FlickAnimationView = props => {
     return (
         <div>
 
-            
-
-            <main className={classes.layout}>
+            <main className={gameStarted ? classes.layout: "hidden"}>
                 <Paper ref = {paperRef} className={classes.paper}> 
 
-                  <div class ="paperTitleText" style = {{"padding-bottom" : "10px"}}>
+                  <div class ="paperTitleText" >
                       Game View
                   </div>
 
-                    {/* <Grid container spacing={3}> */}
-                      <Grid item>
 
-                        <video playsinline ref={vidRef1} width={getIconSize(444)} height={getIconSize(294)} className= {show1 ? "" : "hidden"}>
-                            <source src ={vid1} type="video/mp4" /> 
-                        </video>
+                      <Grid container
+                       alignItems="center"
+                       justifyContent="center" 
+                       justify = "center"
+                      >
 
-                        <video playsinline  ref={vidRef2} width={getIconSize(444)} height={getIconSize(294)} className= {show2 ? "" : "hidden"}>
-                            <source src ={vid2} type="video/mp4" /> 
-                        </video>
+                        <Grid item style = {{"margin" : "5px"}}>
+                          <img src = {vid.current} width={getIconSize(444)} height={getIconSize(294)}/>
 
-                        <video playsinline  ref={vidRef3} width={getIconSize(444)} height={getIconSize(294)} className= {show3 ? "" : "hidden"}>
-                            <source src ={vid3} type="video/mp4" /> 
-                        </video>
 
-                        <video playsinline  ref={vidRef4} width={getIconSize(444)} height={getIconSize(294)} className= {show4 ? "" : "hidden"} >
-                            <source src ={vid4} type="video/mp4" /> 
-                        </video>
+                          <img src = {vid1} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
+                          <img src = {vid2} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
+                          <img src = {vid3} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
+                          <img src = {vid4} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
 
+                        </Grid>
+                        
 
                       </Grid>
-                      {/* </Grid> */}
-
-
-                    
+          
                       <PrettoSlider  value={sliderValue} aria-label="pretto slider" defaultValue={20} />
 
                       <div className={ show ? classes.layout : "hidden"}> 
@@ -474,6 +514,7 @@ export const FlickAnimationView = props => {
                                 <Button
                                   variant="contained"
                                   color="primary"
+                                  disabled = {hitDisabled}
                                   onClick={(e) => handleSubmit(e)}   
                                   >
                                   Hit
@@ -483,41 +524,33 @@ export const FlickAnimationView = props => {
                         </Grid>
 
                       </div>
-                      
-               
-                  
 
-                  
-                 
-                    
-                  {/* <Button variant="contained" color="primary" style = 
-                    {{"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
-                    "align-self":"center", 
-                    "margin-bottom":"1rem",
-                    "margin-left": "auto",
-                    "margin-right": "auto"}} 
-                    onClick = {() =>  progress()}
-                  >
-                    <div className = "smallText">
-                      Progress
-                    </div>
- 
-                  </Button>
-                  <Button variant="contained" color="primary" style = 
-                    {{"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
-                    "align-self":"center", 
-                    "margin-bottom":"1rem",
-                    "margin-left": "auto",
-                    "margin-right": "auto"}} 
-                    onClick = {() =>  repeat()}
-                  >
-                    <div className = "smallText">
-                      Repeat
-                    </div>
- 
-                  </Button> */}
+             
                 </Paper>
             </main>
+
+            <div className = {msg != "" ? "" : "hidden"}>
+
+            <Snackbar
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                open={open}
+                autoHideDuration={2000}
+                onClose={handleClose}
+                message= {msg}
+                action={
+                  <React.Fragment>
+
+                  <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+                    <CloseIcon fontSize="small" />
+                  </IconButton>
+                </React.Fragment>
+                }
+              />
+
+            </div>
             
    
       
