@@ -120,6 +120,8 @@ export const GuessNumberGame = props => {
                     }
 
                     if(data.link) {
+                        general.removeRules();
+
                         history.push({
                             pathname: "/" + data.link,
                             token:token

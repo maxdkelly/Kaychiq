@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
+import FlickGameRules from './FlickGameRules';
 
 
 class CreateGameForm extends React.Component {
@@ -49,6 +49,10 @@ class CreateGameForm extends React.Component {
   
     handleGuessLink(e) {
 
+      general.setRules("Guess The Soju Bottle No. Rules", [" In 'Guess The Soju Bottle No.' you take turns to guess what the number under the virutal Soju bottle cap is. The number under the virutal Soju bottle cap is between 0 and 100.",
+      " Each guess you make must be within the previous highest and lowest guesses. If you make an incorrect guess the computer will tell you whether the number is higher or lower and update the previous higher or lower guess.",
+      "If you make a correct guess you drink!"]);
+
         general.startGuessGame(this.state.indToken)
         .then(data => {
             if(!data.isValid) {
@@ -61,6 +65,11 @@ class CreateGameForm extends React.Component {
     }
 
     handleFlickLink(e) {
+      general.setRules("Flick the Soju Bottle Cap Game", ["In 'Flick the Soju Bottle Cap Game' you take turns tring to flick the tail off the virtual soju bottle cap, by pressing the hit button.",
+      "The closer the slider is to the red area, the harder your flick is.",
+      "If you flick the tail off the virtual soju bottle cap, the people before and after you drink!"]);
+ 
+
 
       general.startFlickGame(this.state.indToken)
       .then(data => {

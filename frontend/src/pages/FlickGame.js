@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header"
 import flick from '../utils/flick';
 import general from '../utils/general';
+import Paper from '@material-ui/core/Paper';
 
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -25,9 +26,50 @@ import FlickGameView from '../components/FlickGameView';
 import FlickAnimationView from '../components/FlickAnimationView';
 import FlickFinishedDialog from '../components/FlickFinishedDialog';
 
+import flickGif from '../flicks/flick.gif'
+
+function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height
+    };
+  }
+  
+  function useWindowDimensions() {
+    const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  
+    useEffect(() => {
+      function handleResize() {
+        setWindowDimensions(getWindowDimensions());
+      }
+  
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+  
+    return windowDimensions;
+  }
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      display : "flex",
+    },
+    paper: {
+      height: 140,
+      width: 100,
+    },
+    control: {
+      padding: theme.spacing(2),
+    },
+  }));
+
 export const FlickGame = props => {
 
     const history = useHistory();
+    const classes = useStyles();
+
+    const flickGifLoaded = (new Image().src = flickGif)
 
     const [token, setToken] = useState(props.location.token);
 
@@ -59,6 +101,9 @@ export const FlickGame = props => {
     const [msg, setMsg] = useState("");
 
     const [health, setHealth] = useState("100");
+
+  const { height, width } = useWindowDimensions();
+
 
     useEffect(() => {
 
@@ -92,7 +137,6 @@ export const FlickGame = props => {
        
         flick.getFlickState(token)
             .then(data => {
-               
                 if(data) {
                     setStage(data.stage);
                     if(data.tick != tick) {
@@ -103,7 +147,7 @@ export const FlickGame = props => {
                         if (hitDiff <= 10) {
                             setMsg(currPlayer + " powerfully flicked the tail")
                         } else if (hitDiff <= 30) {
-                            setMsg(currPlayer + " made a solid attempt at flicking the tail")
+                            setMsg(currPlayer + " flicked the tail")
                         } else {
                             setMsg(currPlayer + " made a shite attempt at flicking the tail")
                         }
@@ -152,6 +196,8 @@ export const FlickGame = props => {
                     }
 
                     if(data.link) {
+                        general.removeRules();
+
                         history.push({
                             pathname: "/" + data.link,
                             token:token
@@ -189,22 +235,52 @@ export const FlickGame = props => {
     }
 
 
+    const section = {
+        height: "100%"
+      };
 
+    const getFontSize = () => {
+
+        if(width > 1000) {
+            return "medium"
+        }
+
+        if(width > 400) {
+            return "small"
+        }
+
+       
+        return "x-small"
+        
+    }
+
+    const getIconSize = relSize => {
+
+        return Math.max(relSize/1.7, relSize * width/1920 )
+  
+    }
     
     return(
         <body>
             <Header/> 
             
-            <Grid container spacing={3}  alignItems="center"
-                    justifyContent="center" 
-                    justify = "center">
+            <Grid 
+                container 
+                spacing={width > 850 ? 3 : 1}  
+                alignItems="center"
+                justifyContent="center" 
+                justify = "center"
+              
+                
+                className={classes.root} 
+            >
 
-                <Grid item >
+                <Grid item style = {section}>
                     <FlickGameView players = {players} sojuMap = {sojuMap} currPlayer = {currPlayer} currHit = {currHit} over = {loserShow} show={show}/>
 
                 </Grid>
 
-                <Grid item>
+                <Grid item style = {section}>
                      <FlickAnimationView 
                         tick = {tick} 
                         stage = {stage} 
@@ -232,7 +308,7 @@ export const FlickGame = props => {
                   horizontal: 'right',
                 }}
                 open={open}
-                autoHideDuration={4000}
+                autoHideDuration={3500}
                 onClose={handleClose}
                 message= {"Soju bottle tail at " + health + "% health"}
                 action={
@@ -240,7 +316,33 @@ export const FlickGame = props => {
                     
                   </React.Fragment>
                 }
-              />
+              >
+                <main>
+                    <Paper style = {{
+                         "background-color": '#C4C3D0',
+                         "border-radius": "5"
+                    }}> 
+                    <div style = {{
+                        "padding" : "10px",
+                        
+                        "width": getIconSize(270),
+                        "font-size": getFontSize(),
+                        "font-weight": "bold",
+                        "text-decoration": "none",
+                        "text-align" : "center", 
+                        "vertical-align": "middle",
+                        "color": "#293242",
+                        "line-height": "110%"
+                    }}>
+
+                        {"Soju bottle tail at " + health + "% health"}
+                    </div>  
+                   
+                    <img src = {flickGifLoaded} width={getIconSize(270)} height={getIconSize(480)} />
+
+                  </Paper>
+                </main>
+            </Snackbar>
 
             </div>
         </body>

@@ -218,7 +218,7 @@ export const GuessGameView = props => {
             <main className={players.length == 0 ? "hidden" : classes.layout}>
                 <Paper className={players.length == 0 ? "hidden" : classes.paper}> 
 
-                <Grid container spacing={3} justifyContent = "flex-end">
+                {/* <Grid container spacing={3} justifyContent = "flex-end">
                   <Grid item xs style = {{"max-width" : "32%"}}>
                     <Button variant="contained" color="primary" style = 
                           {{"background-color": "#3D3D90", "max-width": "90%", "display" : "block",
@@ -237,7 +237,7 @@ export const GuessGameView = props => {
                          
                         </Button>
                     </Grid>
-                  </Grid>
+                  </Grid> */}
 
                   <div class ="paperTitleText" >
                       Guess The Soju Bottle No.

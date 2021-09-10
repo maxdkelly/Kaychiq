@@ -80,6 +80,7 @@ export const FlickFinishedDialog = props => {
 
     
     function handleBackToLobby(e) {
+      general.removeRules();
 
         flick.flickToLobby(token)
         .then(

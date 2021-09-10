@@ -1,9 +1,34 @@
+
+
 import axios from "axios";
 import Cookies from 'js-cookie';
 
 class General {
   constructor() {
-    
+    this.title = "";
+    this.body = [];
+  }
+
+  hasRules() {
+    return this.title != "";
+  }
+
+  setRules(title, body) {
+    this.title = title;
+    this.body = body;
+  }
+
+  removeRules() {
+    this.title = "";
+    this.body = [];
+  }
+
+  getTitle() {
+    return this.title;
+  }
+
+  getBody() {
+    return this.body;
   }
 
   getToken() {

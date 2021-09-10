@@ -82,6 +82,7 @@ export const GuessFinishedDialog = props => {
 
     
     function handleBackToLobby(e) {
+        general.removeRules();
 
         guess.guessToLobby(token)
         .then(

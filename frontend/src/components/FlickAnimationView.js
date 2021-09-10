@@ -37,8 +37,8 @@ import lychee from '../soju/lychee.png'
 import chicken from '../soju/chicken.png'
 
 import stage1 from '../flicks/stage1.gif'
-import stage2 from '../flicks/stage2.jpg'
-import stage3 from '../flicks/stage3.jpg'
+import stage2 from '../flicks/stage2.gif'
+import stage3 from '../flicks/stage3.gif'
 
 import vid1 from '../flicks/vid1.gif'
 import vid2 from '../flicks/vid2.gif'
@@ -78,20 +78,19 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: 1,
     }, 
     layout: {
-      // width: 'fit-content',
-      // maxWidth: "90%",
-      // marginLeft: 'auto',
-      // marginRight: 'auto',       
+      width: 'fit-content',
+      maxWidth: "90%",
+      marginLeft: 'auto',
+      marginRight: 'auto',         
     },
     paper: {
-      marginTop: theme.spacing(3),
-      height: 'fit-content',
-      width: 'fit-content',
+      // marginTop: theme.spacing(3),
+      // height: 'fit-content',
+      // width: 'fit-content',
       paddingTop: "7px",
       paddingBottom: "7px",
       paddingLeft: "20px",
       paddingRight: "20px",
-
       marginBottom: theme.spacing(3),
       [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
         marginTop: theme.spacing(6),
@@ -236,7 +235,7 @@ export const FlickAnimationView = props => {
   
     const getIconSize = relSize => {
 
-      return Math.max(relSize/1.7, relSize * 1.3 * width/1920 )
+      return Math.max(relSize/1.3, relSize * 1.4 * width/1920 )
 
     }
 
@@ -457,20 +456,28 @@ export const FlickAnimationView = props => {
             <main className={gameStarted ? classes.layout: "hidden"}>
                 <Paper ref = {paperRef} className={classes.paper}> 
 
-                  <div class ="paperTitleText" style = {{"padding-bottom" : "10px"}}>
+                  <div class ="paperTitleText" >
                       Game View
                   </div>
 
 
-                      <Grid item>
+                      <Grid container
+                       alignItems="center"
+                       justifyContent="center" 
+                       justify = "center"
+                      >
 
-                        <img src = {vid.current} width={getIconSize(444)} height={getIconSize(294)}/>
+                        <Grid item style = {{"padding" : "15px"}}>
+                          <img src = {vid.current} width={getIconSize(444)} height={getIconSize(294)}/>
 
 
-                        <img src = {vid1} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
-                        <img src = {vid2} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
-                        <img src = {vid3} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
-                        <img src = {vid4} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
+                          <img src = {vid1} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
+                          <img src = {vid2} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
+                          <img src = {vid3} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
+                          <img src = {vid4} width={getIconSize(444)} height={getIconSize(294)} className= "hidden"/>
+
+                        </Grid>
+                        
 
                       </Grid>
           
