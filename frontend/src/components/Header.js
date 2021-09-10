@@ -70,15 +70,16 @@ export const Header = props =>  {
         <Typography variant="h5" className={classes.title} onClick = {() => {general.removeRules();history.push("/")}}>
           Kaychiq
         </Typography>
+        <div className = {general.hasRules() ? "" : "hidden"}>
+          <Button  color="inherit" onClick = {() => handleRulesClick()}>Rules</Button>
+
+        </div>
         <div className = {general.hasToken() ? "" : "hidden"}>
           <Button  color="inherit" onClick = {() => handleClick()}>Leave Game</Button>
 
         </div>
 
-        <div className = {general.hasRules() ? "" : "hidden"}>
-          <Button  color="inherit" onClick = {() => handleRulesClick()}>Rules</Button>
-
-        </div>
+    
       </Toolbar>
       <Rules body = {body} title = {title} show = {rulesShow} handleClose = {handleRulesClose}/>
     </AppBar>

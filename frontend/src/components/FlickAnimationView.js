@@ -160,6 +160,8 @@ export const FlickAnimationView = props => {
   const [gameStarted, setStarted] = useState(false);
   const [msg, setMsg] = useState(props.msg);
 
+  const [tickRate, setTickRate] = useState(20);
+
   const [over, setOver] = useState(false);
   const { height, width } = useWindowDimensions();
   
@@ -241,6 +243,10 @@ export const FlickAnimationView = props => {
 
     if( props.stage != stage) {
       setChanged(true);
+
+      if(props.stage == 1) {
+        setTickRate(17);
+      }
     }
     
 
@@ -260,7 +266,7 @@ export const FlickAnimationView = props => {
 
     useInterval(() => {
       changeSlider()
-    }, 20);   
+    }, tickRate);   
 
   function changeSlider() {
 

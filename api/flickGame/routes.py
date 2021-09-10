@@ -277,7 +277,7 @@ def flick():
     if abs(flick - game.maxHitPos) <= 10:
 
         game.currHitPoints -= 100
-    elif abs(flick - game.maxHitPos) <= 30:
+    elif abs(flick - game.maxHitPos) <= 20:
         game.currHitPoints -= int((100 - abs(flick - game.maxHitPos)) / 5)
         
     game.currHitPos = flick

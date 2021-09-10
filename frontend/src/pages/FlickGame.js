@@ -29,6 +29,9 @@ import FlickFinishedDialog from '../components/FlickFinishedDialog';
 import flickGif from '../flicks/flick.gif'
 
 import gif from '../gifs/gif2.gif'
+import roger from '../gifs/roger.gif'
+import wow from '../gifs/wow.gif'
+
 
 
 function getWindowDimensions() {
@@ -74,6 +77,8 @@ export const FlickGame = props => {
 
     const flickGifLoaded = (new Image().src = flickGif)
     const finishedGif = (new Image().src = gif)
+    const rogerGif = (new Image().src = roger)
+    const wowGif = (new Image().src = wow)
 
     const [token, setToken] = useState(props.location.token);
 
@@ -86,6 +91,16 @@ export const FlickGame = props => {
     const [open, setOpen] = useState(false);
 
     const handleClose = () => setOpen(false);
+
+    
+    const [weakOpen, setWeak] = useState(false);
+
+    const handleWeakClose = () => setWeak(false);
+
+    
+    const [wowOpen, setWow] = useState(false);
+
+    const handleWowClose = () => setWow(false);
 
     const [tick, setTick] = useState(false);
     const [players, setPlayers] = useState([]);
@@ -103,6 +118,8 @@ export const FlickGame = props => {
     const [sojuMap, setSojuMap] = useState({});
 
     const [msg, setMsg] = useState("");
+
+    const [healthMsg, setHealthMsg] = useState("");
 
     const [health, setHealth] = useState("100");
 
@@ -150,9 +167,14 @@ export const FlickGame = props => {
 
                         if (hitDiff <= 10) {
                             setMsg(currPlayer + " powerfully flicked the tail")
-                        } else if (hitDiff <= 30) {
+                        } else if (hitDiff <= 20) {
                             setMsg(currPlayer + " flicked the tail")
                         } else {
+
+                            setTimeout(() => {
+                                setWeak(true);
+
+                            }, 5000);
                             setMsg(currPlayer + " made a shite attempt at flicking the tail")
                         }
                         
@@ -161,6 +183,21 @@ export const FlickGame = props => {
                         setTick(data.tick);
 
                         if(data.health != health && !data.gameOver) {
+
+                            if(data.health == 75) {
+                                setHealthMsg("Soju Bottle tail taking some damage");
+                            }
+
+                            if(data.health == 50) {
+                                setHealthMsg("Soju Bottle tail not looking so hot");
+
+                            }
+
+                            if(data.health == 25) {
+                                setHealthMsg("Soju Bottle tail almost gone");
+
+                            }
+
                             setHealth(data.health)
                             handleClose();
                             setTimeout(() => {
@@ -168,6 +205,12 @@ export const FlickGame = props => {
     
                             }, 5000);
     
+                        } else if (hitDiff <= 10  && !data.gameOver) {
+                            setTimeout(() => {
+                                setWow(true);
+    
+                            }, 5000);
+
                         }
                     }
 
@@ -339,10 +382,64 @@ export const FlickGame = props => {
                         "line-height": "110%"
                     }}>
 
-                        {"Soju bottle tail at " + health + "% health"}
+                        {healthMsg}
                     </div>  
                    
                     <img src = {flickGifLoaded} width={getIconSize(270)} height={getIconSize(480)} />
+
+                  </Paper>
+                </main>
+            </Snackbar>
+
+            <Snackbar
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={weakOpen}
+                autoHideDuration={3000}
+                onClose={handleWeakClose}
+                action={
+                  <React.Fragment>
+                    
+                  </React.Fragment>
+                }
+              >
+                <main>
+                    <Paper style = {{
+                         "background-color": '#EEDFDE',
+                         "border-radius": "6"
+                    }}> 
+                  
+                   
+                    <img src = {rogerGif} width={getIconSize(498)} height={getIconSize(277)} />
+
+                  </Paper>
+                </main>
+            </Snackbar>
+
+            <Snackbar
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={wowOpen}
+                autoHideDuration={2500}
+                onClose={handleWowClose}
+                action={
+                  <React.Fragment>
+                    
+                  </React.Fragment>
+                }
+              >
+                <main>
+                    <Paper style = {{
+                         "background-color": '#EEDFDE',
+                         "border-radius": "6"
+                    }}> 
+                  
+                   
+                    <img src = {wowGif} width={getIconSize(500)} height={getIconSize(374)} />
 
                   </Paper>
                 </main>
