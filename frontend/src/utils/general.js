@@ -70,7 +70,9 @@ class General {
       .then(res => {
 
             if(res.data.isValid) {
-              Cookies.set('token', res.data.individualToken, { expires: 1 })
+
+              var twoHours = new Date(new Date().getTime() + 2 * 60 * 60 * 1000);
+              Cookies.set('token', res.data.individualToken, { expires: twoHours })
             }
             return res.data;
       })

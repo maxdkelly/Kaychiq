@@ -149,7 +149,7 @@ export const FlickAnimationView = props => {
 
   const [hit, setHit] = useState(-10);
   const token = useState(props.token);
-  const [show, setShow] = useState(props.show);
+  const [show, setShow] = useState(null);
   const [currHit, setCurrHit] = useState([-1,  ""]);
   const [go, setGo] = useState(false);
 
@@ -179,13 +179,30 @@ export const FlickAnimationView = props => {
   },[])
   useEffect(() => {
 
-    console.log(props.currHit)
-   
+    console.log(gameStarted)
 
-    setTimeout(() => {
+    if(props.show == false) {
       setShow(props.show)
 
-    }, 3900);
+    } else {
+
+      if(!gameStarted) {
+
+        setTimeout(() => {
+          setShow(props.show)
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          setShow(props.show)
+    
+        }, 6500);
+  
+      }
+
+    }
+   
+    
+    
   },[props.show])
 
 

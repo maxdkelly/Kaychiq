@@ -242,15 +242,15 @@ export const FlickGame = props => {
     const getFontSize = () => {
 
         if(width > 1000) {
+            return "large"
+        }
+
+        if(width > 600) {
             return "medium"
         }
 
-        if(width > 400) {
-            return "small"
-        }
-
        
-        return "x-small"
+        return "small"
         
     }
 
@@ -308,7 +308,7 @@ export const FlickGame = props => {
                   horizontal: 'right',
                 }}
                 open={open}
-                autoHideDuration={3500}
+                autoHideDuration={3300}
                 onClose={handleClose}
                 message= {"Soju bottle tail at " + health + "% health"}
                 action={
@@ -319,8 +319,8 @@ export const FlickGame = props => {
               >
                 <main>
                     <Paper style = {{
-                         "background-color": '#C4C3D0',
-                         "border-radius": "5"
+                         "background-color": '#EEDFDE',
+                         "border-radius": "6"
                     }}> 
                     <div style = {{
                         "padding" : "10px",
