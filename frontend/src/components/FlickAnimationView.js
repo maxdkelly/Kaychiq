@@ -235,7 +235,7 @@ export const FlickAnimationView = props => {
   
     const getIconSize = relSize => {
 
-      return Math.max(relSize/1.3, relSize * 1.4 * width/1920 )
+      return Math.max(relSize/1.7, relSize * 1.4 * width/1920 )
 
     }
 
